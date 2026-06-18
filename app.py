@@ -1,6 +1,8 @@
 import streamlit as st
 import json
-import random
+import os
+import base64
+import tempfile
 from pathlib import Path
 from utils.content_loader import load_chapter, load_scenes
 
@@ -10,10 +12,36 @@ st.set_page_config(
     layout="wide"
 )
 
-# ─── Custom CSS ───────────────────────────────────────────────────────────────
+# ─── TTS Helper ───────────────────────────────────────────────────────────────
+
+@st.cache_data
+def generate_tts_audio(text, scene_id):
+    """Generate TTS audio for narration text and return base64 encoded audio."""
+    try:
+        from gtts import gTTS
+        import io
+        tts = gTTS(text=text, lang='en', slow=False)
+        audio_buffer = io.BytesIO()
+        tts.write_to_fp(audio_buffer)
+        audio_buffer.seek(0)
+        return audio_buffer.getvalue()
+    except Exception:
+        return None
+
+
+def render_audio_player(narration_text, scene_id):
+    """Render a play narration button with TTS."""
+    audio_data = generate_tts_audio(narration_text, scene_id)
+    if audio_data:
+        st.audio(audio_data, format="audio/mp3")
+
+
+# ─── CSS Animations & Styling ─────────────────────────────────────────────────
 
 st.markdown("""
 <style>
+
+/* ─── Base Layout ─────────────────────────────────────────────────────────── */
 
 .story-container {
     background: white;
@@ -31,6 +59,7 @@ st.markdown("""
     border-radius: 15px;
     font-size: 18px;
     margin-top: 15px;
+    animation: slideInLeft 0.6s ease-out;
 }
 
 .speaker {
@@ -46,6 +75,7 @@ st.markdown("""
     border-radius: 10px;
     font-size: 16px;
     margin-top: 15px;
+    animation: fadeIn 0.8s ease-out;
 }
 
 .hotspot-card {
@@ -54,7 +84,6 @@ st.markdown("""
     border-radius: 15px;
     padding: 20px;
     margin: 10px 0;
-    transition: all 0.3s;
 }
 
 .badge-container {
@@ -63,10 +92,12 @@ st.markdown("""
     background: linear-gradient(135deg, #FEF9C3, #FDE68A);
     border-radius: 20px;
     margin: 20px 0;
+    animation: badgePop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .badge-icon {
     font-size: 80px;
+    animation: bounce 1s ease infinite;
 }
 
 .summary-card {
@@ -75,6 +106,7 @@ st.markdown("""
     padding: 15px;
     border-radius: 10px;
     margin: 8px 0;
+    animation: slideInLeft 0.5s ease-out;
 }
 
 .xp-gain {
@@ -109,10 +141,339 @@ st.markdown("""
     padding: 15px;
     margin: 8px 0;
     border-left: 4px solid #8B5CF6;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes badgePop {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes growUp {
+    0% { height: 0; opacity: 0; }
+    100% { height: 100%; opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-15px) translateX(10px); }
+    50% { transform: translateY(-5px) translateX(20px); }
+    75% { transform: translateY(-20px) translateX(30px); }
+    100% { transform: translateY(0) translateX(40px); }
+}
+
+@keyframes waterFlow {
+    0% { transform: translateX(0) rotate(0deg); }
+    50% { transform: translateX(30px) rotate(5deg); }
+    100% { transform: translateX(60px) rotate(-5deg); }
+}
+
+@keyframes explode {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes sprout {
+    0% { height: 0; opacity: 0; }
+    30% { height: 20px; opacity: 0.5; }
+    60% { height: 50px; opacity: 0.8; }
+    100% { height: 80px; opacity: 1; }
+}
+
+/* ─── Process Animation Containers ────────────────────────────────────────── */
+
+.animation-container {
+    background: linear-gradient(180deg, #E0F2FE 0%, #BAE6FD 50%, #7DD3FC 100%);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+}
+
+.germination-anim {
+    background: linear-gradient(180deg, #FEF9C3 0%, #92400E 60%, #78350F 100%);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 20px 0;
+    text-align: center;
+    position: relative;
+    min-height: 250px;
+}
+
+.seed-icon {
+    font-size: 50px;
+    animation: bounce 2s ease-in-out infinite;
+    display: inline-block;
+}
+
+.root-anim {
+    font-size: 30px;
+    animation: growUp 2s ease-out forwards;
+    display: inline-block;
+}
+
+.shoot-anim {
+    font-size: 40px;
+    animation: sprout 3s ease-out forwards;
+    display: inline-block;
+}
+
+.wind-seed {
+    font-size: 30px;
+    display: inline-block;
+    animation: float 4s ease-in-out infinite;
+}
+
+.water-seed {
+    font-size: 30px;
+    display: inline-block;
+    animation: waterFlow 3s ease-in-out infinite;
+}
+
+.explode-seed {
+    font-size: 30px;
+    display: inline-block;
+    animation: explode 2s ease-out infinite;
+}
+
+/* ─── Farming Timeline ────────────────────────────────────────────────────── */
+
+.timeline-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.timeline-step {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    min-width: 100px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s ease-out;
+    position: relative;
+}
+
+.timeline-step::after {
+    content: "→";
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #22C55E;
+}
+
+.timeline-step:last-child::after {
+    content: "";
+}
+
+.timeline-icon {
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+/* ─── Seed Anatomy Animation ──────────────────────────────────────────────── */
+
+.seed-anatomy {
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.seed-layer {
+    display: inline-block;
+    margin: 0 10px;
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+}
+
+.seed-layer-icon {
+    font-size: 50px;
+    margin-bottom: 8px;
+}
+
+.seed-layer-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #92400E;
+}
+
+/* ─── Scene Type Badge ────────────────────────────────────────────────────── */
+
+.scene-type-badge {
+    display: inline-block;
+    background: #EFF6FF;
+    color: #2563EB;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
 }
 
 </style>
 """, unsafe_allow_html=True)
+
+# ─── Animation Renderers ──────────────────────────────────────────────────────
+
+def render_animation(animation_config):
+    """Render CSS animations based on animation type."""
+    anim_type = animation_config.get("type", "")
+
+    if anim_type == "germination_stages":
+        st.markdown("""
+        <div class="germination-anim">
+            <div style="margin-bottom: 15px; font-weight: bold; color: #78350F;">🎬 Germination in Action</div>
+            <div style="display: flex; justify-content: center; align-items: flex-end; gap: 30px; height: 150px;">
+                <div style="text-align: center;">
+                    <div class="seed-icon">🌰</div>
+                    <div style="font-size: 12px; color: #78350F;">Seed</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite 0.5s;">💧</div>
+                    <div style="font-size: 12px; color: #78350F;">+ Water</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite 1s;">💥</div>
+                    <div style="font-size: 12px; color: #78350F;">Cracks</div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="root-anim">⬇️🌿</div>
+                    <div style="font-size: 12px; color: #78350F;">Root Down</div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="shoot-anim">🌱</div>
+                    <div style="font-size: 12px; color: #78350F;">Shoot Up!</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "seed_dispersal":
+        st.markdown("""
+        <div class="animation-container">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #1E40AF;">🎬 Seeds on the Move!</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
+                <div style="text-align: center; padding: 15px;">
+                    <div class="wind-seed">🌬️ 🪶</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Wind</strong><br>Floating away...</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div class="water-seed">🌊 🥥</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Water</strong><br>Floating downstream...</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 30px; animation: bounce 2s ease-in-out infinite;">🐕 🌿</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Animals</strong><br>Hitching a ride!</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div class="explode-seed">💥 🫛</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Explosion</strong><br>Pop! Scatter!</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "seed_anatomy":
+        st.markdown("""
+        <div class="seed-anatomy">
+            <div style="font-weight: bold; margin-bottom: 20px; color: #92400E;">🎬 Inside a Seed — Layers Revealed</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+                <div class="seed-layer" style="animation-delay: 0s;">
+                    <div class="seed-layer-icon">🛡️</div>
+                    <div class="seed-layer-label">Seed Coat<br><small>(Outer protection)</small></div>
+                </div>
+                <div style="font-size: 24px; color: #92400E;">→</div>
+                <div class="seed-layer" style="animation-delay: 0.5s;">
+                    <div class="seed-layer-icon">🍽️</div>
+                    <div class="seed-layer-label">Cotyledons<br><small>(Food storage)</small></div>
+                </div>
+                <div style="font-size: 24px; color: #92400E;">→</div>
+                <div class="seed-layer" style="animation-delay: 1s;">
+                    <div class="seed-layer-icon">🌱</div>
+                    <div class="seed-layer-label">Embryo<br><small>(Baby plant)</small></div>
+                </div>
+            </div>
+            <div style="margin-top: 15px; display: flex; justify-content: center; gap: 40px;">
+                <div style="font-size: 13px; color: #78350F;">⬇️ Radicle (root)</div>
+                <div style="font-size: 13px; color: #78350F;">⬆️ Plumule (shoot)</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "stem_cutting":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #ECFDF5, #D1FAE5);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #065F46;">🎬 Growing a New Plant from a Stem Cutting</div>
+            <div style="display: flex; justify-content: center; align-items: flex-end; gap: 25px; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-size: 40px;">✂️🌿</div>
+                    <div style="font-size: 12px; margin-top: 5px;">Cut a healthy stem</div>
+                </div>
+                <div style="font-size: 20px; color: #22C55E;">→</div>
+                <div style="text-align: center;">
+                    <div style="font-size: 40px; animation: bounce 2s infinite;">🪴</div>
+                    <div style="font-size: 12px; margin-top: 5px;">Plant in moist soil</div>
+                </div>
+                <div style="font-size: 20px; color: #22C55E;">→</div>
+                <div style="text-align: center;">
+                    <div style="font-size: 40px; animation: sprout 3s ease-out infinite;">🌿⬇️</div>
+                    <div style="font-size: 12px; margin-top: 5px;">Roots grow from base</div>
+                </div>
+                <div style="font-size: 20px; color: #22C55E;">→</div>
+                <div style="text-align: center;">
+                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite;">🌳</div>
+                    <div style="font-size: 12px; margin-top: 5px;">New plant grows!</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "agriculture_timeline":
+        st.markdown("""
+        <div style="margin: 20px 0;">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 15px; color: #92400E;">🎬 The Farming Journey</div>
+            <div class="timeline-container">
+                <div class="timeline-step"><div class="timeline-icon">🚜</div><div>Plough</div></div>
+                <div class="timeline-step"><div class="timeline-icon">🧪</div><div>Manure</div></div>
+                <div class="timeline-step"><div class="timeline-icon">🌱</div><div>Sow</div></div>
+                <div class="timeline-step"><div class="timeline-icon">💧</div><div>Irrigate</div></div>
+                <div class="timeline-step"><div class="timeline-icon">🐛</div><div>Protect</div></div>
+                <div class="timeline-step"><div class="timeline-icon">🌾</div><div>Harvest</div></div>
+                <div class="timeline-step"><div class="timeline-icon">🏪</div><div>Store</div></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
 
 # ─── Session State Initialization ─────────────────────────────────────────────
 
@@ -250,10 +611,21 @@ if st.session_state.chapter_started:
     scene = scenes_data["scenes"][st.session_state.scene_index]
     scene_type = scene.get("scene_type", "story")
 
-    # Background image
-    background_file = f"assets/backgrounds/{scene['background']}.jpg"
-    if Path(background_file).exists():
-        st.image(background_file, use_container_width=True)
+    # Scene type badge
+    type_labels = {
+        "story": "📖 Story", "explore": "🔍 Explore", "experiment": "🧪 Experiment",
+        "activity": "🎮 Activity", "challenge": "⚡ Challenge", "quiz": "📝 Quiz",
+        "summary": "📋 Summary", "badge": "🏆 Badge Award"
+    }
+    st.markdown(f"<span class='scene-type-badge'>{type_labels.get(scene_type, scene_type)}</span>",
+                unsafe_allow_html=True)
+
+    # Background image (only if not "none")
+    bg = scene.get("background", "none")
+    if bg and bg != "none":
+        background_file = f"assets/backgrounds/{bg}.jpg"
+        if Path(background_file).exists():
+            st.image(background_file, use_container_width=True)
 
     # ─── Scene Type: STORY ────────────────────────────────────────────────────
 
@@ -274,12 +646,21 @@ if st.session_state.chapter_started:
             st.write("")
             st.write(scene["narration"])
 
-            # Steps display (for story scenes with steps)
+            # TTS audio
+            if scene.get("tts"):
+                with st.expander("🔊 Listen to Narration"):
+                    render_audio_player(scene["narration"], scene["id"])
+
+            # Animation
+            if "animation" in scene:
+                render_animation(scene["animation"])
+
+            # Steps display
             if "steps_display" in scene:
                 st.write("")
-                for step in scene["steps_display"]:
+                for i, step in enumerate(scene["steps_display"]):
                     st.markdown(f"""
-                    <div class='step-card'>
+                    <div class='step-card' style='animation-delay: {i * 0.2}s;'>
                         <strong>{step['icon']} Step {step['step']}: {step['title']}</strong><br>
                         {step['description']}
                     </div>
@@ -316,10 +697,19 @@ if st.session_state.chapter_started:
             st.write("")
             st.write(scene["narration"])
 
+            # TTS audio
+            if scene.get("tts"):
+                with st.expander("🔊 Listen to Narration"):
+                    render_audio_player(scene["narration"], scene["id"])
+
         with col_char:
             character_file = f"assets/characters/{scene['character']}.png"
             if Path(character_file).exists():
                 st.image(character_file, width=200)
+
+        # Animation
+        if "animation" in scene:
+            render_animation(scene["animation"])
 
         st.write("")
         st.subheader("🔍 Explore — Click to Learn More")
@@ -328,6 +718,9 @@ if st.session_state.chapter_started:
             for hotspot in scene["hotspots"]:
                 with st.expander(f"{hotspot['icon']} {hotspot['name']}", expanded=False):
                     st.write(hotspot["description"])
+                    if "examples" in hotspot:
+                        examples_str = ", ".join(hotspot["examples"])
+                        st.info(f"📌 Examples: {examples_str}")
                     if "fun_fact" in hotspot:
                         st.markdown(f"""
                         <div class='fun-fact-box'>
@@ -353,6 +746,11 @@ if st.session_state.chapter_started:
 
             st.write("")
             st.write(scene["narration"])
+
+            # TTS audio
+            if scene.get("tts"):
+                with st.expander("🔊 Listen to Narration"):
+                    render_audio_player(scene["narration"], scene["id"])
 
         with col_char:
             character_file = f"assets/characters/{scene['character']}.png"
@@ -381,9 +779,6 @@ if st.session_state.chapter_started:
                 required = [c for c in exp["conditions"] if c["required"]]
                 all_required_on = all(conditions_state[c["id"]] for c in required)
 
-                non_required = [c for c in exp["conditions"] if not c["required"]]
-                non_required_on = [c for c in non_required if conditions_state[c["id"]]]
-
                 if all_required_on:
                     st.session_state.experiment_result = "success"
                 else:
@@ -391,7 +786,6 @@ if st.session_state.chapter_started:
 
             if st.session_state.experiment_result == "success":
                 st.success(f"✅ {exp['success_message']}")
-                # Show non-required info
                 for condition in exp["conditions"]:
                     if not condition["required"] and conditions_state.get(condition["id"]):
                         st.info(f"💡 {condition['name']}: {condition['description']}")
@@ -419,12 +813,22 @@ if st.session_state.chapter_started:
                 """, unsafe_allow_html=True)
 
             st.write("")
+            st.write("")
             st.write(scene["narration"])
+
+            # TTS audio
+            if scene.get("tts"):
+                with st.expander("🔊 Listen to Narration"):
+                    render_audio_player(scene["narration"], scene["id"])
 
         with col_char:
             character_file = f"assets/characters/{scene['character']}.png"
             if Path(character_file).exists():
                 st.image(character_file, width=200)
+
+        # Animation
+        if "animation" in scene:
+            render_animation(scene["animation"])
 
         if "activity" in scene:
             activity = scene["activity"]
@@ -450,7 +854,6 @@ if st.session_state.chapter_started:
                     for pair in activity["pairs"]:
                         if answers[pair["item"]] == pair["match"]:
                             correct += 1
-
                     st.session_state.activity_score = correct
 
                 if st.session_state.activity_submitted:
@@ -458,7 +861,10 @@ if st.session_state.chapter_started:
                     score = st.session_state.activity_score
 
                     if score == total:
+                        st.balloons()
                         st.success(f"🎉 Perfect! You got all {total} correct!")
+                    elif score >= total * 0.7:
+                        st.success(f"👍 Great job! {score}/{total} correct!")
                     else:
                         st.warning(f"You got {score}/{total} correct. Review below:")
 
@@ -494,7 +900,10 @@ if st.session_state.chapter_started:
                     score = st.session_state.activity_score
 
                     if score == total:
+                        st.balloons()
                         st.success(f"🎉 Perfect order! All {total} steps correct!")
+                    elif score >= total * 0.7:
+                        st.success(f"👍 Great job! {score}/{total} in the right position!")
                     else:
                         st.warning(f"You got {score}/{total} in the right position. Here's the correct order:")
 
@@ -524,6 +933,11 @@ if st.session_state.chapter_started:
 
             st.write("")
             st.write(scene["narration"])
+
+            # TTS audio
+            if scene.get("tts"):
+                with st.expander("🔊 Listen to Narration"):
+                    render_audio_player(scene["narration"], scene["id"])
 
         with col_char:
             character_file = f"assets/characters/{scene['character']}.png"
@@ -558,6 +972,7 @@ if st.session_state.chapter_started:
                 score = st.session_state.challenge_score
 
                 if score == total:
+                    st.balloons()
                     st.success(f"🎉 Perfect! All {total} correct!")
                 elif score >= total * 0.7:
                     st.success(f"👍 Great job! {score}/{total} correct!")
@@ -596,6 +1011,11 @@ if st.session_state.chapter_started:
             st.write("")
             st.write(scene["narration"])
 
+            # TTS audio
+            if scene.get("tts"):
+                with st.expander("🔊 Listen to Narration"):
+                    render_audio_player(scene["narration"], scene["id"])
+
         with col_char:
             character_file = f"assets/characters/{scene['character']}.png"
             if Path(character_file).exists():
@@ -605,7 +1025,7 @@ if st.session_state.chapter_started:
             quiz = scene["quiz"]
             st.write("")
             st.subheader(f"📝 {quiz['title']}")
-            st.write(f"Pass score: {quiz['pass_score']}/{len(quiz['questions'])}")
+            st.write(f"**Pass score: {quiz['pass_score']}/{len(quiz['questions'])}**")
 
             user_answers = {}
             for i, q in enumerate(quiz["questions"]):
@@ -633,7 +1053,7 @@ if st.session_state.chapter_started:
                     st.balloons()
                     st.success(f"🎉 Congratulations! You scored {score}/{total} — Quiz Passed!")
                 else:
-                    st.error(f"You scored {score}/{total}. You need {quiz['pass_score']} to pass. Try again!")
+                    st.error(f"You scored {score}/{total}. You need {quiz['pass_score']} to pass. Review and try again!")
 
                 st.write("---")
                 st.write("**Review:**")
@@ -670,6 +1090,11 @@ if st.session_state.chapter_started:
             st.write("")
             st.write(scene["narration"])
 
+            # TTS audio
+            if scene.get("tts"):
+                with st.expander("🔊 Listen to Narration"):
+                    render_audio_player(scene["narration"], scene["id"])
+
         with col_char:
             character_file = f"assets/characters/{scene['character']}.png"
             if Path(character_file).exists():
@@ -678,9 +1103,9 @@ if st.session_state.chapter_started:
         if "summary_points" in scene:
             st.write("")
             st.subheader("📋 What You Learned")
-            for point in scene["summary_points"]:
+            for i, point in enumerate(scene["summary_points"]):
                 st.markdown(f"""
-                <div class='summary-card'>
+                <div class='summary-card' style='animation-delay: {i * 0.15}s;'>
                     <strong>{point['icon']} {point['title']}</strong><br>
                     {point['text']}
                 </div>
@@ -689,8 +1114,6 @@ if st.session_state.chapter_started:
     # ─── Scene Type: BADGE ────────────────────────────────────────────────────
 
     elif scene_type == "badge":
-        st.header(scene["title"])
-
         if "badge" in scene:
             badge = scene["badge"]
 
@@ -702,9 +1125,11 @@ if st.session_state.chapter_started:
             </div>
             """, unsafe_allow_html=True)
 
-            # Add badge to collection
             if badge["name"] not in st.session_state.badges:
                 st.session_state.badges.append(badge["name"])
+                st.balloons()
+
+        st.header(scene["title"])
 
         if "dialogue" in scene:
             st.markdown(f"""
@@ -716,6 +1141,11 @@ if st.session_state.chapter_started:
 
         st.write("")
         st.write(scene["narration"])
+
+        # TTS audio
+        if scene.get("tts"):
+            with st.expander("🔊 Listen to Narration"):
+                render_audio_player(scene["narration"], scene["id"])
 
         col_char_center = st.columns([1, 2, 1])
         with col_char_center[1]:
@@ -735,9 +1165,14 @@ if st.session_state.chapter_started:
 
     st.write("")
     st.progress((st.session_state.scene_index + 1) / scene_count)
-    st.caption(f"Scene {st.session_state.scene_index + 1} of {scene_count} | "
-               f"Type: {scene_type.title()} | "
-               f"XP this scene: +{scene.get('xp', 10)}")
+
+    col_info1, col_info2, col_info3 = st.columns(3)
+    with col_info1:
+        st.caption(f"Scene {st.session_state.scene_index + 1} of {scene_count}")
+    with col_info2:
+        st.caption(f"Type: {scene_type.title()}")
+    with col_info3:
+        st.caption(f"XP this scene: +{scene.get('xp', 10)}")
 
     st.divider()
 
@@ -746,7 +1181,6 @@ if st.session_state.chapter_started:
     with col_prev:
         if st.button("⬅ Previous", disabled=(st.session_state.scene_index == 0)):
             st.session_state.scene_index -= 1
-            # Reset interactive states
             st.session_state.quiz_submitted = False
             st.session_state.challenge_submitted = False
             st.session_state.activity_submitted = False
@@ -760,7 +1194,6 @@ if st.session_state.chapter_started:
     with col_next:
         if st.button("Next ➡", disabled=(st.session_state.scene_index >= scene_count - 1)):
             st.session_state.scene_index += 1
-            # Reset interactive states
             st.session_state.quiz_submitted = False
             st.session_state.challenge_submitted = False
             st.session_state.activity_submitted = False
