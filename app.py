@@ -74,7 +74,6 @@ json_file = Path("content/class5/science/chapters.json")
 
 if json_file.exists():
 
-```
 with open(json_file, "r", encoding="utf-8") as f:
     data = json.load(f)
 
