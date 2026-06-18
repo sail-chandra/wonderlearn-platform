@@ -13,7 +13,8 @@
 
   "characters": [
     "Tara",
-    "Buddi"
+    "Buddi",
+    "Farmer Kisan"
   ],
 
   "badge": {
@@ -21,48 +22,29 @@
     "icon": "🌱"
   },
 
-  "estimated_time": "25 minutes",
+  "estimated_time": "30 minutes",
+  "total_xp": 280,
 
   "learning_objectives": [
-    "Understand seed structure",
-    "Learn germination",
-    "Explore seed dispersal",
-    "Understand vegetative propagation",
-    "Learn basics of agriculture"
+    "Understand seed structure (seed coat, cotyledon, embryo)",
+    "Learn the process and conditions for germination",
+    "Explore different methods of seed dispersal",
+    "Understand vegetative propagation with examples",
+    "Learn the steps of agriculture and farming"
   ],
 
   "scenes": [
-    {
-      "id": 1,
-      "title": "Welcome to Plant Land"
-    },
-    {
-      "id": 2,
-      "title": "Meet Buddi"
-    },
-    {
-      "id": 3,
-      "title": "Inside a Seed"
-    },
-    {
-      "id": 4,
-      "title": "Germination Lab"
-    },
-    {
-      "id": 5,
-      "title": "Seed Dispersal Adventure"
-    },
-    {
-      "id": 6,
-      "title": "Vegetative Propagation Garden"
-    },
-    {
-      "id": 7,
-      "title": "Farmer Simulator"
-    },
-    {
-      "id": 8,
-      "title": "Final Challenge"
-    }
+    {"id": 1, "title": "Welcome to Plant Land", "type": "story"},
+    {"id": 2, "title": "Meet Buddi the Seed", "type": "story"},
+    {"id": 3, "title": "Inside a Seed", "type": "explore"},
+    {"id": 4, "title": "Germination Lab", "type": "experiment"},
+    {"id": 5, "title": "Stages of Germination", "type": "story"},
+    {"id": 6, "title": "Seed Dispersal Adventure", "type": "activity"},
+    {"id": 7, "title": "Vegetative Propagation Garden", "type": "explore"},
+    {"id": 8, "title": "Farmer Kisan's Field", "type": "activity"},
+    {"id": 9, "title": "Chapter Challenge", "type": "challenge"},
+    {"id": 10, "title": "Final Quiz — Seed Explorer", "type": "quiz"},
+    {"id": 11, "title": "Chapter Summary", "type": "summary"},
+    {"id": 12, "title": "Badge Awarded — Seed Explorer!", "type": "badge"}
   ]
 }
