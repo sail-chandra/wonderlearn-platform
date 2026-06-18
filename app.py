@@ -25,10 +25,10 @@ layout="wide"
 # --------------------------------------------------
 
 if "scene_index" not in st.session_state:
-st.session_state.scene_index = 0
+    st.session_state.scene_index = 0
 
 if "chapter_started" not in st.session_state:
-st.session_state.chapter_started = False
+    st.session_state.chapter_started = False
 
 # --------------------------------------------------
 
