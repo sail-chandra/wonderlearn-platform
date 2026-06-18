@@ -93,10 +93,10 @@ if st.session_state.chapter_started:
     )
     
     if chapter_data is None or scenes_data is None:
-    
-    st.warning(
-        "🚧 This adventure is under development and will be available soon."
-    )
+        
+        st.warning(
+            "🚧 This adventure is under development and will be available soon."
+        )
     
     if st.button("🏠 Return to Home"):
     
