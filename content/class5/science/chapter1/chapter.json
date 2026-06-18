@@ -1,0 +1,68 @@
+{
+  "id": 1,
+  "title": "More About Plants",
+  "subtitle": "The Great Plant Adventure",
+  "subject": "General Science",
+  "class": 5,
+
+  "theme": {
+    "primary_color": "#22C55E",
+    "secondary_color": "#2563EB",
+    "background": "plant_land"
+  },
+
+  "characters": [
+    "Tara",
+    "Buddi"
+  ],
+
+  "badge": {
+    "name": "Seed Explorer",
+    "icon": "🌱"
+  },
+
+  "estimated_time": "25 minutes",
+
+  "learning_objectives": [
+    "Understand seed structure",
+    "Learn germination",
+    "Explore seed dispersal",
+    "Understand vegetative propagation",
+    "Learn basics of agriculture"
+  ],
+
+  "scenes": [
+    {
+      "id": 1,
+      "title": "Welcome to Plant Land"
+    },
+    {
+      "id": 2,
+      "title": "Meet Buddi"
+    },
+    {
+      "id": 3,
+      "title": "Inside a Seed"
+    },
+    {
+      "id": 4,
+      "title": "Germination Lab"
+    },
+    {
+      "id": 5,
+      "title": "Seed Dispersal Adventure"
+    },
+    {
+      "id": 6,
+      "title": "Vegetative Propagation Garden"
+    },
+    {
+      "id": 7,
+      "title": "Farmer Simulator"
+    },
+    {
+      "id": 8,
+      "title": "Final Challenge"
+    }
+  ]
+}
