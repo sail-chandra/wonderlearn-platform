@@ -1,11 +1,19 @@
 import streamlit as st
 import json
 from pathlib import Path
-
+from utils.content_loader import (
+    load_chapter,
+    load_scenes
+)
 # --------------------------------------------------
 # Page Configuration
 # --------------------------------------------------
+if "scene_index" not in st.session_state:
+    st.session_state.scene_index = 0
 
+if "chapter_started" not in st.session_state:
+    st.session_state.chapter_started = False
+    
 st.set_page_config(
     page_title="WonderLearn",
     page_icon="🌟",
@@ -124,10 +132,12 @@ if json_file.exists():
         </div>
         """, unsafe_allow_html=True)
 
-        st.button(
-            f"Start {chapter['title']}",
-            key=f"chapter_{chapter['id']}"
-        )
+        if st.button(
+    f"Start {chapter['title']}",
+    key=f"chapter_{chapter['id']}"
+    ):
+    st.session_state.chapter_started = True
+    st.rerun()
 
 else:
     st.error(
@@ -154,6 +164,57 @@ with c3:
 
 with c4:
     st.metric("Level", "Explorer")
+
+if st.session_state.chapter_started:
+
+    chapter = load_chapter()
+    scenes = load_scenes()
+
+    scene = scenes["scenes"][
+        st.session_state.scene_index
+    ]
+
+    st.divider()
+
+    st.header(scene["title"])
+
+    st.write(
+        f"🎭 Character: {scene['character']}"
+    )
+
+    st.info(scene["narration"])
+
+    if "dialogue" in scene:
+
+        st.success(
+            f"{scene['dialogue']['speaker']}: "
+            f"{scene['dialogue']['text']}"
+        )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        if st.button(
+            "⬅ Previous",
+            disabled=(
+                st.session_state.scene_index == 0
+            )
+        ):
+            st.session_state.scene_index -= 1
+            st.rerun()
+
+    with col2:
+
+        if st.button(
+            "Next ➡",
+            disabled=(
+                st.session_state.scene_index
+                >= len(scenes["scenes"]) - 1
+            )
+        ):
+            st.session_state.scene_index += 1
+            st.rerun()
 
 # --------------------------------------------------
 # Footer
