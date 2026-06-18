@@ -22,10 +22,10 @@ layout="wide"
 # --------------------------------------------------
 
 if "scene_index" not in st.session_state:
-st.session_state.scene_index = 0
+    st.session_state.scene_index = 0
 
 if "chapter_started" not in st.session_state:
-st.session_state.chapter_started = False
+    st.session_state.chapter_started = False
 
 # --------------------------------------------------
 
@@ -45,22 +45,22 @@ st.subheader("Learn Through Stories, Explore Through Adventures")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-student_name = st.text_input(
-"Student Name",
-value="Explorer"
-)
+     student_name = st.text_input(
+     "Student Name",
+     value="Explorer"
+     )
 
 with col2:
-selected_class = st.selectbox(
-"Class",
-["Class 5"]
-)
+     selected_class = st.selectbox(
+     "Class",
+     ["Class 5"]
+     )
 
 with col3:
-subject = st.selectbox(
-"Subject",
-["General Science"]
-)
+     subject = st.selectbox(
+     "Subject",
+     ["General Science"]
+     )
 
 st.success(f"Welcome {student_name}!")
 
