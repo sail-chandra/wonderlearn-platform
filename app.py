@@ -56,7 +56,15 @@ if not st.session_state.chapter_started:
     st.subheader("📚 Available Adventures")
 
     for chapter in data["chapters"]:
-
+        
+        st.markdown(
+            f"### Chapter {chapter['id']} - {chapter['title']}"
+        )
+        
+        st.write(
+            f"🏆 Badge: {chapter['badge']}"
+        )
+        
         chapter_folder = Path(
             f"content/class5/science/chapter{chapter['id']}"
         )
@@ -78,6 +86,8 @@ if not st.session_state.chapter_started:
         else:
         
             st.info("🚧 Coming Soon")
+        
+        st.divider()
 
 # else:
 #     st.error("chapters.json not found")
