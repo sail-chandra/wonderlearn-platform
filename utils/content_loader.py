@@ -2,10 +2,9 @@ import json
 from pathlib import Path
 
 def load_chapter(chapter_id):
-
-chapter_file = Path(
-    f"content/class5/science/chapter{chapter_id}/chapter.json"
-)
+    chapter_file = Path(
+        f"content/class5/science/chapter{chapter_id}/chapter.json"
+    )
 
 if not chapter_file.exists():
     return None
