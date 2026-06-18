@@ -118,14 +118,14 @@ if st.session_state.chapter_started:
             "🚧 This adventure is under development and will be available soon."
         )
     
-    if st.button("🏠 Return to Home"):
-    
-        st.session_state.chapter_started = False
-        st.session_state.scene_index = 0
-    
-        st.rerun()
-    
-    st.stop()
+        if st.button("🏠 Return to Home"):
+        
+            st.session_state.chapter_started = False
+            st.session_state.scene_index = 0
+        
+            st.rerun()
+        
+        st.stop()
     
     scene_count = len(scenes_data["scenes"])
     
