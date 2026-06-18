@@ -76,19 +76,19 @@ st.write("")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-student_name = st.text_input(
+    student_name = st.text_input(
 "Student Name",
 value="Explorer"
 )
 
 with col2:
-selected_class = st.selectbox(
+    selected_class = st.selectbox(
 "Class",
 ["Class 5"]
 )
 
 with col3:
-subject = st.selectbox(
+    subject = st.selectbox(
 "Subject",
 ["General Science"]
 )
