@@ -80,64 +80,64 @@ if st.session_state.chapter_started:
         st.session_state.scene_index = 0
         st.rerun()
 
-chapter_data = load_chapter()
-scenes_data = load_scenes()
-
-scene_count = len(scenes_data["scenes"])
-
-scene = scenes_data["scenes"][
-    st.session_state.scene_index
-]
-
-st.progress(
-    (st.session_state.scene_index + 1) / scene_count
-)
-
-st.write(
-    f"Scene {st.session_state.scene_index + 1} of {scene_count}"
-)
-
-st.divider()
-
-st.header(scene["title"])
-
-st.write(
-    f"🎭 Character: {scene['character']}"
-)
-
-st.info(scene["narration"])
-
-if "dialogue" in scene:
-
-    st.success(
-        f"{scene['dialogue']['speaker']}: "
-        f"{scene['dialogue']['text']}"
+    chapter_data = load_chapter()
+    scenes_data = load_scenes()
+    
+    scene_count = len(scenes_data["scenes"])
+    
+    scene = scenes_data["scenes"][
+        st.session_state.scene_index
+    ]
+    
+    st.progress(
+        (st.session_state.scene_index + 1) / scene_count
     )
-
-col_prev, col_next = st.columns(2)
-
-with col_prev:
-
-    if st.button(
-        "⬅ Previous",
-        disabled=(
-            st.session_state.scene_index == 0
+    
+    st.write(
+        f"Scene {st.session_state.scene_index + 1} of {scene_count}"
+    )
+    
+    st.divider()
+    
+    st.header(scene["title"])
+    
+    st.write(
+        f"🎭 Character: {scene['character']}"
+    )
+    
+    st.info(scene["narration"])
+    
+    if "dialogue" in scene:
+    
+        st.success(
+            f"{scene['dialogue']['speaker']}: "
+            f"{scene['dialogue']['text']}"
         )
-    ):
-        st.session_state.scene_index -= 1
-        st.rerun()
-
-with col_next:
-
-    if st.button(
-        "Next ➡",
-        disabled=(
-            st.session_state.scene_index
-            >= scene_count - 1
-        )
-    ):
-        st.session_state.scene_index += 1
-        st.rerun()
+    
+    col_prev, col_next = st.columns(2)
+    
+    with col_prev:
+    
+        if st.button(
+            "⬅ Previous",
+            disabled=(
+                st.session_state.scene_index == 0
+            )
+        ):
+            st.session_state.scene_index -= 1
+            st.rerun()
+    
+    with col_next:
+    
+        if st.button(
+            "Next ➡",
+            disabled=(
+                st.session_state.scene_index
+                >= scene_count - 1
+            )
+        ):
+            st.session_state.scene_index += 1
+            st.rerun()
 
 st.divider()
 
