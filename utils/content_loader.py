@@ -1,17 +1,21 @@
 import json
 
-def load_chapter():
+def load_chapter(chapter_id):
+
     with open(
-        "content/class5/science/chapter1/chapter.json",
+        f"content/class5/science/chapter{chapter_id}/chapter.json",
         "r",
         encoding="utf-8"
     ) as f:
+
         return json.load(f)
 
-def load_scenes():
+def load_scenes(chapter_id):
+
     with open(
-        "content/class5/science/chapter1/scenes.json",
+        f"content/class5/science/chapter{chapter_id}/scenes.json",
         "r",
         encoding="utf-8"
     ) as f:
+
         return json.load(f)
