@@ -10,11 +10,11 @@ def load_chapter(chapter_id):
     if not chapter_file.exists():
         return None
 
-with open(
-    chapter_file,
-    "r",
-    encoding="utf-8"
-) as f:
+    with open(
+        chapter_file,
+        "r",
+        encoding="utf-8"
+    ) as f:
 
     return json.load(f)
 
@@ -27,10 +27,10 @@ def load_scenes(chapter_id):
     if not scene_file.exists():
         return None
 
-with open(
-    scene_file,
-    "r",
-    encoding="utf-8"
-) as f:
+    with open(
+        scene_file,
+        "r",
+        encoding="utf-8"
+    ) as f:
 
     return json.load(f)
