@@ -38,7 +38,8 @@ with col3:
     ["General Science"]
     )
 
-st.success(f"Welcome {student_name}!")
+if not st.session_state.chapter_started:
+    st.success(f"Welcome {student_name}! 🚀")
 
 json_file = Path("content/class5/science/chapters.json")
 
@@ -47,35 +48,37 @@ if json_file.exists():
     with open(json_file, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-st.subheader("📚 Available Adventures")
+if not st.session_state.chapter_started:
 
-for chapter in data["chapters"]:
+    st.subheader("📚 Available Adventures")
 
-    st.write(
-        f"### Chapter {chapter['id']} - {chapter['title']}"
-    )
+    for chapter in data["chapters"]:
 
-    st.write(
-        f"🏆 Badge: {chapter['badge']}"
-    )
-
-    if st.button(
-        f"Start {chapter['title']}",
-        key=f"chapter_{chapter['id']}"
-    ):
-        st.session_state.chapter_started = True
-        st.session_state.scene_index = 0
-        st.rerun()
+        st.write(
+            f"### Chapter {chapter['id']} - {chapter['title']}"
+        )
+    
+        st.write(
+            f"🏆 Badge: {chapter['badge']}"
+        )
+    
+        if st.button(
+            f"Start {chapter['title']}",
+            key=f"chapter_{chapter['id']}"
+        ):
+            st.session_state.chapter_started = True
+            st.session_state.scene_index = 0
+            st.rerun()
 
 # else:
 #     st.error("chapters.json not found")
 
 if st.session_state.chapter_started:
 
-    if st.button("🏠 Back to Home"):
-        st.session_state.chapter_started = False
-        st.session_state.scene_index = 0
-        st.rerun()
+if st.button("🏠 Back to Home"):
+    st.session_state.chapter_started = False
+    st.session_state.scene_index = 0
+    st.rerun()
 
 chapter_data = load_chapter()
 scenes_data = load_scenes()
@@ -85,6 +88,14 @@ scene_count = len(scenes_data["scenes"])
 scene = scenes_data["scenes"][
     st.session_state.scene_index
 ]
+
+st.progress(
+    (st.session_state.scene_index + 1) / scene_count
+)
+
+st.write(
+    f"Scene {st.session_state.scene_index + 1} of {scene_count}"
+)
 
 st.divider()
 
