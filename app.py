@@ -93,7 +93,6 @@ for chapter in data["chapters"]:
         st.session_state.chapter_started = True
         st.session_state.scene_index = 0
         st.rerun()
-```
 
 else:
 
