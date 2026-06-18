@@ -1,0 +1,696 @@
+{
+  "chapter_id": 1,
+  "chapter_title": "More About Plants",
+  "total_xp": 450,
+
+  "scenes": [
+
+    {
+      "id": 1,
+      "title": "Welcome to the World of Plants",
+      "scene_type": "story",
+      "character": "tara",
+      "background": "none",
+      "xp": 10,
+      "narration": "Welcome, explorer! Today we begin an exciting journey into the world of plants. Plants are everywhere - in gardens, forests, farms, and even on windowsills. They give us food, oxygen, clothes, medicine, and so much more. But have you ever wondered how plants increase in number? That process is called reproduction - when living things produce more of their kind.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "I am Tara, your learning guide! In this chapter, we will discover how plants reproduce, how seeds work, how they travel to new places, and how farmers grow food for us all. Ready?"
+      },
+      "tts": true,
+      "fun_fact": "There are over 400,000 species of plants on Earth, and new ones are still being discovered!"
+    },
+
+    {
+      "id": 2,
+      "title": "How Do Plants Reproduce?",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "Plants reproduce in two main ways. Some use seeds, while others grow new plants from their body parts like stems, leaves, and roots. Let us explore both methods!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Plants are clever! They have many ways to create new plants. Click each card to learn more."
+      },
+      "tts": true,
+      "hotspots": [
+        {
+          "id": "flowering",
+          "name": "Flowering Plants (Seed-producing)",
+          "icon": "🌸",
+          "description": "Most plants produce flowers which form fruits containing seeds. These seeds grow into new plants. Examples include tomato, pea, orange, mango, wheat, and rice. These plants produce many seeds, but only some grow into new plants.",
+          "fun_fact": "A single sunflower head can contain up to 2,000 seeds!"
+        },
+        {
+          "id": "non_flowering",
+          "name": "Non-Flowering Plants",
+          "icon": "🌿",
+          "description": "Some plants like ferns and mushrooms do not produce flowers or seeds. They reproduce using tiny structures called spores. If you look at the underside of a fern leaf, you will see dark dots called sori - that is where spores are made!",
+          "fun_fact": "Mushrooms can release billions of spores in a single day!"
+        },
+        {
+          "id": "vegetative",
+          "name": "Vegetative Reproduction",
+          "icon": "🥔",
+          "description": "Many plants can grow new plants from their stems, leaves, or roots - without any seeds! This is called vegetative propagation. Potato grows from stem buds, Bryophyllum from leaf buds, and sweet potato from roots.",
+          "fun_fact": "A single Bryophyllum leaf can produce dozens of baby plants along its edges!"
+        }
+      ]
+    },
+
+    {
+      "id": 3,
+      "title": "Inside a Seed - Kidney Bean",
+      "scene_type": "explore",
+      "character": "buddi",
+      "background": "none",
+      "xp": 20,
+      "narration": "Let us look inside a seed! Take a kidney bean seed and soak it in water overnight. The next day, it becomes soft. You will notice a small hole where it absorbed water, and a scar where it was attached to the fruit. Now peel off the outer covering - that is the seed coat. Inside, you will find two seed leaves and a tiny baby plant!",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "Hello! I am Buddi the seed. I may look small, but there is a whole baby plant inside me! Let me show you my parts."
+      },
+      "tts": true,
+      "animation": {
+        "type": "seed_anatomy",
+        "description": "Animated cross-section of a kidney bean seed showing layers"
+      },
+      "hotspots": [
+        {
+          "id": "seed_coat",
+          "name": "Seed Coat",
+          "icon": "🛡️",
+          "description": "The seed coat is the hard outer covering that protects the baby plant inside. It keeps the seed safe from insects, diseases, and harsh weather until conditions are right for growing. When you soak a seed in water, the seed coat softens.",
+          "fun_fact": "Some seed coats are so tough that seeds can survive being eaten by animals and still sprout!"
+        },
+        {
+          "id": "cotyledon",
+          "name": "Cotyledons (Seed Leaves)",
+          "icon": "🍽️",
+          "description": "Cotyledons are the seed leaves that store food for the baby plant. A kidney bean seed has TWO cotyledons making it a DICOT. A corn seed has only ONE cotyledon making it a MONOCOT. The stored food nourishes the embryo until it can make its own food using sunlight.",
+          "fun_fact": "When you split a peanut in half, you can clearly see the two cotyledons!"
+        },
+        {
+          "id": "embryo",
+          "name": "Embryo (Baby Plant)",
+          "icon": "🌱",
+          "description": "The embryo is the baby plant hidden between the cotyledons. It has two important parts: the BABY ROOT (radicle) which grows downward into the soil, and the BABY SHOOT (plumule) which grows upward to form the stem, leaves, and flowers.",
+          "fun_fact": "The embryo stays dormant (sleeping) inside the seed until water, air, and warmth wake it up!"
+        }
+      ]
+    },
+
+    {
+      "id": 4,
+      "title": "Dicot vs Monocot Seeds",
+      "scene_type": "activity",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "Seeds come in two main types based on how many cotyledons (seed leaves) they have. Dicot seeds have TWO cotyledons (like kidney beans, peas, and peanuts). Monocot seeds have ONE cotyledon (like corn, wheat, and rice).",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Can you sort these seeds into the correct category? Let us find out which are dicots and which are monocots!"
+      },
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Sort: Dicot or Monocot?",
+        "instructions": "Classify each seed as a Dicot (2 cotyledons) or Monocot (1 cotyledon).",
+        "pairs": [
+          {"item": "Kidney Bean", "icon": "🫘", "match": "Dicot", "hint": "Split it open and you find two halves.", "explanation": "Kidney bean has two cotyledons, making it a dicot."},
+          {"item": "Corn", "icon": "🌽", "match": "Monocot", "hint": "This grain has a single food-storing part inside.", "explanation": "Corn has only one cotyledon, making it a monocot."},
+          {"item": "Pea", "icon": "🟢", "match": "Dicot", "hint": "These round seeds split into two perfect halves.", "explanation": "Pea seeds have two cotyledons and are dicots."},
+          {"item": "Wheat", "icon": "🌾", "match": "Monocot", "hint": "This grain seed cannot be easily split into two halves.", "explanation": "Wheat has a single cotyledon and is a monocot."},
+          {"item": "Peanut", "icon": "🥜", "match": "Dicot", "hint": "Crack it open and you see two clear halves with a tiny plant between them.", "explanation": "Peanuts clearly show two cotyledons when split open."},
+          {"item": "Rice", "icon": "🍚", "match": "Monocot", "hint": "This staple grain is in the grass family.", "explanation": "Rice has one cotyledon and belongs to the monocot group."}
+        ],
+        "options": ["Dicot", "Monocot"]
+      }
+    },
+
+    {
+      "id": 5,
+      "title": "Germination - What Seeds Need",
+      "scene_type": "experiment",
+      "character": "tara",
+      "background": "none",
+      "xp": 30,
+      "narration": "Germination is the process by which a baby plant or seedling grows from a seed. But seeds do not just grow anywhere - they need the right conditions! In this experiment with three glass jars, we test what a seed truly needs.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Jar 1 has moist seeds in a refrigerator (cold). Jar 2 has moist seeds with the lid closed tight (no air). Jar 3 has moist seeds with cotton on top (air plus warmth). Which one will germinate? Let us find out!"
+      },
+      "tts": true,
+      "experiment": {
+        "title": "The Three Jar Experiment",
+        "instructions": "Toggle each condition ON or OFF to simulate different jars. A seed needs ALL required conditions to germinate!",
+        "conditions": [
+          {"id": "water", "name": "Water (Moisture)", "icon": "💧", "description": "Water softens the seed coat and activates enzymes that start growth. Without water, the seed stays dormant.", "required": true},
+          {"id": "air", "name": "Air (Oxygen)", "icon": "🌬️", "description": "The seed needs oxygen for respiration to release energy for growth. Jar 2 failed because the lid blocked air!", "required": true},
+          {"id": "warmth", "name": "Proper Temperature (Warmth)", "icon": "🌡️", "description": "Seeds need warmth to speed up chemical reactions for growth. Jar 1 failed because the refrigerator was too cold!", "required": true},
+          {"id": "light", "name": "Light", "icon": "💡", "description": "Surprise! Most seeds do NOT need light to germinate as they sprout underground in complete darkness! Light helps AFTER the seedling emerges.", "required": false}
+        ],
+        "success_message": "Germination successful! Just like Jar 3 with water, air, and warmth, the seed coat softens, the baby root pushes down, and the baby shoot pushes up!",
+        "failure_message": "Germination failed! Without all required conditions (water plus air plus warmth), the seed cannot grow. Try adjusting the conditions!"
+      }
+    },
+
+    {
+      "id": 6,
+      "title": "Stages of Germination",
+      "scene_type": "story",
+      "character": "buddi",
+      "background": "none",
+      "xp": 10,
+      "narration": "Now let us watch the stages of germination step by step from a sleeping seed to a brand new seedling!",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "Watch me grow! This is my journey from a tiny seed to a baby plant reaching for the sky!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "germination_stages",
+        "description": "Animated sequence showing seed growth stages"
+      },
+      "steps_display": [
+        {"step": 1, "title": "Water Absorption", "icon": "💧", "description": "The seed absorbs water through a tiny hole. It swells up and the seed coat becomes soft."},
+        {"step": 2, "title": "Seed Coat Cracks", "icon": "💥", "description": "The swollen embryo pushes against the seed coat until it cracks open."},
+        {"step": 3, "title": "Baby Root Emerges", "icon": "⬇️", "description": "The radicle (baby root) pushes out first and grows DOWNWARD into the soil. It anchors the plant and absorbs water."},
+        {"step": 4, "title": "Baby Shoot Grows Up", "icon": "⬆️", "description": "The plumule (baby shoot) grows UPWARD, pushing through the soil surface toward light."},
+        {"step": 5, "title": "First Leaves Open", "icon": "🌱", "description": "The first true leaves unfurl and begin photosynthesis making food using sunlight. A new plant is born!"}
+      ],
+      "fun_fact": "Not all seeds are healthy enough to germinate. Many get destroyed by heat, eaten by mice and birds, or never get the right conditions!"
+    },
+
+    {
+      "id": 7,
+      "title": "Why Seeds Need to Travel",
+      "scene_type": "story",
+      "character": "tara",
+      "background": "none",
+      "xp": 10,
+      "narration": "Seeds need sufficient sunlight, air, and water to grow into healthy plants. If all seeds fell right next to the parent plant, they would be too crowded competing for space, light, water, and nutrients. None would grow well! That is why nature has clever ways to scatter seeds far and wide. This process is called SEED DISPERSAL.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Imagine 50 seeds all piled together and they would fight for sunlight and water! Seeds must travel away from the parent plant to find space to grow."
+      },
+      "tts": true,
+      "fun_fact": "In an experiment, when 50-60 seeds are planted too close together in one pot, they barely germinate. But 6 seeds spread apart in another pot grow beautifully!"
+    },
+
+    {
+      "id": 8,
+      "title": "Seed Dispersal Methods",
+      "scene_type": "explore",
+      "character": "buddi",
+      "background": "none",
+      "xp": 20,
+      "narration": "Seeds cannot walk or run, but they have amazing ways to travel! The agents that help seeds move are called agents of dispersal. Let us explore four main methods.",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "I have friends who fly on the wind, float on water, hitch rides on animals, and even launch themselves like rockets!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "seed_dispersal",
+        "description": "Four-panel animation showing dispersal methods"
+      },
+      "hotspots": [
+        {
+          "id": "wind",
+          "name": "Dispersal by Wind",
+          "icon": "🌬️",
+          "description": "Light seeds with special features float on wind. DANDELION seeds have fine, long hair like tiny parachutes. MAPLE seeds have papery wings that spin like helicopters. COTTON seeds have fluffy fibres. DRUMSTICK and JACARANDA seeds also have wings.",
+          "examples": ["Dandelion (hair/parachute)", "Maple (wings/helicopter)", "Cotton (fluffy fibres)", "Drumstick (wings)", "Jacaranda (wings)"],
+          "fun_fact": "Dandelion seeds can travel over 100 km on a windy day!"
+        },
+        {
+          "id": "water",
+          "name": "Dispersal by Water",
+          "icon": "🌊",
+          "description": "Seeds of plants growing near water are dispersed by flowing water. These seeds are light and can FLOAT. COCONUT has air trapped between its fibres, helping it float far across rivers and even oceans to reach new islands!",
+          "examples": ["Coconut (air-filled fibres)", "Lotus (floats on water)"],
+          "fun_fact": "Coconuts have been found floating thousands of kilometres across the ocean and still sprouting on new shores!"
+        },
+        {
+          "id": "animals",
+          "name": "Dispersal by Animals",
+          "icon": "🐾",
+          "description": "Animals help disperse seeds in two ways: (1) EATEN - fruits like mango, litchi, papaya, and orange are eaten by animals. Seeds pass through undigested and are dropped far away. These fruits are bright and tasty to attract animals! (2) STUCK - seeds like Xanthium (cocklebur) have hooks or spines that cling to animal fur or human clothes.",
+          "examples": ["Mango, Litchi, Papaya (eaten)", "Xanthium/Cocklebur (hooks on fur)", "Orange, Peach (thrown away after eating)"],
+          "fun_fact": "Velcro was invented after a scientist noticed how cocklebur seeds stuck to his dog's fur!"
+        },
+        {
+          "id": "explosion",
+          "name": "Dispersal by Explosion",
+          "icon": "💥",
+          "description": "Some fruits BURST OPEN when they ripen, flinging seeds away from the parent plant! PEA pods dry out and twist open suddenly. BALSAM (Touch-me-not) pods explode when touched. GORSE and GERANIUM pods also scatter seeds by popping open.",
+          "examples": ["Balsam/Touch-me-not", "Pea pods", "Geranium", "Gorse pod", "Poppy"],
+          "fun_fact": "The sandbox tree is called the dynamite tree because its fruits explode so loudly, launching seeds up to 40 metres away!"
+        }
+      ]
+    },
+
+    {
+      "id": 9,
+      "title": "Seed Dispersal - Match the Method",
+      "scene_type": "activity",
+      "character": "buddi",
+      "background": "none",
+      "xp": 20,
+      "narration": "Now let us test what you have learned! Can you match each seed to its method of travel?",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "Match each plant to how its seeds are dispersed. Think about the seed's special features!"
+      },
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Match the Seed to Its Travel Method",
+        "instructions": "Select the correct dispersal method for each seed or plant.",
+        "pairs": [
+          {"item": "Dandelion", "icon": "🌬️", "match": "Wind", "hint": "These seeds have fine, long hair like tiny parachutes.", "explanation": "Dandelion seeds have feathery hair that catches the wind, letting them float far."},
+          {"item": "Coconut", "icon": "🥥", "match": "Water", "hint": "This large seed has air trapped in its fibres and can float.", "explanation": "Coconuts float across rivers and oceans thanks to air trapped in their fibres."},
+          {"item": "Xanthium (Cocklebur)", "icon": "🐕", "match": "Animals", "hint": "These seeds have hooks that cling to fur or clothes.", "explanation": "Xanthium seeds have hook-like spines that stick to animal fur or clothing."},
+          {"item": "Balsam (Touch-me-not)", "icon": "💥", "match": "Explosion", "hint": "The fruit bursts open suddenly when touched or ripe.", "explanation": "Balsam pods burst open when ripe, flinging seeds in all directions!"},
+          {"item": "Maple", "icon": "🚁", "match": "Wind", "hint": "These seeds have wings that spin like tiny helicopters.", "explanation": "Maple seeds have papery wings that make them spin as they fall."},
+          {"item": "Mango", "icon": "🥭", "match": "Animals", "hint": "Animals eat the sweet, colourful fruit and drop the seed.", "explanation": "Animals eat the tasty mango flesh and discard the seed far away."},
+          {"item": "Pea", "icon": "🫛", "match": "Explosion", "hint": "The pods dry out and twist open suddenly.", "explanation": "Dried pea pods split and twist open, popping seeds out."},
+          {"item": "Lotus", "icon": "🪷", "match": "Water", "hint": "This plant grows in ponds and its seeds float.", "explanation": "Lotus grows in water and its seeds are dispersed by floating."}
+        ],
+        "options": ["Wind", "Water", "Animals", "Explosion"]
+      }
+    },
+
+    {
+      "id": 10,
+      "title": "Reproduction from Stems",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "Many plants can grow new plants from their STEMS without any seeds at all! This is called vegetative propagation from stems. Gardeners use this to grow identical copies of plants quickly.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Stems have buds that can sprout into whole new plants! Let us explore different ways stems create new life."
+      },
+      "tts": true,
+      "animation": {
+        "type": "stem_cutting",
+        "description": "Animation showing stem cutting process"
+      },
+      "hotspots": [
+        {
+          "id": "stem_cutting",
+          "name": "Stem Cuttings - Rose, Hibiscus, Sugarcane",
+          "icon": "✂️",
+          "description": "A healthy stem with buds is cut from the parent plant and planted in moist soil. New roots grow from the cut end, and the buds sprout into a new independent plant. Rose, bougainvillea, hibiscus, and sugarcane are all grown this way!",
+          "fun_fact": "Most rose plants you see in gardens were grown from cuttings, not from seeds!"
+        },
+        {
+          "id": "stem_tuber",
+          "name": "Underground Stem (Tuber) - Potato",
+          "icon": "🥔",
+          "description": "A potato is actually an underground STEM (not a root!) that stores food. The small dents on its surface are called eyes and these are buds. When a potato piece with an eye is planted, a brand new plant grows from it!",
+          "fun_fact": "One potato plant can produce 5-10 new potato tubers underground."
+        },
+        {
+          "id": "rhizome",
+          "name": "Rhizome - Ginger, Onion",
+          "icon": "🫚",
+          "description": "Ginger and onion grow from rhizomes which are thick underground stems that grow horizontally. New shoots and roots sprout from nodes on the rhizome, forming new plants. Turmeric, banana, and lotus also grow this way!",
+          "fun_fact": "What we eat as ginger root is actually a stem growing underground!"
+        }
+      ]
+    },
+
+    {
+      "id": 11,
+      "title": "Reproduction from Leaves, Roots and Spores",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "Besides stems, plants can also reproduce from leaves, roots, and even tiny spores! Nature has found many creative ways to make new plants.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Leaves that grow babies, roots that sprout new plants, and invisible spores - plants are amazing!"
+      },
+      "tts": true,
+      "hotspots": [
+        {
+          "id": "leaf_budding",
+          "name": "From Leaves - Bryophyllum",
+          "icon": "🍃",
+          "description": "Bryophyllum (Mother of Thousands) has thick, fleshy leaves with many buds along their edges. Tiny baby plants complete with mini roots grow right on the leaf! When they fall off, they root in the soil and grow independently. Begonia can also reproduce from leaves.",
+          "fun_fact": "A single Bryophyllum leaf can produce over 50 baby plants along its edges!"
+        },
+        {
+          "id": "root_reproduction",
+          "name": "From Roots - Sweet Potato, Carrot",
+          "icon": "🍠",
+          "description": "Sweet potato and carrot are ROOTS that store food. When replanted, they sprout new stems and leaves, growing into new plants. Try this: cut the top of a carrot and place it in a shallow dish of water in sunlight and new leaves will grow in a few days!",
+          "fun_fact": "Sweet potatoes are roots, but regular potatoes are underground stems - do not confuse them!"
+        },
+        {
+          "id": "spores",
+          "name": "From Spores - Ferns, Mushrooms",
+          "icon": "🍄",
+          "description": "Some plants do not have flowers or seeds at all! Ferns reproduce using SPORES which are tiny structures found in dark dots (called sori) on the underside of fern leaves. Fungi like bread mould and mushrooms also reproduce by spores. Spores are very simple and made of just one cell, unlike multi-cellular seeds.",
+          "fun_fact": "Fern spores are so tiny that millions can fit in a teaspoon!"
+        }
+      ]
+    },
+
+    {
+      "id": 12,
+      "title": "Vegetative Propagation - Sort the Method",
+      "scene_type": "activity",
+      "character": "buddi",
+      "background": "none",
+      "xp": 20,
+      "narration": "Now let us check your understanding of vegetative propagation! Can you identify which plant part each example reproduces from?",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "Stems, leaves, roots, or spores - which part does each plant use to reproduce?"
+      },
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Match Plant to Its Reproduction Method",
+        "instructions": "Select how each plant reproduces vegetatively.",
+        "pairs": [
+          {"item": "Potato", "icon": "🥔", "match": "Stem", "hint": "It is an underground stem with eyes (buds).", "explanation": "Potato is a stem tuber and new plants grow from the buds on its surface."},
+          {"item": "Bryophyllum", "icon": "🍃", "match": "Leaf", "hint": "Tiny babies grow along the edges of its thick leaves.", "explanation": "Bryophyllum produces new plantlets from buds on the margins of its leaves."},
+          {"item": "Sweet Potato", "icon": "🍠", "match": "Root", "hint": "This food-storing part grows underground and is NOT a stem.", "explanation": "Sweet potato is a root that stores food and can sprout new plants when replanted."},
+          {"item": "Rose", "icon": "🌹", "match": "Stem", "hint": "A piece is cut and planted to grow a new plant.", "explanation": "Rose plants are commonly grown from stem cuttings with buds."},
+          {"item": "Mushroom", "icon": "🍄", "match": "Spores", "hint": "This organism does not have flowers, seeds, stems, or leaves.", "explanation": "Mushrooms are fungi that reproduce by releasing millions of tiny spores."},
+          {"item": "Ginger", "icon": "🫚", "match": "Stem", "hint": "This underground horizontal stem is called a rhizome.", "explanation": "Ginger is a rhizome (underground stem) and new shoots sprout from its nodes."}
+        ],
+        "options": ["Stem", "Leaf", "Root", "Spores"]
+      }
+    },
+
+    {
+      "id": 13,
+      "title": "Types of Crops",
+      "scene_type": "explore",
+      "character": "farmer",
+      "background": "none",
+      "xp": 20,
+      "narration": "Crops are plants we cultivate in large quantities. They provide us food, cloth, oil, medicine, and timber. The practice of growing crops is called agriculture. Rice is the most cultivated crop in India!",
+      "dialogue": {
+        "speaker": "Farmer Kisan",
+        "text": "Namaste! I am Farmer Kisan. Let me teach you about the different kinds of crops we grow and when we plant them."
+      },
+      "tts": true,
+      "hotspots": [
+        {
+          "id": "food_crops",
+          "name": "Food Crops",
+          "icon": "🍚",
+          "description": "These provide us food directly. Examples include rice, wheat, maize (corn), pulses (dal), and sugarcane. These are the crops you eat every day in your roti, rice, and dal!",
+          "examples": ["Rice", "Wheat", "Maize", "Pulses", "Sugarcane"]
+        },
+        {
+          "id": "fibre_crops",
+          "name": "Fibre Crops",
+          "icon": "👕",
+          "description": "These give us fibres to make cloth and rope. Cotton gives us the soft cloth for clothes. Jute gives us strong fibres for bags and rope. Flax and hemp are also fibre crops.",
+          "examples": ["Cotton", "Jute", "Flax", "Hemp"]
+        },
+        {
+          "id": "oil_crops",
+          "name": "Oil-Producing Crops",
+          "icon": "🫒",
+          "description": "These crops produce seeds rich in oil used for cooking, fuel, and industry. Mustard oil, sunflower oil, soya bean oil, and canola oil all come from these crops!",
+          "examples": ["Mustard", "Sunflower", "Soya bean", "Canola", "Groundnut"]
+        },
+        {
+          "id": "kharif",
+          "name": "Kharif Crops (Monsoon Season)",
+          "icon": "🌧️",
+          "description": "Crops grown during the MONSOON season (June-October) are called Kharif crops. They need lots of rain. Examples: rice, maize, jowar, bajra, cotton, groundnut, jute. TRICK: Many kharif crops end with e - rice, maize, sugarcane, pulse, jute!",
+          "examples": ["Rice", "Maize", "Jowar", "Bajra", "Cotton", "Groundnut", "Jute"]
+        },
+        {
+          "id": "rabi",
+          "name": "Rabi Crops (Winter Season)",
+          "icon": "❄️",
+          "description": "Crops grown during the WINTER season (October-March) are called Rabi crops. They grow in cool weather. Examples: wheat, barley, chickpea (chana), mustard. Vegetables like radish, turnip, carrot, cauliflower, peas, and beans are also rabi crops.",
+          "examples": ["Wheat", "Barley", "Chickpea", "Mustard", "Peas", "Radish"]
+        }
+      ]
+    },
+
+    {
+      "id": 14,
+      "title": "Kharif vs Rabi - Sort the Crops",
+      "scene_type": "activity",
+      "character": "farmer",
+      "background": "none",
+      "xp": 20,
+      "narration": "Let us test your knowledge of crop seasons! Can you sort these crops into the correct season?",
+      "dialogue": {
+        "speaker": "Farmer Kisan",
+        "text": "Some crops love the rain, others prefer the cool winter. Which season does each belong to?"
+      },
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Sort: Kharif or Rabi?",
+        "instructions": "Classify each crop as Kharif (monsoon) or Rabi (winter).",
+        "pairs": [
+          {"item": "Rice", "icon": "🍚", "match": "Kharif", "hint": "This crop needs lots of water and is grown in flooded fields.", "explanation": "Rice is a kharif crop grown during monsoon season."},
+          {"item": "Wheat", "icon": "🌾", "match": "Rabi", "hint": "This grain is harvested in spring after growing through winter.", "explanation": "Wheat is a rabi crop sown in winter and harvested in March-April."},
+          {"item": "Cotton", "icon": "☁️", "match": "Kharif", "hint": "This fibre crop needs warm, humid monsoon conditions.", "explanation": "Cotton is a kharif crop that grows in warm, rainy monsoon months."},
+          {"item": "Mustard", "icon": "🌼", "match": "Rabi", "hint": "You see bright yellow fields of this oil crop in winter.", "explanation": "Mustard is a rabi crop with beautiful yellow fields in winter."},
+          {"item": "Maize", "icon": "🌽", "match": "Kharif", "hint": "This tall grain crop grows quickly in warm, rainy weather.", "explanation": "Maize (corn) is a kharif crop that thrives in monsoon warmth and rain."},
+          {"item": "Chickpea (Chana)", "icon": "🫘", "match": "Rabi", "hint": "This pulse grows well in cool, dry weather.", "explanation": "Chickpea is a rabi crop grown in the cool winter months."}
+        ],
+        "options": ["Kharif", "Rabi"]
+      }
+    },
+
+    {
+      "id": 15,
+      "title": "Growing Healthy Crops",
+      "scene_type": "explore",
+      "character": "farmer",
+      "background": "none",
+      "xp": 20,
+      "narration": "Growing healthy crops requires proper care at every stage. Farmers must consider soil type, water needs, seed quality, pest control, and weed removal. Let us learn what makes crops healthy!",
+      "dialogue": {
+        "speaker": "Farmer Kisan",
+        "text": "Growing food is like raising children - you need patience, care, and the right conditions. Here are my tips!"
+      },
+      "tts": true,
+      "hotspots": [
+        {
+          "id": "soil",
+          "name": "Right Soil for Right Crop",
+          "icon": "🪴",
+          "description": "Different crops need different soils. Rice grows well in WET, CLAYEY soil. Groundnut needs POROUS, SANDY soil. Farmers test their soil before deciding which crop to plant!",
+          "fun_fact": "India has 8 major soil types, each suited to different crops."
+        },
+        {
+          "id": "fertilizer",
+          "name": "Manure and Fertilizers",
+          "icon": "🧪",
+          "description": "Soil needs nutrients for plants to grow. MANURE (natural, from decomposed plant or animal waste) makes soil fertile. Chemical fertilizers also add nutrients, but too much can HARM the soil. The right balance is key!",
+          "fun_fact": "Earthworms naturally fertilize soil and farmers call them nature's ploughs!"
+        },
+        {
+          "id": "water_needs",
+          "name": "Adequate Water (Irrigation)",
+          "icon": "💧",
+          "description": "Different crops need different amounts of water. Rice and sugarcane need LOTS of water. Wheat needs LESS water. Farmers use canals, sprinklers, or drip irrigation to water their fields at the right time.",
+          "fun_fact": "Drip irrigation can save up to 70 percent water compared to flood irrigation!"
+        },
+        {
+          "id": "seeds",
+          "name": "Quality Seeds",
+          "icon": "🌱",
+          "description": "Seeds must be mature, healthy, and of good quality. They should not be planted too close together as they would compete, or too deep in the soil as they could not reach sunlight.",
+          "fun_fact": "M.S. Swaminathan introduced high-yield wheat varieties to India and is called the Father of the Green Revolution!"
+        },
+        {
+          "id": "pest_control",
+          "name": "Pest Control",
+          "icon": "🐛",
+          "description": "Crops are sprayed with insecticides and pesticides to keep them free from harmful insects and diseases. But too many chemicals can harm people who eat the food! Bio-pesticides are better as they are biodegradable and do not harm the environment.",
+          "fun_fact": "Ladybugs are natural pest controllers and they eat aphids that damage crops!"
+        },
+        {
+          "id": "weeding",
+          "name": "Weeding",
+          "icon": "🌾",
+          "description": "Unwanted plants called WEEDS compete with crops for water, nutrients, and sunlight. Weeding means removing these unwanted plants by hand, tools, or weedicide. It must be done regularly for healthy crops.",
+          "fun_fact": "Some weeds grow so fast they can take over a field in just a few weeks!"
+        }
+      ]
+    },
+
+    {
+      "id": 16,
+      "title": "Stages of Agriculture",
+      "scene_type": "activity",
+      "character": "farmer",
+      "background": "none",
+      "xp": 20,
+      "narration": "Agriculture follows a step-by-step process from preparing the soil to storing the harvest. Each step is crucial and skip one and the whole crop can fail!",
+      "dialogue": {
+        "speaker": "Farmer Kisan",
+        "text": "Here are the stages of growing a crop. Can you put them in the correct order from start to finish?"
+      },
+      "tts": true,
+      "animation": {
+        "type": "agriculture_timeline",
+        "description": "Animated timeline showing farming stages"
+      },
+      "activity": {
+        "type": "sequence",
+        "title": "Put the Agriculture Steps in Order",
+        "instructions": "Arrange these farming stages in the correct sequence from first to last.",
+        "steps": [
+          {"id": 1, "name": "Ploughing (Tilling)", "icon": "🚜", "description": "The field is ploughed to loosen soil, mix nutrients, and add air for roots.", "correct_position": 1},
+          {"id": 2, "name": "Adding Manure", "icon": "🧪", "description": "Manure or fertilizer is mixed into the ploughed soil to make it nutrient-rich.", "correct_position": 2},
+          {"id": 3, "name": "Sowing Seeds", "icon": "🌱", "description": "Good quality seeds are planted at the right depth and spacing using seed drills.", "correct_position": 3},
+          {"id": 4, "name": "Irrigation (Watering)", "icon": "💧", "description": "The field is supplied with water at regular intervals using canals or sprinklers.", "correct_position": 4},
+          {"id": 5, "name": "Spraying Pesticides and Weeding", "icon": "🐛", "description": "Crops are protected from pests and weeds are removed to prevent competition.", "correct_position": 5},
+          {"id": 6, "name": "Harvesting", "icon": "🌾", "description": "When crops are fully grown and ripe, they are cut and gathered.", "correct_position": 6},
+          {"id": 7, "name": "Storage", "icon": "🏪", "description": "Harvested grains are dried and stored in AIRTIGHT containers to protect from moisture and pests.", "correct_position": 7}
+        ]
+      }
+    },
+
+    {
+      "id": 17,
+      "title": "Protection of Crops",
+      "scene_type": "story",
+      "character": "farmer",
+      "background": "none",
+      "xp": 10,
+      "narration": "Even after careful farming, crops face many threats! They can be destroyed by birds and insects eating them, pests like rats and squirrels, bad weather like excessive rain, diseases that can infect leaves, stems or roots, and grazing animals like cows and goats wandering into fields.",
+      "dialogue": {
+        "speaker": "Farmer Kisan",
+        "text": "We work so hard to grow our crops and now we must protect them too! Fencing keeps animals out. Airtight storage prevents moisture and rodent damage. And bio-pesticides fight insects without harming the environment."
+      },
+      "tts": true,
+      "steps_display": [
+        {"step": 1, "title": "Threats to Crops", "icon": "⚠️", "description": "Birds, insects, rats, squirrels, excessive rain, plant diseases, and grazing animals (cows, goats) can all destroy crops."},
+        {"step": 2, "title": "Fencing", "icon": "🧱", "description": "Fencing the fields prevents grazing animals from entering and eating or trampling crops."},
+        {"step": 3, "title": "Pesticides and Bio-pesticides", "icon": "🧴", "description": "Spraying keeps insects and diseases away. Bio-pesticides are better because they are biodegradable and do not harm people or the environment."},
+        {"step": 4, "title": "Proper Storage", "icon": "🏪", "description": "After harvesting, grains must be dried and stored in AIRTIGHT containers. This prevents spoiling from moisture, and protects from rodents and birds."}
+      ],
+      "fun_fact": "M.S. Swaminathan, the Father of India's Green Revolution, received the Padma Shri in 1967 for introducing high-yield wheat varieties that fed millions of poor farmers."
+    },
+
+    {
+      "id": 18,
+      "title": "True or False Challenge",
+      "scene_type": "challenge",
+      "character": "tara",
+      "background": "none",
+      "xp": 30,
+      "narration": "You have learned so much about plants, seeds, dispersal, vegetative propagation, and crops! Let us test your understanding with quick-fire true or false questions.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Think carefully as some of these are tricky! Remember what you learned in each section."
+      },
+      "tts": true,
+      "challenge": {
+        "type": "true_false",
+        "title": "True or False - Plants and Crops",
+        "questions": [
+          {"id": 1, "statement": "A seed needs light to germinate.", "answer": false, "explanation": "False! Most seeds germinate underground without light. They need water, air, and warmth."},
+          {"id": 2, "statement": "Kidney bean is a dicot because it has two cotyledons.", "answer": true, "explanation": "True! Kidney bean seeds have two cotyledons (seed leaves) so they are dicots."},
+          {"id": 3, "statement": "Coconut seeds are dispersed by wind.", "answer": false, "explanation": "False! Coconuts are dispersed by WATER as they float across rivers and oceans."},
+          {"id": 4, "statement": "Sweet potato is a stem that stores food.", "answer": false, "explanation": "False! Sweet potato is a ROOT that stores food. Potato (regular) is a stem!"},
+          {"id": 5, "statement": "Bryophyllum reproduces from its leaves.", "answer": true, "explanation": "True! Bryophyllum has buds along its leaf edges that grow into new plants."},
+          {"id": 6, "statement": "Ferns reproduce from seeds.", "answer": false, "explanation": "False! Ferns reproduce using SPORES, not seeds. Spores are found in sori on leaf undersides."},
+          {"id": 7, "statement": "Wheat is a kharif crop grown in monsoon season.", "answer": false, "explanation": "False! Wheat is a RABI crop grown in the winter season."},
+          {"id": 8, "statement": "Weeding means removing unwanted plants from the field.", "answer": true, "explanation": "True! Weeds compete with crops for water, nutrients, and sunlight, so they must be removed."}
+        ]
+      }
+    },
+
+    {
+      "id": 19,
+      "title": "Final Quiz - Seed Explorer",
+      "scene_type": "quiz",
+      "character": "buddi",
+      "background": "none",
+      "xp": 50,
+      "narration": "This is your final quiz for the chapter! Answer at least 7 out of 10 questions correctly to earn your Seed Explorer badge!",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "You have come so far on this journey! Let us see if you can become a certified Seed Explorer. Good luck, friend!"
+      },
+      "tts": true,
+      "quiz": {
+        "title": "Seed Explorer Final Quiz",
+        "pass_score": 7,
+        "questions": [
+          {"id": 1, "question": "What is the protective outer covering of a seed called?", "options": ["Cotyledon", "Seed Coat", "Embryo", "Plumule"], "correct": 1, "explanation": "The seed coat is the hard outer layer that protects the baby plant from insects, diseases, and weather."},
+          {"id": 2, "question": "A corn seed has one cotyledon. It is called a:", "options": ["Dicot", "Monocot", "Tricot", "Spore"], "correct": 1, "explanation": "Plants with one cotyledon (like corn, wheat, rice) are called monocots."},
+          {"id": 3, "question": "Which of these is NOT needed for seed germination?", "options": ["Water", "Air (Oxygen)", "Light", "Warmth"], "correct": 2, "explanation": "Most seeds germinate underground without light. They need water, air, and warmth."},
+          {"id": 4, "question": "How are dandelion seeds dispersed?", "options": ["By water", "By animals", "By wind", "By explosion"], "correct": 2, "explanation": "Dandelion seeds have fine, feathery hair (like parachutes) that let them float on the wind."},
+          {"id": 5, "question": "Which plant reproduces through leaf buds?", "options": ["Potato", "Rose", "Bryophyllum", "Ginger"], "correct": 2, "explanation": "Bryophyllum produces baby plants from buds along the edges of its thick, fleshy leaves."},
+          {"id": 6, "question": "Potato reproduces vegetatively from its:", "options": ["Root", "Leaf", "Stem (tuber)", "Flower"], "correct": 2, "explanation": "Potato is an underground stem (tuber). New plants grow from the buds (eyes) on its surface."},
+          {"id": 7, "question": "Which is a Rabi crop (grown in winter)?", "options": ["Rice", "Maize", "Cotton", "Wheat"], "correct": 3, "explanation": "Wheat is a rabi crop sown in winter. Rice, maize, and cotton are all kharif (monsoon) crops."},
+          {"id": 8, "question": "The correct FIRST step in agriculture is:", "options": ["Sowing seeds", "Irrigation", "Ploughing", "Harvesting"], "correct": 2, "explanation": "Ploughing (tilling) comes first as the soil must be loosened and aerated before anything else."},
+          {"id": 9, "question": "Xanthium (cocklebur) seeds are dispersed by:", "options": ["Wind", "Water", "Animals", "Explosion"], "correct": 2, "explanation": "Xanthium seeds have hooks and spines that stick to animal fur or human clothes for dispersal."},
+          {"id": 10, "question": "After harvesting, grains should be stored in:", "options": ["Open baskets", "Airtight containers", "Moist soil", "Plastic bags with holes"], "correct": 1, "explanation": "Grains must be stored in airtight containers or granaries to protect from moisture, rodents, and birds."}
+        ]
+      }
+    },
+
+    {
+      "id": 20,
+      "title": "Chapter Summary",
+      "scene_type": "summary",
+      "character": "tara",
+      "background": "none",
+      "xp": 10,
+      "narration": "Congratulations, explorer! You have completed the full chapter on Plants. Let us review everything you learned on this incredible adventure.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "What an amazing journey! From tiny seeds to vast farms, you now understand the secret life of plants. I am so proud of you!"
+      },
+      "tts": true,
+      "summary_points": [
+        {"icon": "🌸", "title": "Reproduction", "text": "Plants reproduce from seeds (flowering plants), body parts (vegetative propagation), or spores (ferns, mushrooms)."},
+        {"icon": "🌰", "title": "Seed Structure", "text": "Seeds have a seed coat (protection), cotyledons (food storage), and embryo (baby plant with radicle and plumule). Dicots have 2 cotyledons; monocots have 1."},
+        {"icon": "🌱", "title": "Germination", "text": "Seeds need water, air, and warmth to germinate. The radicle grows down (root), the plumule grows up (shoot)."},
+        {"icon": "🌬️", "title": "Seed Dispersal", "text": "Seeds travel by wind (dandelion, maple), water (coconut), animals (mango, cocklebur), and explosion (balsam, pea)."},
+        {"icon": "🥔", "title": "Vegetative Propagation", "text": "Plants reproduce from stems (potato, rose, ginger), leaves (bryophyllum), roots (sweet potato, carrot), and spores (fern, mushroom)."},
+        {"icon": "🌾", "title": "Crops", "text": "Crops are food (rice, wheat), fibre (cotton, jute), or oil (mustard, sunflower). Kharif equals monsoon season. Rabi equals winter season."},
+        {"icon": "🚜", "title": "Agriculture", "text": "Steps: ploughing, manure, sowing, irrigation, pest control and weeding, harvesting, storage in airtight containers."}
+      ]
+    },
+
+    {
+      "id": 21,
+      "title": "Badge Awarded - Seed Explorer!",
+      "scene_type": "badge",
+      "character": "buddi",
+      "background": "none",
+      "xp": 50,
+      "narration": "You did it! You have earned the Seed Explorer badge! You now know all about plant reproduction, seed structure, germination, dispersal, vegetative propagation, crop types, and agriculture. You are a true plant scientist!",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "We did it together, friend! You helped me understand everything about the plant world. Thank you, Seed Explorer! See you in the next adventure with Animals in Their Surroundings!"
+      },
+      "tts": true,
+      "badge": {
+        "name": "Seed Explorer",
+        "icon": "🌱",
+        "description": "Awarded for completing Chapter 1: More About Plants - mastering seeds, germination, dispersal, vegetative propagation, and agriculture!",
+        "criteria": "Complete all 21 scenes and pass the final quiz"
+      }
+    }
+  ]
+}
