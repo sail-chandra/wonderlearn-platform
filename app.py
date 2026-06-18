@@ -3,6 +3,12 @@ import json
 from pathlib import Path
 from utils.content_loader import load_chapter, load_scenes
 
+st.set_page_config(
+page_title="WonderLearn",
+page_icon="🌟",
+layout="wide"
+)
+
 st.markdown("""
 
 <style>
@@ -34,12 +40,6 @@ st.markdown("""
 
 """, unsafe_allow_html=True)
 
-st.set_page_config(
-page_title="WonderLearn",
-page_icon="🌟",
-layout="wide"
-)
-
 if "scene_index" not in st.session_state:
     st.session_state.scene_index = 0
 
@@ -49,16 +49,24 @@ if "chapter_started" not in st.session_state:
 if "selected_chapter" not in st.session_state:
     st.session_state.selected_chapter = 1
 
-    if "xp" not in st.session_state:
+if "xp" not in st.session_state:
         st.session_state.xp = 0
 
 
-st.title("🌟 WonderLearn")
-st.subheader("Learn Through Stories, Explore Through Adventures")
-st.metric(
-    "⭐ XP Earned",
-    st.session_state.xp
-)
+col_logo, col_xp = st.columns([4,1])
+
+with col_logo:
+    st.title("🌟 WonderLearn")
+    st.subheader(
+        "Learn Through Stories, Explore Through Adventures"
+    )
+
+with col_xp:
+    st.metric(
+        "⭐ XP",
+        st.session_state.xp
+    )
+    
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -173,61 +181,62 @@ if st.session_state.chapter_started:
 
     background_file = (
         f"assets/backgrounds/{scene['background']}.jpg"
+    )
+    
+    if Path(background_file).exists():
+    
+        st.image(
+            background_file,
+            use_container_width=True
+        )
+    
+    st.markdown(
+        "<div class='story-container'>",
+        unsafe_allow_html=True
+    )
+    
+    col1, col2 = st.columns([2,1])
+    
+    with col1:
+    
+        st.header(scene["title"])
+        
+        if "dialogue" in scene:
+        
+            st.markdown(
+                f"""
+                <div class='dialogue-box'>
+                    <div class='speaker'>
+                        {scene['dialogue']['speaker']}
+                    </div>
+                    <br>
+                    {scene['dialogue']['text']}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        
+        st.write("")
+        st.write(scene["narration"])
+    
+    with col2:
+    
+        character_file = (
+            f"assets/characters/{scene['character']}.png"
         )
         
-            if Path(background_file).exists():
-                
-                st.image(
-                    background_file,
-                    use_container_width=True
-                )
-                
-                st.markdown(
-                "<div class='story-container'>",
-                unsafe_allow_html=True
-                )
-                
-                col1, col2 = st.columns([2,1])
-                
-                with col1:
-                
-                    st.header(scene["title"])
-                    
-                    st.markdown(
-                        f"""
-                        <div class='dialogue-box'>
-                            <div class='speaker'>
-                                {scene['dialogue']['speaker']}
-                            </div>
-                            <br>
-                            {scene['dialogue']['text']}
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-                    
-                    st.write("")
-                    st.write(scene["narration"])
-                
-                with col2:
-                
-                    character_file = (
-                        f"assets/characters/{scene['character']}.png"
-                    )
-                    
-                    if Path(character_file).exists():
-                    
-                        st.image(
-                            character_file,
-                            width=300
-                        )
-                    
-                    st.markdown(
-                    "</div>",
-                    unsafe_allow_html=True
-                    )
-
+        if Path(character_file).exists():
+        
+            st.image(
+                character_file,
+                width=300
+            )
     
+    st.markdown(
+    "</div>",
+    unsafe_allow_html=True
+    )
+
     st.progress(
         (st.session_state.scene_index + 1) / scene_count
     )
