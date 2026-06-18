@@ -176,56 +176,56 @@ if st.session_state.chapter_started:
         )
         
         if Path(background_file).exists():
-        
-        st.image(
-            background_file,
-            use_container_width=True
-        )
-        
-        st.markdown(
-        "<div class='story-container'>",
-        unsafe_allow_html=True
-        )
-        
-        col1, col2 = st.columns([2,1])
-        
-        with col1:
-        
-        st.header(scene["title"])
-        
-        st.markdown(
-            f"""
-            <div class='dialogue-box'>
-                <div class='speaker'>
-                    {scene['dialogue']['speaker']}
-                </div>
-                <br>
-                {scene['dialogue']['text']}
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        
-        st.write("")
-        st.write(scene["narration"])
-        
-        with col2:
-        
-        character_file = (
-            f"assets/characters/{scene['character']}.png"
-        )
-        
-        if Path(character_file).exists():
-        
+            
             st.image(
-                character_file,
-                width=300
+                background_file,
+                use_container_width=True
             )
-        
-        st.markdown(
-        "</div>",
-        unsafe_allow_html=True
-        )
+            
+            st.markdown(
+            "<div class='story-container'>",
+            unsafe_allow_html=True
+            )
+            
+            col1, col2 = st.columns([2,1])
+            
+            with col1:
+            
+                st.header(scene["title"])
+                
+                st.markdown(
+                    f"""
+                    <div class='dialogue-box'>
+                        <div class='speaker'>
+                            {scene['dialogue']['speaker']}
+                        </div>
+                        <br>
+                        {scene['dialogue']['text']}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+                
+                st.write("")
+                st.write(scene["narration"])
+            
+            with col2:
+            
+                character_file = (
+                    f"assets/characters/{scene['character']}.png"
+                )
+                
+                if Path(character_file).exists():
+                
+                    st.image(
+                        character_file,
+                        width=300
+                    )
+                
+                st.markdown(
+                "</div>",
+                unsafe_allow_html=True
+                )
 
     
     st.progress(
