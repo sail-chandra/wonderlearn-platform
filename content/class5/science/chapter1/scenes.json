@@ -1,0 +1,177 @@
+{
+  "chapter_id": 1,
+  "chapter_title": "More About Plants",
+
+  "scenes": [
+
+    {
+      "id": 1,
+      "title": "Welcome to Plant Land",
+
+      "type": "story",
+
+      "background": "plant_land",
+
+      "character": "Tara",
+
+      "narration": "Welcome explorer! Today we are entering the magical world of plants. Together we will discover how tiny seeds grow into giant trees and how plants help life on Earth.",
+
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Are you ready to explore Plant Land with me?"
+      },
+
+      "interaction": {
+        "type": "button",
+        "label": "Start Adventure"
+      }
+    },
+
+    {
+      "id": 2,
+      "title": "Meet Buddi",
+
+      "type": "story",
+
+      "background": "plant_land",
+
+      "character": "Buddi",
+
+      "narration": "Meet Buddi, a tiny seed with a big dream. Buddi wants to become a strong and healthy tree.",
+
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "Hello! I am Buddi. Can you help me become a giant tree?"
+      },
+
+      "interaction": {
+        "type": "button",
+        "label": "Help Buddi"
+      }
+    },
+
+    {
+      "id": 3,
+      "title": "Inside a Seed",
+
+      "type": "interactive",
+
+      "background": "seed_lab",
+
+      "character": "Buddi",
+
+      "narration": "A seed contains a baby plant called an embryo. It also stores food to help the baby plant grow.",
+
+      "hotspots": [
+        {
+          "name": "Seed Coat",
+          "description": "Protects the seed."
+        },
+        {
+          "name": "Cotyledon",
+          "description": "Stores food for the baby plant."
+        },
+        {
+          "name": "Embryo",
+          "description": "The baby plant."
+        }
+      ]
+    },
+
+    {
+      "id": 4,
+      "title": "Germination Lab",
+
+      "type": "simulation",
+
+      "background": "germination_lab",
+
+      "character": "Tara",
+
+      "narration": "Seeds need water, air and warmth to germinate.",
+
+      "simulation": {
+        "water": true,
+        "air": true,
+        "warmth": true
+      }
+    },
+
+    {
+      "id": 5,
+      "title": "Seed Dispersal Adventure",
+
+      "type": "game",
+
+      "background": "plant_land",
+
+      "character": "Buddi",
+
+      "narration": "Seeds travel to new places in different ways.",
+
+      "activities": [
+        "Wind",
+        "Water",
+        "Animals",
+        "Explosion"
+      ]
+    },
+
+    {
+      "id": 6,
+      "title": "Vegetative Propagation Garden",
+
+      "type": "interactive",
+
+      "background": "garden",
+
+      "character": "Tara",
+
+      "narration": "Some plants grow without seeds.",
+
+      "examples": [
+        "Potato",
+        "Bryophyllum",
+        "Ginger"
+      ]
+    },
+
+    {
+      "id": 7,
+      "title": "Farmer Simulator",
+
+      "type": "simulation",
+
+      "background": "farm",
+
+      "character": "Farmer",
+
+      "narration": "Let's learn how crops are grown.",
+
+      "steps": [
+        "Ploughing",
+        "Sowing",
+        "Irrigation",
+        "Weeding",
+        "Harvesting",
+        "Storage"
+      ]
+    },
+
+    {
+      "id": 8,
+      "title": "Final Challenge",
+
+      "type": "challenge",
+
+      "background": "plant_land",
+
+      "character": "Buddi",
+
+      "narration": "Let's see how much you have learned.",
+
+      "next": "quiz"
+    }
+
+  ]
+}
