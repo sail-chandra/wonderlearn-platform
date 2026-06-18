@@ -1,21 +1,40 @@
 import json
+from pathlib import Path
 
 def load_chapter(chapter_id):
 
-    with open(
-        f"content/class5/science/chapter{chapter_id}/chapter.json",
-        "r",
-        encoding="utf-8"
-    ) as f:
+```
+chapter_file = Path(
+    f"content/class5/science/chapter{chapter_id}/chapter.json"
+)
 
-        return json.load(f)
+if not chapter_file.exists():
+    return None
+
+with open(
+    chapter_file,
+    "r",
+    encoding="utf-8"
+) as f:
+
+    return json.load(f)
+```
 
 def load_scenes(chapter_id):
 
-    with open(
-        f"content/class5/science/chapter{chapter_id}/scenes.json",
-        "r",
-        encoding="utf-8"
-    ) as f:
+```
+scene_file = Path(
+    f"content/class5/science/chapter{chapter_id}/scenes.json"
+)
 
-        return json.load(f)
+if not scene_file.exists():
+    return None
+
+with open(
+    scene_file,
+    "r",
+    encoding="utf-8"
+) as f:
+
+    return json.load(f)
+```
