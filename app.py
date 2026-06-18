@@ -132,6 +132,45 @@ if st.session_state.chapter_started:
     scene = scenes_data["scenes"][
         st.session_state.scene_index
     ]
+
+    background_file = (
+        f"assets/backgrounds/{scene['background']}.jpg"
+    )
+    
+    if Path(background_file).exists():
+    
+        st.image(
+            background_file,
+            use_container_width=True
+        )
+
+    character_file = (
+        f"assets/characters/{scene['character']}.png"
+    )
+    
+    if Path(character_file).exists():
+    
+        col_img, col_text = st.columns([1,2])
+    
+        with col_img:
+    
+            st.image(
+                character_file,
+                width=250
+            )
+    
+        with col_text:
+    
+            st.header(scene["title"])
+    
+            st.info(scene["narration"])
+    
+            if "dialogue" in scene:
+    
+                st.success(
+                    f"{scene['dialogue']['speaker']}: "
+                    f"{scene['dialogue']['text']}"
+                )
     
     st.progress(
         (st.session_state.scene_index + 1) / scene_count
@@ -142,21 +181,6 @@ if st.session_state.chapter_started:
     )
     
     st.divider()
-    
-    st.header(scene["title"])
-    
-    st.write(
-        f"🎭 Character: {scene['character']}"
-    )
-    
-    st.info(scene["narration"])
-    
-    if "dialogue" in scene:
-    
-        st.success(
-            f"{scene['dialogue']['speaker']}: "
-            f"{scene['dialogue']['text']}"
-        )
     
     col_prev, col_next = st.columns(2)
     
