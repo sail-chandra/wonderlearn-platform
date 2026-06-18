@@ -97,11 +97,9 @@ for chapter in data["chapters"]:
 
 else:
 
-```
 st.error(
     "chapters.json not found."
 )
-```
 
 # --------------------------------------------------
 
@@ -111,7 +109,6 @@ st.error(
 
 if st.session_state.chapter_started:
 
-```
 st.divider()
 
 if st.button("🏠 Back to Home"):
@@ -172,7 +169,6 @@ with col_next:
     ):
         st.session_state.scene_index += 1
         st.rerun()
-```
 
 # --------------------------------------------------
 
