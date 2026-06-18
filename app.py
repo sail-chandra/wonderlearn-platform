@@ -75,10 +75,10 @@ if not st.session_state.chapter_started:
 
 if st.session_state.chapter_started:
 
-if st.button("🏠 Back to Home"):
-    st.session_state.chapter_started = False
-    st.session_state.scene_index = 0
-    st.rerun()
+    if st.button("🏠 Back to Home"):
+        st.session_state.chapter_started = False
+        st.session_state.scene_index = 0
+        st.rerun()
 
 chapter_data = load_chapter()
 scenes_data = load_scenes()
