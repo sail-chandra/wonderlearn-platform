@@ -57,30 +57,27 @@ if not st.session_state.chapter_started:
 
     for chapter in data["chapters"]:
 
-        st.write(
-            f"### Chapter {chapter['id']} - {chapter['title']}"
+        chapter_folder = Path(
+            f"content/class5/science/chapter{chapter['id']}"
         )
-    
-        st.write(
-            f"🏆 Badge: {chapter['badge']}"
-        )
-
-        if st.button(
-            f"Start {chapter['title']}",
-            key=f"chapter_{chapter['id']}"
-        ):
-            st.session_state.chapter_started = True
-            st.session_state.selected_chapter = chapter["id"]
-            st.session_state.scene_index = 0
-            st.rerun()
+        
+        chapter_file = chapter_folder / "chapter.json"
+        scene_file = chapter_folder / "scenes.json"
+        
+        if chapter_file.exists() and scene_file.exists():
+        
+            if st.button(
+                f"Start {chapter['title']}",
+                key=f"chapter_{chapter['id']}"
+            ):
+                st.session_state.chapter_started = True
+                st.session_state.selected_chapter = chapter["id"]
+                st.session_state.scene_index = 0
+                st.rerun()
         
         else:
-            
-            st.button(
-                f"{chapter['title']} (Coming Soon)",
-                disabled=True,
-                key=f"coming_{chapter['id']}"
-            )
+        
+            st.info("🚧 Coming Soon")
 
 # else:
 #     st.error("chapters.json not found")
