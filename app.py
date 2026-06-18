@@ -15,6 +15,9 @@ if "scene_index" not in st.session_state:
 if "chapter_started" not in st.session_state:
     st.session_state.chapter_started = False
 
+if "selected_chapter" not in st.session_state:
+    st.session_state.selected_chapter = 1
+
 st.title("🌟 WonderLearn")
 st.subheader("Learn Through Stories, Explore Through Adventures")
 
@@ -61,12 +64,13 @@ if not st.session_state.chapter_started:
         st.write(
             f"🏆 Badge: {chapter['badge']}"
         )
-    
+
         if st.button(
             f"Start {chapter['title']}",
             key=f"chapter_{chapter['id']}"
         ):
             st.session_state.chapter_started = True
+            st.session_state.selected_chapter = chapter["id"]
             st.session_state.scene_index = 0
             st.rerun()
 
@@ -80,8 +84,13 @@ if st.session_state.chapter_started:
         st.session_state.scene_index = 0
         st.rerun()
 
-    chapter_data = load_chapter()
-    scenes_data = load_scenes()
+    chapter_data = load_chapter(
+        st.session_state.selected_chapter
+    )
+
+    scenes_data = load_scenes(
+        st.session_state.selected_chapter
+    )
     
     scene_count = len(scenes_data["scenes"])
     
