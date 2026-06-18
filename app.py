@@ -73,6 +73,14 @@ if not st.session_state.chapter_started:
             st.session_state.selected_chapter = chapter["id"]
             st.session_state.scene_index = 0
             st.rerun()
+        
+        else:
+        
+        st.button(
+            f"{chapter['title']} (Coming Soon)",
+            disabled=True,
+            key=f"coming_{chapter['id']}"
+        )
 
 # else:
 #     st.error("chapters.json not found")
