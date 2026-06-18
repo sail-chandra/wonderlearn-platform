@@ -67,9 +67,8 @@ for chapter in data["chapters"]:
         st.session_state.scene_index = 0
         st.rerun()
 
-else:
-
-    st.error("chapters.json not found")
+# else:
+#     st.error("chapters.json not found")
 
 if st.session_state.chapter_started:
 
