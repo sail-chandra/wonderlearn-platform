@@ -99,7 +99,7 @@ if st.session_state.chapter_started:
         st.session_state.scene_index = 0
         st.rerun()
 
-    st.write("Selected Chapter:", st.session_state.selected_chapter)
+    # st.write("Selected Chapter:", st.session_state.selected_chapter)
     
     chapter_data = load_chapter(
     st.session_state.selected_chapter
@@ -109,8 +109,8 @@ if st.session_state.chapter_started:
     st.session_state.selected_chapter
     )
 
-    st.write("Chapter Data:", chapter_data)
-    st.write("Scenes Data:", scenes_data)
+    # st.write("Chapter Data:", chapter_data)
+    # st.write("Scenes Data:", scenes_data)
 
     if chapter_data is None or scenes_data is None:
         
