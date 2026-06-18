@@ -96,9 +96,9 @@ for chapter in data["chapters"]:
 
     else:
 
-    st.error(
-        "chapters.json not found."
-    )
+        st.error(
+            "chapters.json not found."
+        )
 
 # --------------------------------------------------
 
