@@ -1,0 +1,26 @@
+{
+  "class": 5,
+  "subject": "General Science",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "More About Plants",
+      "badge": "Seed Explorer"
+    },
+    {
+      "id": 2,
+      "title": "Animals in Their Surroundings",
+      "badge": "Habitat Hero"
+    },
+    {
+      "id": 3,
+      "title": "Skeletal and Muscular System",
+      "badge": "Skeleton Detective"
+    },
+    {
+      "id": 4,
+      "title": "Nervous System",
+      "badge": "Brain Commander"
+    }
+  ]
+}
