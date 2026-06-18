@@ -85,12 +85,27 @@ if st.session_state.chapter_started:
         st.rerun()
 
     chapter_data = load_chapter(
-        st.session_state.selected_chapter
+    st.session_state.selected_chapter
     )
-
+    
     scenes_data = load_scenes(
-        st.session_state.selected_chapter
+    st.session_state.selected_chapter
     )
+    
+    if chapter_data is None or scenes_data is None:
+    
+    st.warning(
+        "🚧 This adventure is under development and will be available soon."
+    )
+    
+    if st.button("🏠 Return to Home"):
+    
+        st.session_state.chapter_started = False
+        st.session_state.scene_index = 0
+    
+        st.rerun()
+    
+    st.stop()
     
     scene_count = len(scenes_data["scenes"])
     
