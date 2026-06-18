@@ -7,23 +7,13 @@
     {
       "id": 1,
       "title": "Welcome to Plant Land",
-
       "type": "story",
-
+      "character": "tara",
       "background": "plant_land",
-
-      "character": "Tara",
-
-      "narration": "Welcome explorer! Today we are entering the magical world of plants. Together we will discover how tiny seeds grow into giant trees and how plants help life on Earth.",
-
+      "narration": "Welcome explorer! Today we are entering the magical world of plants.",
       "dialogue": {
         "speaker": "Tara",
         "text": "Are you ready to explore Plant Land with me?"
-      },
-
-      "interaction": {
-        "type": "button",
-        "label": "Start Adventure"
       }
     },
 
