@@ -516,31 +516,35 @@ if "activity_score" not in st.session_state:
 if "scene_xp_awarded" not in st.session_state:
     st.session_state.scene_xp_awarded = set()
 
-# ─── Header ───────────────────────────────────────────────────────────────────
+# ─── Header (conditional) ─────────────────────────────────────────────────────
 
-col_logo, col_xp = st.columns([4, 1])
+if not st.session_state.chapter_started:
+    # Full header on home page
+    col_logo, col_xp = st.columns([4, 1])
 
-with col_logo:
-    st.title("🌟 WonderLearn")
-    st.subheader("Learn Through Stories, Explore Through Adventures")
+    with col_logo:
+        st.title("🌟 WonderLearn")
+        st.subheader("Learn Through Stories, Explore Through Adventures")
 
-with col_xp:
-    st.metric("⭐ XP", st.session_state.xp)
-    if st.session_state.badges:
-        st.write("🏆 " + ", ".join(st.session_state.badges))
+    with col_xp:
+        st.metric("⭐ XP", st.session_state.xp)
+        if st.session_state.badges:
+            st.write("🏆 " + ", ".join(st.session_state.badges))
 
-# ─── Student Info ─────────────────────────────────────────────────────────────
+    # Student Info
+    col1, col2, col3 = st.columns(3)
 
-col1, col2, col3 = st.columns(3)
+    with col1:
+        student_name = st.text_input("Student Name", value="Explorer")
 
-with col1:
-    student_name = st.text_input("Student Name", value="Explorer")
+    with col2:
+        selected_class = st.selectbox("Class", ["Class 5"])
 
-with col2:
-    selected_class = st.selectbox("Class", ["Class 5"])
-
-with col3:
-    subject = st.selectbox("Subject", ["General Science"])
+    with col3:
+        subject = st.selectbox("Subject", ["General Science"])
+else:
+    # Minimal header during chapter - just XP in corner
+    student_name = "Explorer"
 
 # ─── Load Chapters Index ──────────────────────────────────────────────────────
 
@@ -591,14 +595,24 @@ if not st.session_state.chapter_started:
 
 if st.session_state.chapter_started:
 
-    if st.button("🏠 Back to Home"):
-        st.session_state.chapter_started = False
-        st.session_state.scene_index = 0
-        st.session_state.quiz_submitted = False
-        st.session_state.challenge_submitted = False
-        st.session_state.activity_submitted = False
-        st.session_state.experiment_result = None
-        st.rerun()
+    # Compact top bar: Home button + Chapter title + XP
+    col_home, col_title, col_xp_mini = st.columns([1, 4, 1])
+
+    with col_home:
+        if st.button("🏠 Home"):
+            st.session_state.chapter_started = False
+            st.session_state.scene_index = 0
+            st.session_state.quiz_submitted = False
+            st.session_state.challenge_submitted = False
+            st.session_state.activity_submitted = False
+            st.session_state.experiment_result = None
+            st.rerun()
+
+    with col_title:
+        st.markdown("**🌟 WonderLearn**")
+
+    with col_xp_mini:
+        st.metric("⭐ XP", st.session_state.xp)
 
     chapter_data = load_chapter(st.session_state.selected_chapter)
     scenes_data = load_scenes(st.session_state.selected_chapter)
