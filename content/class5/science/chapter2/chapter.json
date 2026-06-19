@@ -1,0 +1,52 @@
+{
+  "id": 2,
+  "title": "Animals in Their Surroundings",
+  "subtitle": "The Great Animal Adventure",
+  "subject": "General Science",
+  "class": 5,
+  "theme": {
+    "primary_color": "#F59E0B",
+    "secondary_color": "#10B981"
+  },
+  "characters": ["Tara", "Buddi"],
+  "badge": {
+    "name": "Habitat Hero",
+    "icon": "🦁"
+  },
+  "estimated_time": "50 minutes",
+  "total_xp": 380,
+  "learning_objectives": [
+    "Identify different types of animal habitats - terrestrial, aquatic, arboreal, aerial, and amphibious",
+    "Describe various body coverings and their protective functions",
+    "Understand camouflage and special defence mechanisms in animals",
+    "Classify animals based on eating habits - herbivores, carnivores, omnivores",
+    "Explain different breathing methods - lungs, gills, spiracles, skin, blowhole",
+    "Describe how animals move on land, in air, and in water",
+    "Identify flightless birds and their adaptations",
+    "Understand animal migration and famous migration routes"
+  ],
+  "scenes": [
+    {"id": 1, "title": "Welcome to the Animal Kingdom", "type": "story"},
+    {"id": 2, "title": "What is a Habitat?", "type": "explore"},
+    {"id": 3, "title": "Body Coverings - Feathers, Scales & Shells", "type": "explore"},
+    {"id": 4, "title": "Body Coverings - Camouflage & Special Armour", "type": "explore"},
+    {"id": 5, "title": "Body Coverings - Match the Animal", "type": "activity"},
+    {"id": 6, "title": "Eating Habits - Herbivores", "type": "explore"},
+    {"id": 7, "title": "Eating Habits - Carnivores, Omnivores & Special Feeders", "type": "explore"},
+    {"id": 8, "title": "Eating Habits - Sort the Animals", "type": "activity"},
+    {"id": 9, "title": "Breathing - Lungs and Gills", "type": "explore"},
+    {"id": 10, "title": "Breathing - Spiracles & Skin", "type": "explore"},
+    {"id": 11, "title": "Breathing Methods - Match Up", "type": "activity"},
+    {"id": 12, "title": "Movement on Land", "type": "explore"},
+    {"id": 13, "title": "Movement - Flying and Swimming", "type": "explore"},
+    {"id": 14, "title": "Flightless Birds - A Special Group", "type": "story"},
+    {"id": 15, "title": "Movement - Sequence the Adaptation", "type": "activity"},
+    {"id": 16, "title": "Animal Migration - Epic Journeys", "type": "explore"},
+    {"id": 17, "title": "More Migration Marvels", "type": "story"},
+    {"id": 18, "title": "Migration - Match the Journey", "type": "activity"},
+    {"id": 19, "title": "True or False Challenge", "type": "challenge"},
+    {"id": 20, "title": "Final Quiz - Habitat Hero", "type": "quiz"},
+    {"id": 21, "title": "Chapter Summary", "type": "summary"},
+    {"id": 22, "title": "Badge Awarded - Habitat Hero!", "type": "badge"}
+  ]
+}
