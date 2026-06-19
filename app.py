@@ -1108,750 +1108,921 @@ draw();
         """, height=390)
         return True
 
+    elif anim_type == "germination_stages":
+        components.html("""
+<div style="background:linear-gradient(135deg,#1a2e05,#365314);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#bbf7d0;margin:0 0 16px;font-size:18px;">Germination — From Seed to Sprout</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;
+c.style.width='600px';c.style.height='280px';
+ctx.scale(dpr,dpr);
+let t=0;
+const stages=[
+  {x:500,label:'Seed',icon:'🌰',desc:'Dormant seed',color:'#a16207'},
+  {x:380,label:'Water',icon:'💧',desc:'Absorbs water, swells',color:'#0ea5e9'},
+  {x:260,label:'Root',icon:'🌱',desc:'Radicle emerges down',color:'#16a34a'},
+  {x:140,label:'Shoot',icon:'🌿',desc:'Plumule grows up',color:'#22c55e'},
+  {x:20,label:'Seedling',icon:'🌳',desc:'Leaves open, photosynthesis',color:'#15803d'}
+];
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // Soil line
+  ctx.fillStyle='#3f2305';ctx.fillRect(0,180,600,100);
+  ctx.fillStyle='#5c3a0a';
+  for(let i=0;i<30;i++){ctx.beginPath();ctx.arc(i*20+Math.sin(i)*5,200+Math.random()*60,3,0,Math.PI*2);ctx.fill();}
+  // Animated water drops RTL
+  for(let i=0;i<5;i++){
+    let wx=580-((t*1.2+i*130)%650),wy=60+Math.sin(t*0.03+i)*20;
+    ctx.globalAlpha=0.4;ctx.font='14px serif';ctx.fillText('💧',wx,wy);ctx.globalAlpha=1;
+  }
+  // Stages
+  stages.forEach((s,i)=>{
+    let bounce=Math.sin(t*0.03+i*1.2)*4;
+    let progress=(t*0.008)%5;
+    let active=Math.floor(progress)===i;
+    // Growth line connecting stages
+    if(i<4){
+      ctx.beginPath();ctx.moveTo(s.x+40,130);ctx.lineTo(stages[i+1].x+60,130);
+      ctx.strokeStyle=s.color+'44';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+    }
+    ctx.save();ctx.translate(s.x+50,120+bounce);
+    if(active){ctx.shadowColor=s.color;ctx.shadowBlur=15;}
+    ctx.beginPath();ctx.arc(0,0,30,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-5,3,0,0,30);
+    g.addColorStop(0,s.color+'66');g.addColorStop(1,'#1a2e05');
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle=active?s.color:s.color+'66';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.font='22px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(s.icon,0,0);
+    ctx.restore();
+    ctx.font='bold 10px "Segoe UI",sans-serif';ctx.fillStyle='#dcfce7';ctx.textAlign='center';
+    ctx.fillText(s.label,s.x+50,165);
+    ctx.font='9px "Segoe UI",sans-serif';ctx.fillStyle='#86efac';
+    ctx.fillText(s.desc,s.x+50,178);
+  });
+  // Direction
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#4ade80';ctx.textAlign='center';
+  ctx.fillText('← Growth stages progress',300,260);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=340)
+        return True
+
+    elif anim_type == "seed_dispersal":
+        components.html("""
+<div style="background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#bae6fd;margin:0 0 16px;font-size:18px;">Seed Dispersal — How Seeds Travel</h4>
+<canvas id="c" width="600" height="300"></canvas>
+<p style="text-align:center;color:#94a3b8;font-size:11px;margin:8px 0 0;">Click any method to learn more</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=300*dpr;
+c.style.width='600px';c.style.height='300px';
+ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const methods=[
+  {x:60,y:100,icon:'💨',name:'Wind',desc:'Light seeds with wings/parachutes float away',examples:'Dandelion, Maple, Cotton',color:'#7dd3fc'},
+  {x:180,y:100,icon:'🌊',name:'Water',desc:'Waterproof seeds float to new locations',examples:'Coconut, Lotus, Water lily',color:'#22d3ee'},
+  {x:300,y:100,icon:'🐿️',name:'Animals',desc:'Eaten or stuck to fur, carried far away',examples:'Berries, Burrs, Mango',color:'#fbbf24'},
+  {x:420,y:100,icon:'💥',name:'Explosion',desc:'Pod bursts open, flinging seeds outward',examples:'Pea, Balsam, Touch-me-not',color:'#f87171'},
+  {x:540,y:100,icon:'👨‍🌾',name:'Humans',desc:'Farmers plant and spread seeds deliberately',examples:'Wheat, Rice, Vegetables',color:'#a78bfa'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();
+  const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  methods.forEach((m,i)=>{if(Math.hypot(mx-m.x,my-m.y)<38)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,300);
+  // Floating seeds RTL
+  for(let i=0;i<6;i++){
+    let sx=600-((t*0.8+i*110)%680),sy=30+i*15+Math.sin(t*0.02+i)*12;
+    ctx.globalAlpha=0.3;ctx.font='12px serif';ctx.fillText('🌱',sx,sy);ctx.globalAlpha=1;
+  }
+  methods.forEach((m,i)=>{
+    let active=selected===i;
+    let bounce=Math.sin(t*0.03+i*1.1)*4;
+    let s=active?1.15:1;
+    ctx.save();ctx.translate(m.x,m.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=m.color;ctx.shadowBlur=18;}
+    ctx.beginPath();ctx.arc(0,0,35,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-5,3,0,0,35);
+    g.addColorStop(0,m.color+'44');g.addColorStop(1,'#0f172a');
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle=active?m.color:'rgba(255,255,255,0.12)';
+    ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.font='26px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(m.icon,0,0);
+    ctx.restore();
+    ctx.font=(active?'bold ':'')+' 11px "Segoe UI",sans-serif';
+    ctx.fillStyle=active?m.color:'#cbd5e1';ctx.textAlign='center';
+    ctx.fillText(m.name,m.x,m.y+bounce+52);
+  });
+  if(selected>=0){
+    let m=methods[selected];
+    ctx.fillStyle='rgba(15,23,42,0.95)';ctx.beginPath();ctx.roundRect(50,195,500,80,12);ctx.fill();
+    ctx.strokeStyle=m.color+'55';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.font='bold 14px "Segoe UI",sans-serif';ctx.fillStyle=m.color;ctx.textAlign='center';
+    ctx.fillText(m.icon+' Dispersal by '+m.name,300,220);
+    ctx.font='12px "Segoe UI",sans-serif';ctx.fillStyle='#e2e8f0';
+    ctx.fillText(m.desc,300,242);
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#94a3b8';
+    ctx.fillText('Examples: '+m.examples,300,262);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=380)
+        return True
+
+    elif anim_type == "seed_anatomy":
+        components.html("""
+<div style="background:linear-gradient(135deg,#1c1917,#431407);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#fed7aa;margin:0 0 16px;font-size:18px;">Inside a Seed — Parts & Functions</h4>
+<canvas id="c" width="600" height="300"></canvas>
+<p style="text-align:center;color:#a8a29e;font-size:11px;margin:8px 0 0;">Click each part to learn its role</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=300*dpr;
+c.style.width='600px';c.style.height='300px';
+ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const parts=[
+  {x:300,y:90,r:60,label:'Seed Coat',desc:'Tough outer layer — protects the seed from damage, insects & drying out',color:'#d97706',icon:'🛡️'},
+  {x:300,y:160,r:35,label:'Cotyledon',desc:'Food storage — provides energy to baby plant until it can make its own food',color:'#65a30d',icon:'🍽️'},
+  {x:300,y:220,r:20,label:'Embryo',desc:'Baby plant inside — has tiny root (radicle) and tiny shoot (plumule)',color:'#dc2626',icon:'🌱'},
+  {x:480,y:120,r:25,label:'Micropyle',desc:'Tiny hole — lets water enter the seed to start germination',color:'#0ea5e9',icon:'💧'},
+  {x:480,y:200,r:25,label:'Hilum',desc:'Scar where seed was attached to fruit — like a belly button!',color:'#a855f7',icon:'⭕'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();
+  const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  parts.forEach((p,i)=>{if(Math.hypot(mx-p.x,my-p.y)<p.r+5)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,300);
+  // Draw seed outline
+  ctx.beginPath();ctx.ellipse(300,155,80,95,0,0,Math.PI*2);
+  ctx.fillStyle='#78350f';ctx.fill();ctx.strokeStyle='#d97706';ctx.lineWidth=2;ctx.stroke();
+  // Parts
+  parts.forEach((p,i)=>{
+    let active=selected===i;
+    let pulse=active?3+Math.sin(t*0.08)*3:0;
+    ctx.save();
+    if(active){ctx.shadowColor=p.color;ctx.shadowBlur=15;}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r+pulse,0,Math.PI*2);
+    ctx.fillStyle=p.color+'33';ctx.fill();
+    ctx.strokeStyle=active?p.color:p.color+'88';
+    ctx.lineWidth=active?2.5:1.5;ctx.setLineDash(active?[]:[3,3]);ctx.stroke();ctx.setLineDash([]);
+    ctx.shadowBlur=0;ctx.restore();
+    // Label
+    let lx=p.x<200?p.x-50:p.x>400?p.x+0:p.x;
+    ctx.font=(active?'bold ':'')+' 10px "Segoe UI",sans-serif';
+    ctx.fillStyle=active?p.color:'#d6d3d1';ctx.textAlign='center';
+    ctx.fillText(p.label,lx,p.y+p.r+14);
+  });
+  // Info panel
+  if(selected>=0){
+    let p=parts[selected];
+    ctx.fillStyle='rgba(28,25,23,0.95)';ctx.beginPath();ctx.roundRect(30,255,540,40,8);ctx.fill();
+    ctx.strokeStyle=p.color+'55';ctx.lineWidth=1;ctx.stroke();
+    ctx.font='12px "Segoe UI",sans-serif';ctx.fillStyle='#fafaf9';ctx.textAlign='center';
+    ctx.fillText(p.icon+' '+p.label+': '+p.desc,300,280);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=370)
+        return True
+
+    elif anim_type == "stem_cutting":
+        components.html("""
+<div style="background:linear-gradient(135deg,#052e16,#14532d);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#bbf7d0;margin:0 0 16px;font-size:18px;">Vegetative Propagation — Growing Without Seeds</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<p style="text-align:center;color:#86efac;font-size:11px;margin:8px 0 0;">Click each method to see how it works</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;
+c.style.width='600px';c.style.height='280px';
+ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const methods=[
+  {x:75,y:100,icon:'✂️',name:'Stem Cutting',desc:'Cut a stem, plant in soil → roots grow from the cut end',plant:'Rose, Sugarcane, Money plant',color:'#22c55e'},
+  {x:210,y:100,icon:'🥔',name:'Tuber',desc:'Underground stem with buds (eyes) — each bud grows a new plant',plant:'Potato, Ginger',color:'#eab308'},
+  {x:345,y:100,icon:'🧅',name:'Bulb',desc:'Layered underground bud — splits into baby bulbs',plant:'Onion, Garlic, Tulip',color:'#f97316'},
+  {x:480,y:100,icon:'🌿',name:'Runner/Stolon',desc:'Horizontal stem runs along ground, roots at nodes',plant:'Strawberry, Grass, Spider plant',color:'#06b6d4'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();
+  const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  methods.forEach((m,i)=>{if(Math.hypot(mx-m.x,my-m.y)<40)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // Soil
+  ctx.fillStyle='#1a0f00';ctx.fillRect(0,200,600,80);
+  // Growing roots animation
+  if(selected>=0){
+    let m=methods[selected];
+    for(let i=0;i<4;i++){
+      let rx=m.x-15+i*10,ry=200+((t*0.5+i*8)%50);
+      ctx.beginPath();ctx.moveTo(m.x,200);ctx.quadraticCurveTo(rx,ry-10,rx,ry);
+      ctx.strokeStyle=m.color+'66';ctx.lineWidth=1.5;ctx.stroke();
+    }
+  }
+  methods.forEach((m,i)=>{
+    let active=selected===i;
+    let bounce=Math.sin(t*0.03+i*1.2)*4;
+    let s=active?1.15:1;
+    ctx.save();ctx.translate(m.x,m.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=m.color;ctx.shadowBlur=18;}
+    ctx.beginPath();ctx.roundRect(-35,-35,70,70,16);
+    let g=ctx.createLinearGradient(-35,-35,35,35);
+    g.addColorStop(0,m.color+'33');g.addColorStop(1,'#052e16');
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle=active?m.color:'rgba(255,255,255,0.1)';
+    ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.font='28px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(m.icon,0,0);
+    ctx.restore();
+    ctx.font=(active?'bold ':'')+' 10px "Segoe UI",sans-serif';
+    ctx.fillStyle=active?m.color:'#bbf7d0';ctx.textAlign='center';
+    ctx.fillText(m.name,m.x,m.y+bounce+52);
+  });
+  if(selected>=0){
+    let m=methods[selected];
+    ctx.fillStyle='rgba(5,46,22,0.95)';ctx.beginPath();ctx.roundRect(40,155,520,42,8);ctx.fill();
+    ctx.strokeStyle=m.color+'44';ctx.lineWidth=1;ctx.stroke();
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#dcfce7';ctx.textAlign='center';
+    ctx.fillText(m.desc,300,172);
+    ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#86efac';
+    ctx.fillText('Plants: '+m.plant,300,188);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
+        return True
+
+    elif anim_type == "agriculture_timeline":
+        components.html("""
+<div style="background:linear-gradient(135deg,#422006,#1c1917);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#fde68a;margin:0 0 16px;font-size:18px;">Agriculture — From Ploughing to Harvest</h4>
+<canvas id="c" width="600" height="260"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=260*dpr;
+c.style.width='600px';c.style.height='260px';
+ctx.scale(dpr,dpr);
+let t=0;
+const steps=[
+  {x:520,icon:'🚜',label:'Ploughing',desc:'Loosen soil',color:'#d97706'},
+  {x:410,icon:'🌱',label:'Sowing',desc:'Plant seeds',color:'#16a34a'},
+  {x:300,icon:'💧',label:'Irrigation',desc:'Water crops',color:'#0ea5e9'},
+  {x:190,icon:'🧴',label:'Fertilizing',desc:'Add nutrients',color:'#a855f7'},
+  {x:80,icon:'🌾',label:'Harvesting',desc:'Collect crops',color:'#eab308'}
+];
+function draw(){
+  ctx.clearRect(0,0,600,260);
+  // Timeline line
+  ctx.beginPath();ctx.moveTo(550,120);ctx.lineTo(50,120);
+  ctx.strokeStyle='#92400e44';ctx.lineWidth=3;ctx.stroke();
+  // Animated farmer walking RTL
+  let farmerX=580-((t*1)%620);
+  ctx.font='24px serif';ctx.textAlign='center';ctx.fillText('👨‍🌾',farmerX,90);
+  // Steps
+  steps.forEach((s,i)=>{
+    let progress=(t*0.012)%5;
+    let active=Math.floor(progress)===i;
+    let bounce=Math.sin(t*0.03+i)*4;
+    ctx.save();ctx.translate(s.x,120+bounce);
+    if(active){ctx.shadowColor=s.color;ctx.shadowBlur=14;}
+    ctx.beginPath();ctx.arc(0,0,28,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-4,2,0,0,28);
+    g.addColorStop(0,s.color+'55');g.addColorStop(1,'#1c1917');
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle=active?s.color:s.color+'66';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.font='20px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(s.icon,0,0);
+    ctx.restore();
+    // Arrow between steps (RTL)
+    if(i<4){
+      let ax=s.x-32;
+      ctx.beginPath();ctx.moveTo(ax,120);ctx.lineTo(ax-18,120);
+      ctx.strokeStyle=s.color+'88';ctx.lineWidth=2;ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ax-14,116);ctx.lineTo(ax-20,120);ctx.lineTo(ax-14,124);
+      ctx.fillStyle=s.color;ctx.fill();
+    }
+    ctx.font='bold 10px "Segoe UI",sans-serif';ctx.fillStyle='#fde68a';ctx.textAlign='center';
+    ctx.fillText(s.label,s.x,163+bounce);
+    ctx.font='9px "Segoe UI",sans-serif';ctx.fillStyle='#fbbf24';
+    ctx.fillText(s.desc,s.x,177+bounce);
+  });
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#d97706';ctx.textAlign='center';
+  ctx.fillText('← Farming cycle progresses through seasons',300,240);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=330)
+        return True
+
+    elif anim_type == "skeleton_functions":
+        components.html("""
+<div style="background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#c4b5fd;margin:0 0 16px;font-size:18px;">Skeleton — 5 Vital Functions</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<p style="text-align:center;color:#a5b4fc;font-size:11px;margin:8px 0 0;">Click each function to explore</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const funcs=[
+  {x:60,y:100,icon:'🏗️',name:'Support',desc:'Framework that holds body upright — like a building frame',color:'#818cf8'},
+  {x:180,y:100,icon:'🛡️',name:'Protection',desc:'Skull protects brain, ribs protect heart & lungs',color:'#f472b6'},
+  {x:300,y:100,icon:'🏃',name:'Movement',desc:'Bones + joints + muscles work together for motion',color:'#34d399'},
+  {x:420,y:100,icon:'🩸',name:'Blood Cells',desc:'Bone marrow inside bones makes red & white blood cells',color:'#f87171'},
+  {x:540,y:100,icon:'🏦',name:'Mineral Store',desc:'Stores calcium & phosphorus, releases when body needs them',color:'#fbbf24'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  funcs.forEach((f,i)=>{if(Math.hypot(mx-f.x,my-f.y)<36)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  for(let i=0;i<8;i++){let px=600-((t*0.4+i*80)%660),py=20+i*30+Math.sin(t*0.02+i)*8;ctx.beginPath();ctx.arc(px,py,1.5,0,Math.PI*2);ctx.fillStyle='rgba(165,180,252,0.2)';ctx.fill();}
+  funcs.forEach((f,i)=>{
+    let active=selected===i;let bounce=Math.sin(t*0.03+i*1.1)*4;let s=active?1.15:1;
+    ctx.save();ctx.translate(f.x,f.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=f.color;ctx.shadowBlur=18;}
+    ctx.beginPath();ctx.arc(0,0,34,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-5,3,0,0,34);g.addColorStop(0,f.color+'44');g.addColorStop(1,'#1e1b4b');
+    ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=active?f.color:'rgba(255,255,255,0.1)';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.font='26px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(f.icon,0,0);
+    ctx.restore();
+    ctx.font=(active?'bold ':'')+' 10px "Segoe UI",sans-serif';ctx.fillStyle=active?f.color:'#c4b5fd';ctx.textAlign='center';ctx.fillText(f.name,f.x,f.y+bounce+50);
+  });
+  if(selected>=0){let f=funcs[selected];
+    ctx.fillStyle='rgba(30,27,75,0.95)';ctx.beginPath();ctx.roundRect(50,200,500,55,10);ctx.fill();
+    ctx.strokeStyle=f.color+'55';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.font='bold 13px "Segoe UI",sans-serif';ctx.fillStyle=f.color;ctx.textAlign='center';ctx.fillText(f.icon+' '+f.name,300,222);
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#e2e8f0';ctx.fillText(f.desc,300,242);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
+        return True
+
+    elif anim_type == "bone_structure":
+        components.html("""
+<div style="background:linear-gradient(135deg,#1c1917,#292524);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#fef3c7;margin:0 0 16px;font-size:18px;">Inside a Bone — Layers of Strength</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<p style="text-align:center;color:#a8a29e;font-size:11px;margin:8px 0 0;">Click each layer to learn about it</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const layers=[
+  {y:60,h:40,label:'Periosteum',desc:'Thin outer membrane — has nerves (why broken bones hurt!) & blood vessels',color:'#fbbf24'},
+  {y:110,h:50,label:'Compact Bone',desc:'Hard dense outer layer — gives bone its strength and white colour',color:'#f5f5f4'},
+  {y:170,h:50,label:'Spongy Bone',desc:'Honeycomb-like structure — lightweight but strong, found at bone ends',color:'#fca5a5'},
+  {y:230,h:35,label:'Bone Marrow',desc:'Soft tissue in centre — makes 200 billion new blood cells every day!',color:'#f87171'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();const my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  layers.forEach((l,i)=>{if(my>=l.y&&my<=l.y+l.h)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // Bone shape
+  ctx.beginPath();ctx.roundRect(150,50,300,225,30);ctx.fillStyle='#44403c';ctx.fill();
+  layers.forEach((l,i)=>{
+    let active=selected===i;
+    let glow=active?8:0;
+    ctx.save();
+    if(active){ctx.shadowColor=l.color;ctx.shadowBlur=glow;}
+    ctx.beginPath();ctx.roundRect(160,l.y,280,l.h,6);
+    ctx.fillStyle=active?l.color+'55':l.color+'22';ctx.fill();
+    ctx.strokeStyle=active?l.color:l.color+'66';ctx.lineWidth=active?2:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.restore();
+    // Label
+    ctx.font=(active?'bold ':'')+' 12px "Segoe UI",sans-serif';
+    ctx.fillStyle=active?l.color:'#d6d3d1';ctx.textAlign='left';
+    ctx.fillText(l.label,470,l.y+l.h/2+4);
+    // Pointer line
+    ctx.beginPath();ctx.moveTo(440,l.y+l.h/2);ctx.lineTo(465,l.y+l.h/2);
+    ctx.strokeStyle=l.color+'88';ctx.lineWidth=1;ctx.stroke();
+  });
+  // Spongy honeycomb pattern
+  if(selected===2||selected===-1){
+    for(let i=0;i<8;i++){
+      let hx=200+i*30,hy=185+Math.sin(i)*8;
+      ctx.beginPath();ctx.arc(hx,hy,6,0,Math.PI*2);
+      ctx.strokeStyle='#fca5a544';ctx.lineWidth=1;ctx.stroke();
+    }
+  }
+  // Info
+  if(selected>=0){
+    let l=layers[selected];
+    ctx.fillStyle='rgba(28,25,23,0.95)';ctx.beginPath();ctx.roundRect(20,2,130,40,8);ctx.fill();
+    ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#fafaf9';ctx.textAlign='left';
+    let words=l.desc.split(' '),line='',ly=18;
+    words.forEach(w=>{if((line+w).length>30){ctx.fillText(line,30,ly);ly+=13;line=w+' ';}else line+=w+' ';});
+    ctx.fillText(line,30,ly);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
+        return True
+
+    elif anim_type == "skull_parts":
+        components.html("""
+<div style="background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#e2e8f0;margin:0 0 16px;font-size:18px;">The Skull — Cranium + Face Bones</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<p style="text-align:center;color:#94a3b8;font-size:11px;margin:8px 0 0;">Click parts of the skull</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const parts=[
+  {x:200,y:80,r:55,name:'Cranium',desc:'8 fused bones forming dome — protects the brain',color:'#818cf8',icon:'🧠'},
+  {x:200,y:175,r:30,name:'Face Bones',desc:'14 bones — jaw is the only movable skull bone',color:'#f472b6',icon:'😊'},
+  {x:200,y:220,r:15,name:'Jaw (Mandible)',desc:'Lower jaw — only bone in skull that moves! For chewing & talking',color:'#fbbf24',icon:'🗣️'},
+  {x:400,y:100,r:25,name:'Eye Sockets',desc:'2 bony cups — protect your delicate eyeballs',color:'#22d3ee',icon:'👁️'},
+  {x:400,y:180,r:25,name:'Foramen Magnum',desc:'Hole at skull base — spinal cord passes through here',color:'#f87171',icon:'⭕'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  parts.forEach((p,i)=>{if(Math.hypot(mx-p.x,my-p.y)<p.r)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // Skull outline
+  ctx.beginPath();ctx.ellipse(200,130,70,100,0,0,Math.PI*2);
+  ctx.fillStyle='#334155';ctx.fill();ctx.strokeStyle='#64748b';ctx.lineWidth=2;ctx.stroke();
+  parts.forEach((p,i)=>{
+    let active=selected===i;let pulse=active?Math.sin(t*0.06)*3:0;
+    ctx.save();
+    if(active){ctx.shadowColor=p.color;ctx.shadowBlur=14;}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r+pulse,0,Math.PI*2);
+    ctx.fillStyle=active?p.color+'33':'transparent';ctx.fill();
+    ctx.strokeStyle=active?p.color:p.color+'66';ctx.lineWidth=active?2.5:1.5;ctx.setLineDash(active?[]:[3,3]);ctx.stroke();ctx.setLineDash([]);
+    ctx.shadowBlur=0;ctx.restore();
+    if(p.x>300){ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle=p.color;ctx.textAlign='center';ctx.fillText(p.name,p.x,p.y+p.r+14);}
+  });
+  // Labels on left
+  ctx.font='10px "Segoe UI",sans-serif';ctx.textAlign='right';
+  ctx.fillStyle='#818cf8';ctx.fillText('Cranium',110,80);
+  ctx.fillStyle='#f472b6';ctx.fillText('Face',110,175);
+  ctx.fillStyle='#fbbf24';ctx.fillText('Jaw',110,220);
+  if(selected>=0){
+    let p=parts[selected];
+    ctx.fillStyle='rgba(15,23,42,0.95)';ctx.beginPath();ctx.roundRect(50,248,500,28,6);ctx.fill();
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#f1f5f9';ctx.textAlign='center';
+    ctx.fillText(p.icon+' '+p.name+': '+p.desc,300,266);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
+        return True
+
+    elif anim_type == "skeleton_parts":
+        components.html("""
+<div style="background:linear-gradient(135deg,#0c1929,#1e293b);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#bae6fd;margin:0 0 16px;font-size:18px;">206 Bones — Major Parts of the Skeleton</h4>
+<canvas id="c" width="600" height="300"></canvas>
+<p style="text-align:center;color:#94a3b8;font-size:11px;margin:8px 0 0;">Click a region to learn about it</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=300*dpr;c.style.width='600px';c.style.height='300px';ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const regions=[
+  {x:60,y:90,icon:'💀',name:'Skull (22)',desc:'Protects brain — 8 cranium + 14 face bones',color:'#818cf8'},
+  {x:180,y:90,icon:'🦴',name:'Spine (33)',desc:'Backbone — 33 vertebrae stacked, protects spinal cord',color:'#34d399'},
+  {x:300,y:90,icon:'🫁',name:'Rib Cage (24)',desc:'12 pairs of curved bones — protects heart & lungs',color:'#f472b6'},
+  {x:420,y:90,icon:'💪',name:'Arms (60)',desc:'Shoulder to fingers — humerus, radius, ulna + 27 hand bones each',color:'#fbbf24'},
+  {x:540,y:90,icon:'🦵',name:'Legs (60)',desc:'Hip to toes — femur (longest bone!), tibia, fibula + 26 foot bones',color:'#f87171'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  regions.forEach((rg,i)=>{if(Math.hypot(mx-rg.x,my-rg.y)<36)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,300);
+  // Stick figure in center background
+  ctx.strokeStyle='#334155';ctx.lineWidth=2;
+  ctx.beginPath();ctx.arc(300,60,15,0,Math.PI*2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(300,75);ctx.lineTo(300,160);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(300,95);ctx.lineTo(260,130);ctx.moveTo(300,95);ctx.lineTo(340,130);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(300,160);ctx.lineTo(270,220);ctx.moveTo(300,160);ctx.lineTo(330,220);ctx.stroke();
+  regions.forEach((rg,i)=>{
+    let active=selected===i;let bounce=Math.sin(t*0.03+i*1.1)*3;let s=active?1.12:1;
+    ctx.save();ctx.translate(rg.x,rg.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=rg.color;ctx.shadowBlur=16;}
+    ctx.beginPath();ctx.arc(0,0,33,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-4,2,0,0,33);g.addColorStop(0,rg.color+'44');g.addColorStop(1,'#0c1929');
+    ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=active?rg.color:'rgba(255,255,255,0.1)';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.font='24px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(rg.icon,0,0);
+    ctx.restore();
+    ctx.font=(active?'bold ':'')+' 10px "Segoe UI",sans-serif';ctx.fillStyle=active?rg.color:'#bae6fd';ctx.textAlign='center';ctx.fillText(rg.name,rg.x,rg.y+bounce+48);
+  });
+  if(selected>=0){let rg=regions[selected];
+    ctx.fillStyle='rgba(12,25,41,0.95)';ctx.beginPath();ctx.roundRect(50,240,500,45,10);ctx.fill();
+    ctx.strokeStyle=rg.color+'44';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.font='bold 12px "Segoe UI",sans-serif';ctx.fillStyle=rg.color;ctx.textAlign='center';ctx.fillText(rg.icon+' '+rg.name,300,258);
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#e2e8f0';ctx.fillText(rg.desc,300,276);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=370)
+        return True
+
+    elif anim_type == "ball_socket_joint":
+        components.html("""
+<div style="background:linear-gradient(135deg,#064e3b,#065f46);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#6ee7b7;margin:0 0 16px;font-size:18px;">Ball & Socket Joint — Full Rotation!</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // Socket (cup)
+  ctx.beginPath();ctx.arc(200,150,60,0.3*Math.PI,0.7*Math.PI);
+  ctx.strokeStyle='#a7f3d0';ctx.lineWidth=8;ctx.lineCap='round';ctx.stroke();
+  ctx.beginPath();ctx.arc(200,150,60,-0.7*Math.PI,-0.3*Math.PI);
+  ctx.strokeStyle='#a7f3d0';ctx.lineWidth=8;ctx.stroke();
+  // Ball rotating in socket
+  let angle=t*0.02;
+  let bx=200+Math.cos(angle)*5,by=150+Math.sin(angle)*5;
+  ctx.beginPath();ctx.arc(bx,by,30,0,Math.PI*2);
+  ctx.fillStyle='#34d399';ctx.fill();ctx.strokeStyle='#6ee7b7';ctx.lineWidth=2;ctx.stroke();
+  // Arm bone attached to ball, rotating
+  let armAngle=Math.sin(t*0.015)*1.2;
+  let armEndX=bx+Math.cos(armAngle)*100;
+  let armEndY=by+Math.sin(armAngle)*100;
+  ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(armEndX,armEndY);
+  ctx.strokeStyle='#fef3c7';ctx.lineWidth=12;ctx.lineCap='round';ctx.stroke();
+  // Rotation arrows
+  ctx.beginPath();ctx.arc(200,150,80,0,Math.PI*1.5);
+  ctx.strokeStyle='#6ee7b766';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);
+  // Labels
+  ctx.font='bold 12px "Segoe UI",sans-serif';ctx.fillStyle='#6ee7b7';ctx.textAlign='center';
+  ctx.fillText('Socket (Cup)',200,240);
+  ctx.fillText('Ball (Head)',200,110);
+  // Info on right
+  ctx.font='13px "Segoe UI",sans-serif';ctx.fillStyle='#d1fae5';ctx.textAlign='left';
+  ctx.fillText('🔄 Allows movement in ALL directions',350,100);
+  ctx.fillText('📍 Found at: Shoulder & Hip',350,125);
+  ctx.fillText('💡 Ball-shaped end fits into cup-shaped socket',350,150);
+  ctx.fillText('🏃 Lets you swing arms, rotate legs',350,175);
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#6ee7b7';
+  ctx.fillText('Most flexible joint in the body!',350,210);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
+        return True
+
+    elif anim_type == "hinge_joint":
+        components.html("""
+<div style="background:linear-gradient(135deg,#7c2d12,#431407);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#fed7aa;margin:0 0 16px;font-size:18px;">Hinge Joint — Like a Door!</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // Upper bone (fixed)
+  ctx.beginPath();ctx.moveTo(180,50);ctx.lineTo(180,140);
+  ctx.strokeStyle='#fef3c7';ctx.lineWidth=14;ctx.lineCap='round';ctx.stroke();
+  // Hinge point
+  ctx.beginPath();ctx.arc(180,145,12,0,Math.PI*2);
+  ctx.fillStyle='#f97316';ctx.fill();ctx.strokeStyle='#fed7aa';ctx.lineWidth=2;ctx.stroke();
+  // Lower bone (swinging)
+  let angle=Math.sin(t*0.025)*0.8+0.4;
+  let endX=180+Math.sin(angle)*100;
+  let endY=145+Math.cos(angle)*100;
+  ctx.beginPath();ctx.moveTo(180,145);ctx.lineTo(endX,endY);
+  ctx.strokeStyle='#fde68a';ctx.lineWidth=12;ctx.lineCap='round';ctx.stroke();
+  // Arc showing range
+  ctx.beginPath();ctx.arc(180,145,50,-0.4,1.2);
+  ctx.strokeStyle='#f9731666';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+  // Door comparison on right
+  ctx.fillStyle='#78350f';ctx.fillRect(380,60,10,180);
+  let doorAngle=Math.sin(t*0.025)*0.7;
+  ctx.save();ctx.translate(390,150);ctx.rotate(doorAngle);
+  ctx.fillStyle='#d97706';ctx.fillRect(0,-70,80,140);
+  ctx.fillStyle='#fbbf24';ctx.beginPath();ctx.arc(65,0,5,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+  // Labels
+  ctx.font='bold 12px "Segoe UI",sans-serif';ctx.fillStyle='#fed7aa';ctx.textAlign='center';
+  ctx.fillText('Elbow / Knee',180,265);
+  ctx.fillText('Door Hinge',420,265);
+  ctx.font='13px "Segoe UI",sans-serif';ctx.fillStyle='#fde68a';ctx.textAlign='left';
+  ctx.fillText('↕️ Only bends ONE direction',350,40);
+  ctx.fillText('📍 Elbow, Knee, Fingers',350,60);
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#fdba74';
+  ctx.fillText('Cannot rotate — just open & close!',180,280);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
+        return True
+
+    elif anim_type == "pivot_gliding_joint":
+        components.html("""
+<div style="background:linear-gradient(135deg,#172554,#1e3a5f);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#bfdbfe;margin:0 0 16px;font-size:18px;">Pivot & Gliding Joints</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // LEFT - Pivot Joint
+  ctx.fillStyle='rgba(23,37,84,0.5)';ctx.beginPath();ctx.roundRect(15,10,270,260,14);ctx.fill();
+  ctx.strokeStyle='#3b82f644';ctx.lineWidth=1;ctx.stroke();
+  ctx.font='bold 13px "Segoe UI",sans-serif';ctx.fillStyle='#93c5fd';ctx.textAlign='center';
+  ctx.fillText('🔄 Pivot Joint',150,35);
+  // Neck rotation demo
+  let headAngle=Math.sin(t*0.02)*0.6;
+  ctx.save();ctx.translate(150,130);
+  // Spine (fixed)
+  ctx.beginPath();ctx.moveTo(0,20);ctx.lineTo(0,80);ctx.strokeStyle='#bfdbfe';ctx.lineWidth=8;ctx.lineCap='round';ctx.stroke();
+  // Pivot point
+  ctx.beginPath();ctx.arc(0,15,8,0,Math.PI*2);ctx.fillStyle='#3b82f6';ctx.fill();
+  // Head rotating
+  ctx.rotate(headAngle);
+  ctx.beginPath();ctx.ellipse(0,-20,25,30,0,0,Math.PI*2);ctx.fillStyle='#60a5fa44';ctx.fill();ctx.strokeStyle='#60a5fa';ctx.lineWidth=2;ctx.stroke();
+  ctx.font='20px serif';ctx.textAlign='center';ctx.fillText('😊',0,-18);
+  ctx.restore();
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#93c5fd';ctx.textAlign='center';
+  ctx.fillText('Neck turns left ↔ right',150,225);
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#60a5fa';
+  ctx.fillText('One bone rotates around another',150,242);
+
+  // RIGHT - Gliding Joint
+  ctx.fillStyle='rgba(23,37,84,0.5)';ctx.beginPath();ctx.roundRect(315,10,270,260,14);ctx.fill();
+  ctx.strokeStyle='#8b5cf644';ctx.lineWidth=1;ctx.stroke();
+  ctx.font='bold 13px "Segoe UI",sans-serif';ctx.fillStyle='#c4b5fd';ctx.textAlign='center';
+  ctx.fillText('↔️ Gliding Joint',450,35);
+  // Two flat bones sliding
+  let slide=Math.sin(t*0.025)*20;
+  ctx.fillStyle='#7c3aed44';ctx.beginPath();ctx.roundRect(400,100,100,30,6);ctx.fill();ctx.strokeStyle='#a78bfa';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#6d28d944';ctx.beginPath();ctx.roundRect(400+slide,135,100,30,6);ctx.fill();ctx.strokeStyle='#c4b5fd';ctx.lineWidth=2;ctx.stroke();
+  // Arrows
+  ctx.beginPath();ctx.moveTo(420+slide,150);ctx.lineTo(480+slide,150);
+  ctx.strokeStyle='#c4b5fd55';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#c4b5fd';ctx.textAlign='center';
+  ctx.fillText('Wrist & Ankle bones',450,225);
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#a78bfa';
+  ctx.fillText('Flat bones slide over each other',450,242);
+
+  // VS
+  ctx.font='bold 14px "Segoe UI",sans-serif';ctx.fillStyle='#64748b';ctx.textAlign='center';ctx.fillText('VS',300,140);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
+        return True
+
+    elif anim_type == "muscle_contraction":
+        components.html("""
+<div style="background:linear-gradient(135deg,#4c0519,#881337);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#fecdd3;margin:0 0 16px;font-size:18px;">Muscle Contraction — Pull, Never Push!</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  let flex=Math.sin(t*0.02)*0.8;
+  // Upper arm bone
+  ctx.beginPath();ctx.moveTo(200,60);ctx.lineTo(200,140);
+  ctx.strokeStyle='#fef3c7';ctx.lineWidth=12;ctx.lineCap='round';ctx.stroke();
+  // Elbow pivot
+  ctx.beginPath();ctx.arc(200,145,8,0,Math.PI*2);ctx.fillStyle='#f59e0b';ctx.fill();
+  // Forearm swinging
+  let fAngle=flex*0.7+0.3;
+  let fEndX=200+Math.sin(fAngle)*100;
+  let fEndY=145+Math.cos(fAngle)*100;
+  ctx.beginPath();ctx.moveTo(200,145);ctx.lineTo(fEndX,fEndY);
+  ctx.strokeStyle='#fde68a';ctx.lineWidth=10;ctx.lineCap='round';ctx.stroke();
+  // Bicep (contracts when bending)
+  let bicepBulge=15+Math.max(0,-flex)*12;
+  ctx.beginPath();ctx.ellipse(185,110,bicepBulge,30,0,0,Math.PI*2);
+  ctx.fillStyle=flex<0?'#ef444488':'#ef444444';ctx.fill();
+  ctx.strokeStyle='#f87171';ctx.lineWidth=2;ctx.stroke();
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#fecdd3';ctx.textAlign='center';
+  ctx.fillText('BICEP',185,115);
+  ctx.fillText(flex<0?'(Contracting!)':'(Relaxed)',185,128);
+  // Tricep (opposite)
+  let tricepBulge=15+Math.max(0,flex)*12;
+  ctx.beginPath();ctx.ellipse(215,110,tricepBulge,28,0,0,Math.PI*2);
+  ctx.fillStyle=flex>0?'#3b82f688':'#3b82f644';ctx.fill();
+  ctx.strokeStyle='#60a5fa';ctx.lineWidth=2;ctx.stroke();
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#bfdbfe';
+  ctx.fillText('TRICEP',215,115);
+  ctx.fillText(flex>0?'(Contracting!)':'(Relaxed)',215,128);
+  // Info on right
+  ctx.font='13px "Segoe UI",sans-serif';ctx.fillStyle='#fecdd3';ctx.textAlign='left';
+  ctx.fillText('Key Facts:',380,70);
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#fda4af';
+  ctx.fillText('• Muscles can only PULL (contract)',380,95);
+  ctx.fillText('• They work in PAIRS (antagonistic)',380,115);
+  ctx.fillText('• Bicep bends arm, Tricep straightens',380,135);
+  ctx.fillText('• Attached to bones by TENDONS',380,155);
+  ctx.font='bold 11px "Segoe UI",sans-serif';ctx.fillStyle='#fb7185';
+  ctx.fillText('Watch the pair work together! →',380,185);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
+        return True
+
+    elif anim_type == "muscle_types":
+        components.html("""
+<div style="background:linear-gradient(135deg,#3b0764,#581c87);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#e9d5ff;margin:0 0 16px;font-size:18px;">3 Types of Muscles</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<p style="text-align:center;color:#c084fc;font-size:11px;margin:8px 0 0;">Click to compare</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const types=[
+  {x:120,y:110,icon:'💪',name:'Skeletal (Striped)',ctrl:'Voluntary — YOU control',where:'Arms, legs, face',fact:'Can get tired! 640+ in body',color:'#f472b6'},
+  {x:300,y:110,icon:'🫁',name:'Smooth',ctrl:'Involuntary — automatic',where:'Stomach, intestines, blood vessels',fact:'Works without thinking! Never tires easily',color:'#a78bfa'},
+  {x:480,y:110,icon:'❤️',name:'Cardiac (Heart)',ctrl:'Involuntary — automatic',where:'Only in the heart',fact:'Beats 100,000 times/day! Never stops',color:'#f87171'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  types.forEach((tp,i)=>{if(Math.hypot(mx-tp.x,my-tp.y)<40)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  types.forEach((tp,i)=>{
+    let active=selected===i;let bounce=Math.sin(t*0.03+i*1.3)*4;let s=active?1.15:1;
+    // Pulsing for heart
+    let heartPulse=i===2?Math.abs(Math.sin(t*0.06))*5:0;
+    ctx.save();ctx.translate(tp.x,tp.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=tp.color;ctx.shadowBlur=18;}
+    ctx.beginPath();ctx.arc(0,0,36+heartPulse,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-5,3,0,0,38);g.addColorStop(0,tp.color+'44');g.addColorStop(1,'#3b0764');
+    ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=active?tp.color:'rgba(255,255,255,0.12)';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.font='28px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(tp.icon,0,0);
+    ctx.restore();
+    ctx.font=(active?'bold ':'')+' 11px "Segoe UI",sans-serif';ctx.fillStyle=active?tp.color:'#e9d5ff';ctx.textAlign='center';
+    ctx.fillText(tp.name,tp.x,tp.y+bounce+54);
+  });
+  if(selected>=0){let tp=types[selected];
+    ctx.fillStyle='rgba(59,7,100,0.95)';ctx.beginPath();ctx.roundRect(50,200,500,70,12);ctx.fill();
+    ctx.strokeStyle=tp.color+'55';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.font='bold 13px "Segoe UI",sans-serif';ctx.fillStyle=tp.color;ctx.textAlign='center';ctx.fillText(tp.icon+' '+tp.name,300,222);
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#f5f3ff';ctx.fillText('Control: '+tp.ctrl,300,240);
+    ctx.fillStyle='#e9d5ff';ctx.fillText('Found: '+tp.where+' | '+tp.fact,300,258);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=360)
+        return True
+
+    elif anim_type == "body_system_overview":
+        components.html("""
+<div style="background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#c4b5fd;margin:0 0 16px;font-size:18px;">How It All Works Together — The Movement System</h4>
+<canvas id="c" width="600" height="260"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=260*dpr;c.style.width='600px';c.style.height='260px';ctx.scale(dpr,dpr);
+let t=0;
+const parts=[
+  {x:500,icon:'🧠',label:'Brain Signal',desc:'Sends electrical impulse',color:'#818cf8'},
+  {x:380,icon:'⚡',label:'Nerve',desc:'Carries message to muscle',color:'#fbbf24'},
+  {x:260,icon:'💪',label:'Muscle',desc:'Contracts (shortens)',color:'#f472b6'},
+  {x:140,icon:'🦴',label:'Bone',desc:'Gets pulled by muscle',color:'#e2e8f0'},
+  {x:30,icon:'🏃',label:'Movement!',desc:'Body part moves',color:'#34d399'}
+];
+function draw(){
+  ctx.clearRect(0,0,600,260);
+  // Signal pulse traveling RTL
+  let pulseX=540-((t*2)%580);
+  ctx.beginPath();ctx.arc(pulseX,100,4,0,Math.PI*2);
+  ctx.fillStyle='#818cf8';ctx.fill();
+  ctx.shadowColor='#818cf8';ctx.shadowBlur=10;
+  ctx.beginPath();ctx.arc(pulseX,100,2,0,Math.PI*2);ctx.fill();
+  ctx.shadowBlur=0;
+  // Connection line
+  ctx.beginPath();ctx.moveTo(530,100);ctx.lineTo(60,100);
+  ctx.strokeStyle='#4338ca33';ctx.lineWidth=3;ctx.stroke();
+  parts.forEach((p,i)=>{
+    let progress=(t*0.01)%5;
+    let active=Math.floor(progress)===i;
+    let bounce=Math.sin(t*0.03+i)*3;
+    ctx.save();ctx.translate(p.x+30,100+bounce);
+    if(active){ctx.shadowColor=p.color;ctx.shadowBlur=14;}
+    ctx.beginPath();ctx.arc(0,0,28,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-3,2,0,0,28);g.addColorStop(0,p.color+'55');g.addColorStop(1,'#1e1b4b');
+    ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=active?p.color:p.color+'44';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.font='20px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(p.icon,0,0);
+    ctx.restore();
+    // Arrow RTL
+    if(i<4){let ax=p.x-5;ctx.beginPath();ctx.moveTo(ax,100);ctx.lineTo(ax-15,100);ctx.strokeStyle=p.color+'66';ctx.lineWidth=2;ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ax-11,96);ctx.lineTo(ax-17,100);ctx.lineTo(ax-11,104);ctx.fillStyle=p.color;ctx.fill();}
+    ctx.font='bold 10px "Segoe UI",sans-serif';ctx.fillStyle=p.color;ctx.textAlign='center';
+    ctx.fillText(p.label,p.x+30,145+bounce);
+    ctx.font='9px "Segoe UI",sans-serif';ctx.fillStyle='#a5b4fc';
+    ctx.fillText(p.desc,p.x+30,159+bounce);
+  });
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#7c3aed';ctx.textAlign='center';
+  ctx.fillText('← Signal flows from brain to movement in milliseconds!',300,220);
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#6366f1';
+  ctx.fillText('Skeleton + Joints + Muscles + Nerves = The Movement System',300,240);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=330)
+        return True
+
     return False
 
 
 
 def render_animation(animation_config):
-    """Render animations — try interactive JS first, fall back to CSS."""
+    """Render animations using interactive HTML5 Canvas."""
     anim_type = animation_config.get("type", "")
-
-    # Try interactive animation first
     if render_interactive_animation(anim_type):
         return
-
-    # Fall back to CSS animations for Chapter 1 and Chapter 3
-
-    if anim_type == "germination_stages":
-        st.markdown("""
-        <div class="germination-anim">
-            <div style="margin-bottom: 15px; font-weight: bold; color: #78350F;">🎬 Germination in Action</div>
-            <div style="display: flex; justify-content: center; align-items: flex-end; gap: 30px; height: 150px;">
-                <div style="text-align: center;">
-                    <div class="seed-icon">🌰</div>
-                    <div style="font-size: 12px; color: #78350F;">Seed</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite 0.5s;">💧</div>
-                    <div style="font-size: 12px; color: #78350F;">+ Water</div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite 1s;">💥</div>
-                    <div style="font-size: 12px; color: #78350F;">Cracks</div>
-                </div>
-                <div style="text-align: center;">
-                    <div class="root-anim">⬇️🌿</div>
-                    <div style="font-size: 12px; color: #78350F;">Root Down</div>
-                </div>
-                <div style="text-align: center;">
-                    <div class="shoot-anim">🌱</div>
-                    <div style="font-size: 12px; color: #78350F;">Shoot Up!</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "seed_dispersal":
-        st.markdown("""
-        <div class="animation-container">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #1E40AF;">🎬 Seeds on the Move!</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
-                <div style="text-align: center; padding: 15px;">
-                    <div class="wind-seed">🌬️ 🪶</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Wind</strong><br>Floating away...</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div class="water-seed">🌊 🥥</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Water</strong><br>Floating downstream...</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 30px; animation: bounce 2s ease-in-out infinite;">🐕 🌿</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Animals</strong><br>Hitching a ride!</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div class="explode-seed">💥 🫛</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Explosion</strong><br>Pop! Scatter!</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "seed_anatomy":
-        st.markdown("""
-        <div class="seed-anatomy">
-            <div style="font-weight: bold; margin-bottom: 20px; color: #92400E;">🎬 Inside a Seed — Layers Revealed</div>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
-                <div class="seed-layer" style="animation-delay: 0s;">
-                    <div class="seed-layer-icon">🛡️</div>
-                    <div class="seed-layer-label">Seed Coat<br><small>(Outer protection)</small></div>
-                </div>
-                <div style="font-size: 24px; color: #92400E;">→</div>
-                <div class="seed-layer" style="animation-delay: 0.5s;">
-                    <div class="seed-layer-icon">🍽️</div>
-                    <div class="seed-layer-label">Cotyledons<br><small>(Food storage)</small></div>
-                </div>
-                <div style="font-size: 24px; color: #92400E;">→</div>
-                <div class="seed-layer" style="animation-delay: 1s;">
-                    <div class="seed-layer-icon">🌱</div>
-                    <div class="seed-layer-label">Embryo<br><small>(Baby plant)</small></div>
-                </div>
-            </div>
-            <div style="margin-top: 15px; display: flex; justify-content: center; gap: 40px;">
-                <div style="font-size: 13px; color: #78350F;">⬇️ Radicle (root)</div>
-                <div style="font-size: 13px; color: #78350F;">⬆️ Plumule (shoot)</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "stem_cutting":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #ECFDF5, #D1FAE5);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #065F46;">🎬 Growing a New Plant from a Stem Cutting</div>
-            <div style="display: flex; justify-content: center; align-items: flex-end; gap: 25px; flex-wrap: wrap;">
-                <div style="text-align: center;">
-                    <div style="font-size: 40px;">✂️🌿</div>
-                    <div style="font-size: 12px; margin-top: 5px;">Cut a healthy stem</div>
-                </div>
-                <div style="font-size: 20px; color: #22C55E;">→</div>
-                <div style="text-align: center;">
-                    <div style="font-size: 40px; animation: bounce 2s infinite;">🪴</div>
-                    <div style="font-size: 12px; margin-top: 5px;">Plant in moist soil</div>
-                </div>
-                <div style="font-size: 20px; color: #22C55E;">→</div>
-                <div style="text-align: center;">
-                    <div style="font-size: 40px; animation: sprout 3s ease-out infinite;">🌿⬇️</div>
-                    <div style="font-size: 12px; margin-top: 5px;">Roots grow from base</div>
-                </div>
-                <div style="font-size: 20px; color: #22C55E;">→</div>
-                <div style="text-align: center;">
-                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite;">🌳</div>
-                    <div style="font-size: 12px; margin-top: 5px;">New plant grows!</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "agriculture_timeline":
-        st.markdown("""
-        <div style="margin: 20px 0;">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 15px; color: #92400E;">🎬 The Farming Journey</div>
-            <div class="timeline-container">
-                <div class="timeline-step"><div class="timeline-icon">🚜</div><div>Plough</div></div>
-                <div class="timeline-step"><div class="timeline-icon">🧪</div><div>Manure</div></div>
-                <div class="timeline-step"><div class="timeline-icon">🌱</div><div>Sow</div></div>
-                <div class="timeline-step"><div class="timeline-icon">💧</div><div>Irrigate</div></div>
-                <div class="timeline-step"><div class="timeline-icon">🐛</div><div>Protect</div></div>
-                <div class="timeline-step"><div class="timeline-icon">🌾</div><div>Harvest</div></div>
-                <div class="timeline-step"><div class="timeline-icon">🏪</div><div>Store</div></div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "breathing_systems":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #EFF6FF, #DBEAFE);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #1E40AF;">🎬 How Animals Breathe</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
-                <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite;">🫁</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Lungs</strong><br>Mammals, Birds<br>Nostrils → Windpipe → Lungs</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.5s;">🐟</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Gills</strong><br>Fish, Tadpoles<br>Water flows over gill filaments</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1s;">🐛</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Spiracles</strong><br>Insects<br>Tiny holes → Trachea tubes</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.5s;">🪱</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Skin</strong><br>Earthworm<br>Moist skin absorbs O₂</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 2s;">🐋</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Blowhole</strong><br>Whales, Dolphins<br>Surface to breathe air</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "animal_movement":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #F0FDF4, #DCFCE7);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #166534;">🎬 Animals on the Move!</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
-                <div style="text-align: center; padding: 15px;">
-                    <div class="wind-seed">🦅</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Flying</strong><br>Wings + Hollow bones<br>+ Streamlined body</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div class="water-seed">🐠</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Swimming</strong><br>Fins + Streamlined body<br>+ Tail propulsion</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite;">🦘</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Hopping</strong><br>Powerful back legs<br>Kangaroo, Frog</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.3s;">🐍</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Slithering</strong><br>Scales + Muscles<br>+ Flexible backbone</div>
-                </div>
-                <div style="text-align: center; padding: 15px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.6s;">🦆</div>
-                    <div style="font-size: 13px; margin-top: 8px;"><strong>Webbed Feet</strong><br>Skin between toes<br>Ducks, Frogs</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "habitat_types":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #FEF3C7, #FDE68A);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #92400E;">🎬 Types of Animal Habitats</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
-                <div style="text-align: center; padding: 12px; background: #D1FAE5; border-radius: 12px; min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite;">🦁</div>
-                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Terrestrial</div>
-                    <div style="font-size: 11px; color: #065F46;">Land: forests,<br>deserts, grasslands</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: #DBEAFE; border-radius: 12px; min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.4s;">🐟</div>
-                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Aquatic</div>
-                    <div style="font-size: 11px; color: #1E40AF;">Water: oceans,<br>rivers, ponds</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: #E0E7FF; border-radius: 12px; min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.8s;">🐸</div>
-                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Amphibious</div>
-                    <div style="font-size: 11px; color: #3730A3;">Both land<br>& water</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: #D1FAE5; border-radius: 12px; min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.2s;">🐒</div>
-                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Arboreal</div>
-                    <div style="font-size: 11px; color: #065F46;">Tree-tops:<br>monkeys, birds</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: #F3E8FF; border-radius: 12px; min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.6s;">🦅</div>
-                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Aerial</div>
-                    <div style="font-size: 11px; color: #6B21A8;">The sky:<br>birds, bats</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "body_coverings_1":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #ECFDF5, #D1FAE5);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #065F46;">🎬 Body Coverings — Nature's Armour</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite;">🪶</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Feathers</div>
-                    <div style="font-size: 11px; color: #6B7280;">Birds — fly<br>& stay warm</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite 0.3s;">🐍</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Scales</div>
-                    <div style="font-size: 11px; color: #6B7280;">Fish & reptiles<br>— protection</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite 0.6s;">🐢</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Shell</div>
-                    <div style="font-size: 11px; color: #6B7280;">Tortoise, snail<br>— hard home</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite 0.9s;">🐑</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Wool</div>
-                    <div style="font-size: 11px; color: #6B7280;">Sheep — traps<br>air, warmth</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite 1.2s;">🐻‍❄️</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Fur</div>
-                    <div style="font-size: 11px; color: #6B7280;">Polar bear<br>— insulation</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "body_coverings_2":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #FEF9C3, #FEF08A);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #854D0E;">🎬 Special Defence — Hide or Fight!</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite;">🦓</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Camouflage</div>
-                    <div style="font-size: 11px; color: #6B7280;">Stripes & colours<br>to blend in</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.4s;">🪲</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Cuticle</div>
-                    <div style="font-size: 11px; color: #6B7280;">Hard outer shell<br>on insects</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.8s;">🦔</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Quills</div>
-                    <div style="font-size: 11px; color: #6B7280;">Sharp spines<br>scare enemies</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.2s;">🛡️</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Armour Plates</div>
-                    <div style="font-size: 11px; color: #6B7280;">Armadillo curls<br>into a ball</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.6s;">🦎</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Colour Change</div>
-                    <div style="font-size: 11px; color: #6B7280;">Chameleon<br>matches surroundings</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "herbivore_teeth":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #F0FDF4, #BBF7D0);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #166534;">🎬 Herbivore Feeding System</div>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 50%; width: 90px; height: 90px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 30px;">🌿</div>
-                    <div style="font-size: 10px;">Plants</div>
-                </div>
-                <div style="font-size: 24px; color: #22C55E; animation: bounce 1s infinite;">→</div>
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 50%; width: 90px; height: 90px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 30px;">🦷</div>
-                    <div style="font-size: 10px;">Sharp Front<br>Teeth (bite)</div>
-                </div>
-                <div style="font-size: 24px; color: #22C55E; animation: bounce 1s infinite 0.3s;">→</div>
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 50%; width: 90px; height: 90px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 30px;">🔲</div>
-                    <div style="font-size: 10px;">Flat Molars<br>(grind)</div>
-                </div>
-                <div style="font-size: 24px; color: #22C55E; animation: bounce 1s infinite 0.6s;">→</div>
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 50%; width: 90px; height: 90px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 30px;">🐄</div>
-                    <div style="font-size: 10px;">Long Gut<br>(digestion)</div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 15px; font-size: 12px; color: #166534;">
-                🦌 Deer &nbsp; 🐴 Horse &nbsp; 🐄 Cow &nbsp; 🐰 Rabbit &nbsp; — all herbivores with hard hooves
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "carnivore_feeders":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #FEF2F2, #FECACA);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #991B1B;">🎬 Carnivores & Special Feeders</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 12px;">
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
-                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite;">🦁</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Carnivore</div>
-                    <div style="font-size: 10px; color: #6B7280;">Sharp teeth 🔪<br>+ Claws for prey</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
-                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 0.3s;">🐻</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Omnivore</div>
-                    <div style="font-size: 10px; color: #6B7280;">Mixed teeth<br>Plants + Meat</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
-                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 0.6s;">🐿️</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Rodent</div>
-                    <div style="font-size: 10px; color: #6B7280;">Ever-growing<br>front teeth 🦷</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
-                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 0.9s;">🦋</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Proboscis</div>
-                    <div style="font-size: 10px; color: #6B7280;">Coiled tube<br>sucks nectar 🌸</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
-                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 1.2s;">🦟</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Needle Tube</div>
-                    <div style="font-size: 10px; color: #6B7280;">Pierces skin<br>sucks blood 💉</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "spiracles_skin":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #EDE9FE, #DDD6FE);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #5B21B6;">🎬 Unique Breathing — Insects & Earthworms</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
-                <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 3px 12px rgba(0,0,0,0.1); flex: 1; min-width: 200px;">
-                    <div style="font-size: 40px; animation: bounce 2s ease-in-out infinite;">🦗</div>
-                    <div style="font-size: 14px; font-weight: bold; margin: 8px 0; color: #5B21B6;">Insect Breathing</div>
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
-                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Spiracles (holes)</span>
-                        <span style="color: #7C3AED;">→</span>
-                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Trachea (tubes)</span>
-                        <span style="color: #7C3AED;">→</span>
-                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Body cells</span>
-                    </div>
-                    <div style="font-size: 11px; color: #6B7280; margin-top: 8px;">No lungs needed! Air goes directly to cells.</div>
-                </div>
-                <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 3px 12px rgba(0,0,0,0.1); flex: 1; min-width: 200px;">
-                    <div style="font-size: 40px; animation: bounce 2s ease-in-out infinite 0.5s;">🪱</div>
-                    <div style="font-size: 14px; font-weight: bold; margin: 8px 0; color: #5B21B6;">Earthworm Breathing</div>
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
-                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Moist skin</span>
-                        <span style="color: #7C3AED;">→</span>
-                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">O₂ dissolves</span>
-                        <span style="color: #7C3AED;">→</span>
-                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Into blood</span>
-                    </div>
-                    <div style="font-size: 11px; color: #6B7280; margin-top: 8px;">Must stay moist! Dries out = can't breathe.</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "land_movement":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #FFF7ED, #FED7AA);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #9A3412;">🎬 How Animals Move on Land</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite;">🐕</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Walking</div>
-                    <div style="font-size: 10px; color: #6B7280;">4 legs</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite 0.3s;">🦎</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Crawling</div>
-                    <div style="font-size: 10px; color: #6B7280;">Low body</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite 0.6s;">🐍</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Slithering</div>
-                    <div style="font-size: 10px; color: #6B7280;">No legs!</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite 0.9s;">🐜</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">6 Legs</div>
-                    <div style="font-size: 10px; color: #6B7280;">Insects</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
-                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite 1.2s;">🦘</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Hopping</div>
-                    <div style="font-size: 10px; color: #6B7280;">Strong legs</div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 15px;">
-                <div style="display: inline-block; background: #FEF3C7; padding: 8px 15px; border-radius: 20px; font-size: 12px;">
-                    🐍 Snakes use: <strong>Belly scales</strong> + <strong>S-shaped muscles</strong> + <strong>Flexible backbone</strong>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "migration_map":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #EFF6FF, #BFDBFE);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #1E40AF;">🎬 Epic Migration Routes</div>
-            <div style="display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 0 auto;">
-                <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); animation: bounce 2s ease-in-out infinite;">
-                    <span style="font-size: 28px;">🏔️</span>
-                    <span style="font-size: 20px; color: #3B82F6;">✈️→</span>
-                    <span style="font-size: 28px;">🇮🇳</span>
-                    <span style="font-size: 12px; flex: 1;"><strong>Siberian Crane</strong><br>Russia → India (5000+ km)</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); animation: bounce 2s ease-in-out infinite 0.3s;">
-                    <span style="font-size: 28px;">🧊</span>
-                    <span style="font-size: 20px; color: #3B82F6;">✈️→</span>
-                    <span style="font-size: 28px;">🐧</span>
-                    <span style="font-size: 12px; flex: 1;"><strong>Arctic Tern</strong><br>Arctic ↔ Antarctic (70,000 km!)</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); animation: bounce 2s ease-in-out infinite 0.6s;">
-                    <span style="font-size: 28px;">🦋</span>
-                    <span style="font-size: 20px; color: #3B82F6;">✈️→</span>
-                    <span style="font-size: 28px;">🌮</span>
-                    <span style="font-size: 12px; flex: 1;"><strong>Monarch Butterfly</strong><br>Canada → Mexico (4000 km)</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); animation: bounce 2s ease-in-out infinite 0.9s;">
-                    <span style="font-size: 28px;">🐢</span>
-                    <span style="font-size: 20px; color: #3B82F6;">🏊→</span>
-                    <span style="font-size: 28px;">🏖️</span>
-                    <span style="font-size: 12px; flex: 1;"><strong>Olive Ridley Turtle</strong><br>Ocean → Odisha, India</span>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "skeleton_functions":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #F5F3FF, #EDE9FE);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #5B21B6;">🎬 What Does Your Skeleton Do?</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
-                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite;">🏗️</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Shape</div>
-                    <div style="font-size: 10px; color: #6B7280;">Gives body<br>its form</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
-                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.3s;">🧍</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Support</div>
-                    <div style="font-size: 10px; color: #6B7280;">Stand<br>upright</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
-                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.6s;">🛡️</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Protect</div>
-                    <div style="font-size: 10px; color: #6B7280;">Brain, heart<br>lungs, spine</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
-                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.9s;">🏃</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Movement</div>
-                    <div style="font-size: 10px; color: #6B7280;">With muscles<br>at joints</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
-                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 1.2s;">🩸</div>
-                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Blood Cells</div>
-                    <div style="font-size: 10px; color: #6B7280;">Made in<br>bone marrow</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "bone_structure":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #FFF7ED, #FFEDD5);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #9A3412;">🎬 Inside a Bone — Layers Revealed</div>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite;">🦴</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Compact Bone</div>
-                    <div style="font-size: 10px; color: #6B7280;">(Hard outer layer)</div>
-                </div>
-                <div style="font-size: 24px; color: #EA580C;">→</div>
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.5s;">🧽</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Spongy Bone</div>
-                    <div style="font-size: 10px; color: #6B7280;">(Lightweight inside)</div>
-                </div>
-                <div style="font-size: 24px; color: #EA580C;">→</div>
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1s;">🩸</div>
-                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Bone Marrow</div>
-                    <div style="font-size: 10px; color: #6B7280;">(Makes blood cells)</div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 15px; font-size: 12px; background: #FEF3C7; padding: 8px; border-radius: 8px;">
-                + Nerves (feel pain) + Blood Vessels (nutrients) + Calcium (strength)
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "skull_parts":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #F0F9FF, #E0F2FE);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #0C4A6E;">🎬 The Skull — 22 Bones</div>
-            <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-                <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 3px 12px rgba(0,0,0,0.1); min-width: 150px;">
-                    <div style="font-size: 45px; animation: bounce 2s ease-in-out infinite;">🧠</div>
-                    <div style="font-size: 14px; font-weight: bold; margin-top: 8px; color: #0C4A6E;">Cranium</div>
-                    <div style="font-size: 22px; font-weight: bold; color: #0284C7;">8 bones</div>
-                    <div style="font-size: 11px; color: #6B7280;">Protects the brain</div>
-                </div>
-                <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 3px 12px rgba(0,0,0,0.1); min-width: 150px;">
-                    <div style="font-size: 45px; animation: bounce 2s ease-in-out infinite 0.5s;">😊</div>
-                    <div style="font-size: 14px; font-weight: bold; margin-top: 8px; color: #0C4A6E;">Face</div>
-                    <div style="font-size: 22px; font-weight: bold; color: #0284C7;">14 bones</div>
-                    <div style="font-size: 11px; color: #6B7280;">Gives face its shape</div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 15px; background: #DBEAFE; padding: 10px; border-radius: 10px;">
-                <span style="font-size: 13px;">👄 Only the <strong>lower jaw</strong> can move! (eating, talking, yawning)</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "skeleton_parts":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #ECFDF5, #D1FAE5);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #065F46;">🎬 The Complete Skeleton</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 8px;">
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
-                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite;">🔗</div>
-                    <div style="font-size: 11px; font-weight: bold;">Backbone</div>
-                    <div style="font-size: 10px; color: #065F46;">33 vertebrae</div>
-                </div>
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
-                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite 0.3s;">🫁</div>
-                    <div style="font-size: 11px; font-weight: bold;">Ribcage</div>
-                    <div style="font-size: 10px; color: #065F46;">12 pairs + sternum</div>
-                </div>
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
-                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite 0.6s;">💪</div>
-                    <div style="font-size: 11px; font-weight: bold;">Arms</div>
-                    <div style="font-size: 10px; color: #065F46;">Humerus, Radius, Ulna</div>
-                </div>
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
-                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite 0.9s;">🦵</div>
-                    <div style="font-size: 11px; font-weight: bold;">Legs</div>
-                    <div style="font-size: 10px; color: #065F46;">Femur, Tibia, Fibula</div>
-                </div>
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
-                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite 1.2s;">⭕</div>
-                    <div style="font-size: 11px; font-weight: bold;">Girdles</div>
-                    <div style="font-size: 10px; color: #065F46;">Shoulder + Hip</div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 12px; font-size: 11px; background: #D1FAE5; padding: 8px; border-radius: 8px;">
-                🪢 <strong>Ligaments</strong> hold bones together | <strong>Femur</strong> = longest bone | <strong>Floating ribs</strong> = last 2 pairs
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "ball_socket_joint":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #FDF4FF, #FAE8FF);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #86198F;">🎬 Ball and Socket Joint</div>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
-                <div style="text-align: center; padding: 20px; background: white; border-radius: 50%; width: 110px; height: 110px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite;">⚽</div>
-                    <div style="font-size: 10px;">Ball in cup</div>
-                </div>
-                <div style="font-size: 24px; color: #A855F7;">↔️↕️🔄</div>
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                    <div style="font-size: 13px; font-weight: bold; color: #86198F;">ALL directions!</div>
-                    <div style="margin-top: 8px; display: flex; gap: 12px;">
-                        <div style="text-align: center;"><div style="font-size: 25px; animation: bounce 1.5s infinite;">💪</div><div style="font-size: 10px;">Shoulder</div></div>
-                        <div style="text-align: center;"><div style="font-size: 25px; animation: bounce 1.5s infinite 0.3s;">🦵</div><div style="font-size: 10px;">Hip</div></div>
-                        <div style="text-align: center;"><div style="font-size: 25px; animation: bounce 1.5s infinite 0.6s;">🕹️</div><div style="font-size: 10px;">Joystick!</div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "hinge_joint":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #FEF9C3, #FEF08A);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #854D0E;">🎬 Hinge Joint — One Direction Only!</div>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite;">🚪</div>
-                    <div style="font-size: 11px; font-weight: bold;">Like a Door</div>
-                    <div style="font-size: 10px; color: #6B7280;">ONE way only</div>
-                </div>
-                <div style="font-size: 24px; color: #CA8A04;">=</div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <div style="font-size: 28px; animation: bounce 1.5s infinite 0.2s;">💪</div>
-                    <div style="font-size: 10px;">Elbow</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <div style="font-size: 28px; animation: bounce 1.5s infinite 0.4s;">🦵</div>
-                    <div style="font-size: 10px;">Knee</div>
-                </div>
-                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <div style="font-size: 28px; animation: bounce 1.5s infinite 0.6s;">🖐️</div>
-                    <div style="font-size: 10px;">Fingers</div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 10px; background: #FEF3C7; padding: 6px; border-radius: 8px; font-size: 11px;">↕️ Back & forth ONLY — no rotation or sideways!</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "pivot_gliding_joint":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #F0FDFA, #CCFBF1);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #134E4A;">🎬 Pivot & Gliding Joints</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
-                <div style="text-align: center; padding: 18px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); flex: 1; min-width: 160px;">
-                    <div style="font-size: 38px; animation: bounce 2s ease-in-out infinite;">🔄</div>
-                    <div style="font-size: 13px; font-weight: bold; margin: 6px 0; color: #134E4A;">Pivot Joint</div>
-                    <div style="font-size: 11px; color: #6B7280;">One bone rotates around another</div>
-                    <div style="margin-top: 6px; background: #CCFBF1; padding: 5px; border-radius: 8px; font-size: 11px;">🙆 <strong>Neck</strong> — turn & nod</div>
-                </div>
-                <div style="text-align: center; padding: 18px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); flex: 1; min-width: 160px;">
-                    <div style="font-size: 38px; animation: bounce 2s ease-in-out infinite 0.5s;">🫳</div>
-                    <div style="font-size: 13px; font-weight: bold; margin: 6px 0; color: #134E4A;">Gliding Joint</div>
-                    <div style="font-size: 11px; color: #6B7280;">Flat bones slide over each other</div>
-                    <div style="margin-top: 6px; background: #CCFBF1; padding: 5px; border-radius: 8px; font-size: 11px;">✋ <strong>Wrist & Ankle</strong></div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "muscle_contraction":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #FEF2F2, #FECACA);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #991B1B;">🎬 How Muscles Move Bones</div>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite;">💪</div>
-                    <div style="font-size: 12px; font-weight: bold;">Contract</div>
-                    <div style="font-size: 10px; color: #6B7280;">Gets SHORT → Pulls bone</div>
-                </div>
-                <div style="font-size: 24px; color: #DC2626;">⟷</div>
-                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 0.5s;">🤲</div>
-                    <div style="font-size: 12px; font-weight: bold;">Relax</div>
-                    <div style="font-size: 10px; color: #6B7280;">Gets LONG → Bone returns</div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 12px; display: inline-flex; align-items: center; gap: 5px; background: #FEE2E2; padding: 6px 12px; border-radius: 15px; font-size: 11px; margin-left: auto; margin-right: auto; width: fit-content;">
-                🔗 Tendon joins 💪 Muscle to 🦴 Bone
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "muscle_types":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #FFF1F2, #FFE4E6);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #9F1239;">🎬 Three Types of Muscles</div>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
-                <div style="text-align: center; padding: 14px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); min-width: 130px; flex: 1;">
-                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite;">🦓</div>
-                    <div style="font-size: 12px; font-weight: bold; color: #9F1239;">Striped (Voluntary)</div>
-                    <div style="font-size: 10px; color: #6B7280;">YOU control them<br>Arms, legs<br>Can get tired</div>
-                </div>
-                <div style="text-align: center; padding: 14px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); min-width: 130px; flex: 1;">
-                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.4s;">🫧</div>
-                    <div style="font-size: 12px; font-weight: bold; color: #9F1239;">Smooth (Involuntary)</div>
-                    <div style="font-size: 10px; color: #6B7280;">Automatic<br>Stomach, intestines<br>Brain controls</div>
-                </div>
-                <div style="text-align: center; padding: 14px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); min-width: 130px; flex: 1;">
-                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.8s;">❤️</div>
-                    <div style="font-size: 12px; font-weight: bold; color: #9F1239;">Cardiac (Heart)</div>
-                    <div style="font-size: 10px; color: #6B7280;">Only in heart<br>Works 24/7<br>Never tires!</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    elif anim_type == "body_system_overview":
-        st.markdown("""
-        <div class="animation-container" style="background: linear-gradient(180deg, #EDE9FE, #DDD6FE);">
-            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #5B21B6;">🎬 How It All Works Together</div>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap;">
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
-                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite;">🦴</div>
-                    <div style="font-size: 10px; font-weight: bold;">Skeleton</div>
-                </div>
-                <div style="font-size: 16px; color: #7C3AED;">+</div>
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
-                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 0.3s;">🔧</div>
-                    <div style="font-size: 10px; font-weight: bold;">Joints</div>
-                </div>
-                <div style="font-size: 16px; color: #7C3AED;">+</div>
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
-                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 0.6s;">💪</div>
-                    <div style="font-size: 10px; font-weight: bold;">Muscles</div>
-                </div>
-                <div style="font-size: 16px; color: #7C3AED;">+</div>
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
-                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 0.9s;">🧠</div>
-                    <div style="font-size: 10px; font-weight: bold;">Brain Signal</div>
-                </div>
-                <div style="font-size: 16px; color: #7C3AED;">=</div>
-                <div style="text-align: center; padding: 10px; background: #7C3AED; border-radius: 12px; color: white;">
-                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 1.2s;">🏃</div>
-                    <div style="font-size: 10px; font-weight: bold;">Movement!</div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
+    # Fallback: show description if animation type not found
+    desc = animation_config.get("description", "")
+    if desc:
+        st.info(f"🎬 {desc}")
 
 # ─── Session State Initialization ─────────────────────────────────────────────
 
@@ -1961,29 +2132,30 @@ else:
 
     st.divider()
 
-    # ─── Scene Title ──────────────────────────────────────────────────────────
-    st.header(scene["title"])
+    # ─── Scene Title + Character Avatar ─────────────────────────────────────────
+    character_name = scene.get("character", "tara")
+    character_display = character_name.title().replace("_", " ")
+    character_file = Path(f"assets/characters/{character_name}.png")
 
-    # ─── Character + Narration ────────────────────────────────────────────────
-    col_content, col_char = st.columns([3, 1])
+    # Floating avatar next to title
+    if character_file.exists():
+        col_avatar, col_title = st.columns([0.08, 0.92])
+        with col_avatar:
+            st.image(str(character_file), width=48)
+        with col_title:
+            st.header(scene["title"])
+            st.caption(f"🎭 {character_display}")
+    else:
+        st.header(scene["title"])
+        st.caption(f"🎭 {character_display}")
 
-    with col_content:
-        # Speaker tag
-        character_name = scene.get("character", "Tara").title()
-        st.markdown(f"**🎭 {character_name}**")
+    # ─── Narration ────────────────────────────────────────────────────────────
+    st.write(scene["narration"])
 
-        st.write("")
-        st.write(scene["narration"])
-
-        # TTS audio
-        if scene.get("tts"):
-            with st.expander("🔊 Listen to Narration"):
-                render_audio_player(scene["narration"], scene["id"])
-
-    with col_char:
-        character_file = Path(f"assets/characters/{scene['character']}.png")
-        if character_file.exists():
-            st.image(str(character_file), width=200)
+    # TTS audio
+    if scene.get("tts"):
+        with st.expander("🔊 Listen to Narration"):
+            render_audio_player(scene["narration"], scene["id"])
 
     # ─── Dialogue ─────────────────────────────────────────────────────────────
     if "dialogue" in scene:
