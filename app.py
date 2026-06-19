@@ -2007,8 +2007,10 @@ else:
         st.write("")
         st.subheader("🔍 Explore & Learn")
         for hotspot in scene["hotspots"]:
-            with st.expander(f"{hotspot.get('icon', '📌')} {hotspot['title']}"):
-                st.write(hotspot["description"])
+            hotspot_title = hotspot.get('title', hotspot.get('name', 'Learn More'))
+            hotspot_icon = hotspot.get('icon', '📌')
+            with st.expander(f"{hotspot_icon} {hotspot_title}"):
+                st.write(hotspot.get("description", hotspot.get("detail", "")))
                 if "example" in hotspot:
                     st.success(f"💡 Example: {hotspot['example']}")
 
