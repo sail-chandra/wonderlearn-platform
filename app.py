@@ -2706,7 +2706,7 @@ else:
 
     with col_home:
         if st.button("🏠 Home", key="nav_home"):
-            st.session_state.current_chapter = None
+            st.session_state.chapter_started = False
             st.session_state.scene_index = 0
             st.rerun()
 
