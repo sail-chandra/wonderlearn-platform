@@ -532,6 +532,278 @@ def render_animation(animation_config):
         </div>
         """, unsafe_allow_html=True)
 
+    elif anim_type == "habitat_types":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #FEF3C7, #FDE68A);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #92400E;">🎬 Types of Animal Habitats</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
+                <div style="text-align: center; padding: 12px; background: #D1FAE5; border-radius: 12px; min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite;">🦁</div>
+                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Terrestrial</div>
+                    <div style="font-size: 11px; color: #065F46;">Land: forests,<br>deserts, grasslands</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: #DBEAFE; border-radius: 12px; min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.4s;">🐟</div>
+                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Aquatic</div>
+                    <div style="font-size: 11px; color: #1E40AF;">Water: oceans,<br>rivers, ponds</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: #E0E7FF; border-radius: 12px; min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.8s;">🐸</div>
+                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Amphibious</div>
+                    <div style="font-size: 11px; color: #3730A3;">Both land<br>& water</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: #D1FAE5; border-radius: 12px; min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.2s;">🐒</div>
+                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Arboreal</div>
+                    <div style="font-size: 11px; color: #065F46;">Tree-tops:<br>monkeys, birds</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: #F3E8FF; border-radius: 12px; min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.6s;">🦅</div>
+                    <div style="font-size: 12px; margin-top: 5px; font-weight: bold;">Aerial</div>
+                    <div style="font-size: 11px; color: #6B21A8;">The sky:<br>birds, bats</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "body_coverings_1":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #ECFDF5, #D1FAE5);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #065F46;">🎬 Body Coverings — Nature's Armour</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite;">🪶</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Feathers</div>
+                    <div style="font-size: 11px; color: #6B7280;">Birds — fly<br>& stay warm</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite 0.3s;">🐍</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Scales</div>
+                    <div style="font-size: 11px; color: #6B7280;">Fish & reptiles<br>— protection</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite 0.6s;">🐢</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Shell</div>
+                    <div style="font-size: 11px; color: #6B7280;">Tortoise, snail<br>— hard home</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite 0.9s;">🐑</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Wool</div>
+                    <div style="font-size: 11px; color: #6B7280;">Sheep — traps<br>air, warmth</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 35px; animation: bounce 1.8s ease-in-out infinite 1.2s;">🐻‍❄️</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Fur</div>
+                    <div style="font-size: 11px; color: #6B7280;">Polar bear<br>— insulation</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "body_coverings_2":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #FEF9C3, #FEF08A);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #854D0E;">🎬 Special Defence — Hide or Fight!</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite;">🦓</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Camouflage</div>
+                    <div style="font-size: 11px; color: #6B7280;">Stripes & colours<br>to blend in</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.4s;">🪲</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Cuticle</div>
+                    <div style="font-size: 11px; color: #6B7280;">Hard outer shell<br>on insects</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.8s;">🦔</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Quills</div>
+                    <div style="font-size: 11px; color: #6B7280;">Sharp spines<br>scare enemies</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.2s;">🛡️</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Armour Plates</div>
+                    <div style="font-size: 11px; color: #6B7280;">Armadillo curls<br>into a ball</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 100px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.6s;">🦎</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Colour Change</div>
+                    <div style="font-size: 11px; color: #6B7280;">Chameleon<br>matches surroundings</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "herbivore_teeth":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #F0FDF4, #BBF7D0);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #166534;">🎬 Herbivore Feeding System</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 50%; width: 90px; height: 90px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 30px;">🌿</div>
+                    <div style="font-size: 10px;">Plants</div>
+                </div>
+                <div style="font-size: 24px; color: #22C55E; animation: bounce 1s infinite;">→</div>
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 50%; width: 90px; height: 90px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 30px;">🦷</div>
+                    <div style="font-size: 10px;">Sharp Front<br>Teeth (bite)</div>
+                </div>
+                <div style="font-size: 24px; color: #22C55E; animation: bounce 1s infinite 0.3s;">→</div>
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 50%; width: 90px; height: 90px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 30px;">🔲</div>
+                    <div style="font-size: 10px;">Flat Molars<br>(grind)</div>
+                </div>
+                <div style="font-size: 24px; color: #22C55E; animation: bounce 1s infinite 0.6s;">→</div>
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 50%; width: 90px; height: 90px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 30px;">🐄</div>
+                    <div style="font-size: 10px;">Long Gut<br>(digestion)</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 15px; font-size: 12px; color: #166534;">
+                🦌 Deer &nbsp; 🐴 Horse &nbsp; 🐄 Cow &nbsp; 🐰 Rabbit &nbsp; — all herbivores with hard hooves
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "carnivore_feeders":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #FEF2F2, #FECACA);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #991B1B;">🎬 Carnivores & Special Feeders</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 12px;">
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
+                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite;">🦁</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Carnivore</div>
+                    <div style="font-size: 10px; color: #6B7280;">Sharp teeth 🔪<br>+ Claws for prey</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
+                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 0.3s;">🐻</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Omnivore</div>
+                    <div style="font-size: 10px; color: #6B7280;">Mixed teeth<br>Plants + Meat</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
+                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 0.6s;">🐿️</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Rodent</div>
+                    <div style="font-size: 10px; color: #6B7280;">Ever-growing<br>front teeth 🦷</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
+                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 0.9s;">🦋</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Proboscis</div>
+                    <div style="font-size: 10px; color: #6B7280;">Coiled tube<br>sucks nectar 🌸</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 110px;">
+                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 1.2s;">🦟</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Needle Tube</div>
+                    <div style="font-size: 10px; color: #6B7280;">Pierces skin<br>sucks blood 💉</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "spiracles_skin":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #EDE9FE, #DDD6FE);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #5B21B6;">🎬 Unique Breathing — Insects & Earthworms</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+                <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 3px 12px rgba(0,0,0,0.1); flex: 1; min-width: 200px;">
+                    <div style="font-size: 40px; animation: bounce 2s ease-in-out infinite;">🦗</div>
+                    <div style="font-size: 14px; font-weight: bold; margin: 8px 0; color: #5B21B6;">Insect Breathing</div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Spiracles (holes)</span>
+                        <span style="color: #7C3AED;">→</span>
+                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Trachea (tubes)</span>
+                        <span style="color: #7C3AED;">→</span>
+                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Body cells</span>
+                    </div>
+                    <div style="font-size: 11px; color: #6B7280; margin-top: 8px;">No lungs needed! Air goes directly to cells.</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 3px 12px rgba(0,0,0,0.1); flex: 1; min-width: 200px;">
+                    <div style="font-size: 40px; animation: bounce 2s ease-in-out infinite 0.5s;">🪱</div>
+                    <div style="font-size: 14px; font-weight: bold; margin: 8px 0; color: #5B21B6;">Earthworm Breathing</div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Moist skin</span>
+                        <span style="color: #7C3AED;">→</span>
+                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">O₂ dissolves</span>
+                        <span style="color: #7C3AED;">→</span>
+                        <span style="background: #EDE9FE; padding: 4px 8px; border-radius: 8px; font-size: 11px;">Into blood</span>
+                    </div>
+                    <div style="font-size: 11px; color: #6B7280; margin-top: 8px;">Must stay moist! Dries out = can't breathe.</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "land_movement":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #FFF7ED, #FED7AA);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #9A3412;">🎬 How Animals Move on Land</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite;">🐕</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Walking</div>
+                    <div style="font-size: 10px; color: #6B7280;">4 legs</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite 0.3s;">🦎</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Crawling</div>
+                    <div style="font-size: 10px; color: #6B7280;">Low body</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite 0.6s;">🐍</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Slithering</div>
+                    <div style="font-size: 10px; color: #6B7280;">No legs!</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite 0.9s;">🐜</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">6 Legs</div>
+                    <div style="font-size: 10px; color: #6B7280;">Insects</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 90px;">
+                    <div style="font-size: 32px; animation: bounce 1.5s ease-in-out infinite 1.2s;">🦘</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Hopping</div>
+                    <div style="font-size: 10px; color: #6B7280;">Strong legs</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <div style="display: inline-block; background: #FEF3C7; padding: 8px 15px; border-radius: 20px; font-size: 12px;">
+                    🐍 Snakes use: <strong>Belly scales</strong> + <strong>S-shaped muscles</strong> + <strong>Flexible backbone</strong>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "migration_map":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #EFF6FF, #BFDBFE);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #1E40AF;">🎬 Epic Migration Routes</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 0 auto;">
+                <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); animation: bounce 2s ease-in-out infinite;">
+                    <span style="font-size: 28px;">🏔️</span>
+                    <span style="font-size: 20px; color: #3B82F6;">✈️→</span>
+                    <span style="font-size: 28px;">🇮🇳</span>
+                    <span style="font-size: 12px; flex: 1;"><strong>Siberian Crane</strong><br>Russia → India (5000+ km)</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); animation: bounce 2s ease-in-out infinite 0.3s;">
+                    <span style="font-size: 28px;">🧊</span>
+                    <span style="font-size: 20px; color: #3B82F6;">✈️→</span>
+                    <span style="font-size: 28px;">🐧</span>
+                    <span style="font-size: 12px; flex: 1;"><strong>Arctic Tern</strong><br>Arctic ↔ Antarctic (70,000 km!)</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); animation: bounce 2s ease-in-out infinite 0.6s;">
+                    <span style="font-size: 28px;">🦋</span>
+                    <span style="font-size: 20px; color: #3B82F6;">✈️→</span>
+                    <span style="font-size: 28px;">🌮</span>
+                    <span style="font-size: 12px; flex: 1;"><strong>Monarch Butterfly</strong><br>Canada → Mexico (4000 km)</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; background: white; padding: 10px 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); animation: bounce 2s ease-in-out infinite 0.9s;">
+                    <span style="font-size: 28px;">🐢</span>
+                    <span style="font-size: 20px; color: #3B82F6;">🏊→</span>
+                    <span style="font-size: 28px;">🏖️</span>
+                    <span style="font-size: 12px; flex: 1;"><strong>Olive Ridley Turtle</strong><br>Ocean → Odisha, India</span>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
 
 # ─── Session State Initialization ─────────────────────────────────────────────
 
