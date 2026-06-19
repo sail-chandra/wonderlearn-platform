@@ -2495,7 +2495,7 @@ else:
         st.caption(f"🎭 {character_display}")
 
     # ─── Narration ────────────────────────────────────────────────────────────
-    st.write(scene["narration"])
+    st.write(scene.get("narration", ""))
 
     # TTS audio
     if scene.get("tts"):
@@ -2513,7 +2513,10 @@ else:
 
     # ─── Animation ────────────────────────────────────────────────────────────
     if "animation" in scene:
-        render_animation(scene["animation"])
+        try:
+            render_animation(scene["animation"])
+        except Exception as e:
+            st.warning(f"🎬 Animation loading... ({e})")
 
     # ─── Fun Fact ─────────────────────────────────────────────────────────────
     if "fun_fact" in scene:
