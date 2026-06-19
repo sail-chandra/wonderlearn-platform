@@ -1137,7 +1137,8 @@ if not st.session_state.chapter_started:
     chapters_file = Path("content/class5/science/chapters.json")
     if chapters_file.exists():
         with open(chapters_file, "r", encoding="utf-8") as f:
-            chapters = json.load(f)
+            chapters_data = json.load(f)
+        chapters = chapters_data.get("chapters", []) if isinstance(chapters_data, dict) else chapters_data
     else:
         chapters = []
 
@@ -1766,6 +1767,11 @@ if st.session_state.chapter_started:
                 st.session_state.scene_index = 0
                 st.session_state.quiz_submitted = False
                 st.rerun()
+
+# ─── Footer ──────────────────────────────────────────────────────────────────
+
+st.write("")
+st.write("")
 
 # ─── Footer ──────────────────────────────────────────────────────────────────
 
