@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import json
 import os
 import base64
@@ -345,9 +346,566 @@ st.markdown("""
 
 # ─── Animation Renderers ──────────────────────────────────────────────────────
 
+def render_interactive_animation(anim_type):
+    """Render interactive HTML5 Canvas/JS animations for motion-based concept demos."""
+
+    if anim_type == "habitat_types":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #FEF3C7, #ECFDF5); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#92400E; margin:0 0 15px;">🎬 Animal Habitats — Where Do They Live?</h4>
+        <canvas id="c" width="580" height="260"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0;
+        const habitats=[
+            {x:60,y:130,icon:'🦁',label:'Terrestrial',color:'#D1FAE5',desc:'Land'},
+            {x:175,y:130,icon:'🐟',label:'Aquatic',color:'#DBEAFE',desc:'Water'},
+            {x:290,y:130,icon:'🐸',label:'Amphibious',color:'#E0E7FF',desc:'Both'},
+            {x:405,y:130,icon:'🐒',label:'Arboreal',color:'#D1FAE5',desc:'Trees'},
+            {x:520,y:130,icon:'🦅',label:'Aerial',color:'#F3E8FF',desc:'Sky'}
+        ];
+        function draw(){
+            ctx.clearRect(0,0,580,260);
+            habitats.forEach((h,i)=>{
+                let bounce=Math.sin(t*0.03+i*1.2)*8;
+                // Background circle
+                ctx.beginPath();ctx.arc(h.x,h.y+bounce,45,0,Math.PI*2);
+                ctx.fillStyle=h.color;ctx.fill();
+                ctx.strokeStyle='#9CA3AF';ctx.lineWidth=2;ctx.stroke();
+                // Icon
+                ctx.font='32px serif';ctx.textAlign='center';
+                ctx.fillText(h.icon,h.x,h.y+bounce+10);
+                // Label
+                ctx.font='bold 12px sans-serif';ctx.fillStyle='#1F2937';
+                ctx.fillText(h.label,h.x,h.y+bounce+55);
+                ctx.font='11px sans-serif';ctx.fillStyle='#6B7280';
+                ctx.fillText(h.desc,h.x,h.y+bounce+70);
+            });
+            // Animated arrow cycling between habitats
+            let arrowIdx=Math.floor(t*0.02)%5;
+            ctx.beginPath();ctx.arc(habitats[arrowIdx].x,habitats[arrowIdx].y-55,8,0,Math.PI*2);
+            ctx.fillStyle='#F59E0B';ctx.fill();
+            ctx.font='12px sans-serif';ctx.fillStyle='#92400E';
+            ctx.fillText('▼',habitats[arrowIdx].x,habitats[arrowIdx].y-48);
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=320)
+        return True
+
+    elif anim_type == "body_coverings_1":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #ECFDF5, #D1FAE5); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#065F46; margin:0 0 10px;">🎬 Body Coverings — Nature's Armour</h4>
+        <canvas id="c" width="580" height="280"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0,selected=-1;
+        const items=[
+            {x:60,y:100,icon:'🪶',name:'Feathers',animal:'Birds',purpose:'Fly & warmth',color:'#FEF3C7'},
+            {x:175,y:100,icon:'🐍',name:'Scales',animal:'Fish/Reptiles',purpose:'Protection',color:'#DBEAFE'},
+            {x:290,y:100,icon:'🐢',name:'Shell',animal:'Tortoise/Snail',purpose:'Hard home',color:'#F3E8FF'},
+            {x:405,y:100,icon:'🐑',name:'Wool',animal:'Sheep',purpose:'Trap warmth',color:'#FEF9C3'},
+            {x:520,y:100,icon:'🐻‍❄️',name:'Fur',animal:'Polar Bear',purpose:'Insulation',color:'#E0F2FE'}
+        ];
+        c.addEventListener('click',e=>{
+            const r=c.getBoundingClientRect();
+            const mx=e.clientX-r.left,my=e.clientY-r.top;
+            selected=-1;
+            items.forEach((it,i)=>{if(Math.abs(mx-it.x)<40&&Math.abs(my-it.y)<40)selected=i;});
+        });
+        function draw(){
+            ctx.clearRect(0,0,580,280);
+            items.forEach((it,i)=>{
+                let s=selected===i?1.15:1;
+                let bounce=Math.sin(t*0.04+i*1.3)*5;
+                // Card
+                ctx.save();ctx.translate(it.x,it.y+bounce);ctx.scale(s,s);
+                ctx.beginPath();ctx.roundRect(-40,-40,80,80,12);
+                ctx.fillStyle=it.color;ctx.fill();
+                ctx.strokeStyle=selected===i?'#22C55E':'#D1D5DB';ctx.lineWidth=selected===i?3:1;ctx.stroke();
+                ctx.font='30px serif';ctx.textAlign='center';ctx.fillText(it.icon,0,10);
+                ctx.restore();
+                // Labels below
+                ctx.font='bold 11px sans-serif';ctx.fillStyle='#1F2937';ctx.textAlign='center';
+                ctx.fillText(it.name,it.x,it.y+bounce+55);
+                ctx.font='10px sans-serif';ctx.fillStyle='#6B7280';
+                ctx.fillText(it.animal,it.x,it.y+bounce+68);
+            });
+            // Detail panel
+            if(selected>=0){
+                let it=items[selected];
+                ctx.fillStyle='#F0FDF4';ctx.beginPath();ctx.roundRect(90,200,400,50,10);ctx.fill();
+                ctx.strokeStyle='#22C55E';ctx.lineWidth=2;ctx.stroke();
+                ctx.font='14px sans-serif';ctx.fillStyle='#065F46';ctx.textAlign='center';
+                ctx.fillText(it.icon+' '+it.name+' — '+it.purpose+' (Found on: '+it.animal+')',290,230);
+            } else {
+                ctx.font='12px sans-serif';ctx.fillStyle='#9CA3AF';ctx.textAlign='center';
+                ctx.fillText('👆 Click on any covering to learn more!',290,230);
+            }
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=340)
+        return True
+
+    elif anim_type == "body_coverings_2":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #FEF9C3, #FEF08A); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#854D0E; margin:0 0 10px;">🎬 Special Defence — Hide or Fight!</h4>
+        <canvas id="c" width="580" height="280"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0,selected=-1;
+        const items=[
+            {x:60,y:100,icon:'🦓',name:'Camouflage',desc:'Stripes/colour blend with surroundings',color:'#F3F4F6'},
+            {x:175,y:100,icon:'🪲',name:'Cuticle',desc:'Hard outer layer on insects like armour',color:'#FEF3C7'},
+            {x:290,y:100,icon:'🦔',name:'Quills',desc:'Sharp spines raised to scare enemies',color:'#FEE2E2'},
+            {x:405,y:100,icon:'🛡️',name:'Armour Plates',desc:'Bony plates — armadillo curls into ball',color:'#E0E7FF'},
+            {x:520,y:100,icon:'🦎',name:'Colour Change',desc:'Chameleon matches any background',color:'#D1FAE5'}
+        ];
+        c.addEventListener('click',e=>{
+            const r=c.getBoundingClientRect();
+            const mx=e.clientX-r.left,my=e.clientY-r.top;
+            selected=-1;
+            items.forEach((it,i)=>{if(Math.abs(mx-it.x)<40&&Math.abs(my-it.y)<40)selected=i;});
+        });
+        function draw(){
+            ctx.clearRect(0,0,580,280);
+            // Camouflage demo - zebra fading in/out
+            if(selected===0){
+                let alpha=0.3+0.7*Math.abs(Math.sin(t*0.05));
+                ctx.globalAlpha=alpha;
+            }
+            items.forEach((it,i)=>{
+                ctx.globalAlpha=1;
+                let pulse=selected===i?3+Math.sin(t*0.1)*3:0;
+                let bounce=Math.sin(t*0.04+i)*5;
+                ctx.beginPath();ctx.roundRect(it.x-40,it.y+bounce-40,80,80,12);
+                ctx.fillStyle=it.color;ctx.fill();
+                ctx.strokeStyle=selected===i?'#EAB308':'#D1D5DB';
+                ctx.lineWidth=selected===i?3:1;ctx.stroke();
+                ctx.font='30px serif';ctx.textAlign='center';
+                ctx.fillText(it.icon,it.x,it.y+bounce+10);
+                ctx.font='bold 10px sans-serif';ctx.fillStyle='#1F2937';
+                ctx.fillText(it.name,it.x,it.y+bounce+55);
+            });
+            if(selected>=0){
+                ctx.fillStyle='#FFFBEB';ctx.beginPath();ctx.roundRect(90,195,400,55,10);ctx.fill();
+                ctx.strokeStyle='#EAB308';ctx.lineWidth=2;ctx.stroke();
+                ctx.font='13px sans-serif';ctx.fillStyle='#78350F';ctx.textAlign='center';
+                ctx.fillText(items[selected].icon+' '+items[selected].name,290,217);
+                ctx.font='12px sans-serif';ctx.fillStyle='#92400E';
+                ctx.fillText(items[selected].desc,290,237);
+            } else {
+                ctx.font='12px sans-serif';ctx.fillStyle='#9CA3AF';ctx.textAlign='center';
+                ctx.fillText('👆 Click on a defence mechanism to see it in action!',290,225);
+            }
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=340)
+        return True
+
+    elif anim_type == "herbivore_teeth":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #F0FDF4, #BBF7D0); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#166534; margin:0 0 10px;">🎬 Herbivore Feeding System</h4>
+        <canvas id="c" width="580" height="240"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0;
+        function draw(){
+            ctx.clearRect(0,0,580,240);
+            // Animated flow: Plant → Bite → Grind → Digest
+            const steps=[
+                {x:80,icon:'🌿',label:'Plant Food',sub:'leaves, grass'},
+                {x:210,icon:'🦷',label:'Sharp Incisors',sub:'bite & cut'},
+                {x:340,icon:'🔲',label:'Flat Molars',sub:'grind & crush'},
+                {x:470,icon:'🐄',label:'Long Gut',sub:'slow digestion'}
+            ];
+            // Animated food particle traveling
+            let foodX=80+(t*1.5)%480;
+            ctx.beginPath();ctx.arc(foodX,40,6,0,Math.PI*2);
+            ctx.fillStyle='#22C55E';ctx.fill();
+            ctx.font='10px sans-serif';ctx.fillStyle='#166534';ctx.textAlign='center';
+            ctx.fillText('🌱',foodX,44);
+
+            steps.forEach((s,i)=>{
+                let bounce=Math.sin(t*0.04+i)*6;
+                // Circle
+                ctx.beginPath();ctx.arc(s.x,110+bounce,40,0,Math.PI*2);
+                ctx.fillStyle='white';ctx.fill();
+                ctx.strokeStyle='#22C55E';ctx.lineWidth=2;ctx.stroke();
+                ctx.font='28px serif';ctx.textAlign='center';
+                ctx.fillText(s.icon,s.x,120+bounce);
+                // Arrow
+                if(i<3){
+                    ctx.beginPath();ctx.moveTo(s.x+45,110);ctx.lineTo(s.x+85,110);
+                    ctx.strokeStyle='#16A34A';ctx.lineWidth=2;ctx.stroke();
+                    ctx.beginPath();ctx.moveTo(s.x+80,105);ctx.lineTo(s.x+88,110);ctx.lineTo(s.x+80,115);
+                    ctx.fillStyle='#16A34A';ctx.fill();
+                }
+                ctx.font='bold 12px sans-serif';ctx.fillStyle='#1F2937';
+                ctx.fillText(s.label,s.x,170+bounce);
+                ctx.font='10px sans-serif';ctx.fillStyle='#6B7280';
+                ctx.fillText(s.sub,s.x,185+bounce);
+            });
+            // Bottom bar
+            ctx.font='11px sans-serif';ctx.fillStyle='#166534';ctx.textAlign='center';
+            ctx.fillText('🦌 Deer  🐴 Horse  🐄 Cow  🐰 Rabbit — all have hard hooves for walking long distances',290,220);
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=300)
+        return True
+
+    elif anim_type == "carnivore_feeders":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #FEF2F2, #FECACA); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#991B1B; margin:0 0 10px;">🎬 Carnivores & Special Feeders</h4>
+        <canvas id="c" width="580" height="280"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0,selected=-1;
+        const items=[
+            {x:60,y:100,icon:'🦁',name:'Carnivore',tool:'Sharp teeth + Claws',food:'Meat only',color:'#FEE2E2'},
+            {x:175,y:100,icon:'🐻',name:'Omnivore',tool:'Mixed teeth',food:'Plants + Meat',color:'#FEF3C7'},
+            {x:290,y:100,icon:'🐿️',name:'Rodent',tool:'Ever-growing teeth',food:'Nuts & seeds',color:'#E0F2FE'},
+            {x:405,y:100,icon:'🦋',name:'Proboscis',tool:'Coiled tube',food:'Nectar',color:'#F3E8FF'},
+            {x:520,y:100,icon:'🦟',name:'Needle tube',tool:'Piercing tube',food:'Blood',color:'#FCE7F3'}
+        ];
+        c.addEventListener('click',e=>{
+            const r=c.getBoundingClientRect();
+            const mx=e.clientX-r.left,my=e.clientY-r.top;
+            selected=-1;
+            items.forEach((it,i)=>{if(Math.abs(mx-it.x)<40&&Math.abs(my-it.y)<40)selected=i;});
+        });
+        function draw(){
+            ctx.clearRect(0,0,580,280);
+            items.forEach((it,i)=>{
+                let bounce=Math.sin(t*0.04+i*1.2)*5;
+                let s=selected===i?1.1:1;
+                ctx.save();ctx.translate(it.x,it.y+bounce);ctx.scale(s,s);
+                ctx.beginPath();ctx.roundRect(-38,-38,76,76,12);
+                ctx.fillStyle=it.color;ctx.fill();
+                ctx.strokeStyle=selected===i?'#DC2626':'#E5E7EB';ctx.lineWidth=selected===i?3:1;ctx.stroke();
+                ctx.font='28px serif';ctx.textAlign='center';ctx.fillText(it.icon,0,8);
+                ctx.restore();
+                ctx.font='bold 10px sans-serif';ctx.fillStyle='#1F2937';ctx.textAlign='center';
+                ctx.fillText(it.name,it.x,it.y+bounce+52);
+            });
+            // Animated feeding demo for selected
+            if(selected>=0){
+                let it=items[selected];
+                ctx.fillStyle='#FFF';ctx.beginPath();ctx.roundRect(80,190,420,60,10);ctx.fill();
+                ctx.strokeStyle='#DC2626';ctx.lineWidth=1.5;ctx.stroke();
+                ctx.font='13px sans-serif';ctx.fillStyle='#991B1B';ctx.textAlign='center';
+                ctx.fillText(it.icon+' '+it.name+': '+it.tool,290,212);
+                ctx.font='12px sans-serif';ctx.fillStyle='#6B7280';
+                ctx.fillText('Food: '+it.food,290,232);
+                // Mini feeding animation
+                let fx=180+Math.sin(t*0.08)*20;
+                ctx.font='16px serif';ctx.fillText(it.icon,fx,245);
+            } else {
+                ctx.font='12px sans-serif';ctx.fillStyle='#9CA3AF';ctx.textAlign='center';
+                ctx.fillText('👆 Click an animal to see how it feeds!',290,220);
+            }
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=340)
+        return True
+
+    elif anim_type == "breathing_systems":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#1E40AF; margin:0 0 10px;">🎬 How Animals Breathe — Watch the Flow!</h4>
+        <canvas id="c" width="580" height="300"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0,selected=0;
+        const systems=[
+            {icon:'🫁',name:'Lungs',animal:'Mammals/Birds',flow:['Nostrils','Windpipe','Lungs','Blood (O₂)'],color:'#DBEAFE'},
+            {icon:'🐟',name:'Gills',animal:'Fish/Tadpoles',flow:['Water in mouth','Over gills','O₂ absorbed','Blood carries'],color:'#D1FAE5'},
+            {icon:'🦗',name:'Spiracles',animal:'Insects',flow:['Spiracle holes','Trachea tubes','Directly to cells','No blood needed'],color:'#EDE9FE'},
+            {icon:'🪱',name:'Skin',animal:'Earthworm',flow:['Moist skin','O₂ dissolves','Into blood','Must stay wet!'],color:'#FEF3C7'},
+            {icon:'🐋',name:'Blowhole',animal:'Whales/Dolphins',flow:['Surface','Blowhole opens','Air to lungs','Dive again'],color:'#E0F2FE'}
+        ];
+        // Tab buttons
+        const tabs=document.createElement('div');
+        tabs.style.cssText='display:flex;justify-content:center;gap:8px;margin-bottom:10px;';
+        systems.forEach((s,i)=>{
+            const btn=document.createElement('button');
+            btn.textContent=s.icon+' '+s.name;
+            btn.style.cssText='padding:5px 12px;border-radius:20px;border:2px solid '+(i===0?'#3B82F6':'#D1D5DB')+';background:'+(i===0?'#EFF6FF':'white')+';cursor:pointer;font-size:12px;';
+            btn.onclick=()=>{selected=i;document.querySelectorAll('button').forEach((b,j)=>{b.style.border='2px solid '+(j===i?'#3B82F6':'#D1D5DB');b.style.background=j===i?'#EFF6FF':'white';});};
+            tabs.appendChild(btn);
+        });
+        c.parentElement.insertBefore(tabs,c);
+        function draw(){
+            ctx.clearRect(0,0,580,300);
+            let sys=systems[selected];
+            // Title
+            ctx.font='16px sans-serif';ctx.fillStyle='#1E40AF';ctx.textAlign='center';
+            ctx.fillText(sys.icon+' '+sys.name+' — '+sys.animal,290,30);
+            // Animated flow pipeline
+            sys.flow.forEach((step,i)=>{
+                let x=80+i*140,y=120;
+                let progress=(t*0.02)%4;
+                let active=Math.floor(progress)===i;
+                // Box
+                ctx.beginPath();ctx.roundRect(x-50,y-30,100,60,10);
+                ctx.fillStyle=active?sys.color:'white';ctx.fill();
+                ctx.strokeStyle=active?'#3B82F6':'#D1D5DB';ctx.lineWidth=active?3:1;ctx.stroke();
+                ctx.font=(active?'bold ':'')+' 12px sans-serif';ctx.fillStyle='#1F2937';ctx.textAlign='center';
+                ctx.fillText(step,x,y+5);
+                // Arrow
+                if(i<3){
+                    let arrowX=x+55;
+                    ctx.beginPath();ctx.moveTo(arrowX,y);ctx.lineTo(arrowX+25,y);
+                    ctx.strokeStyle='#3B82F6';ctx.lineWidth=2;ctx.stroke();
+                    ctx.beginPath();ctx.moveTo(arrowX+20,y-5);ctx.lineTo(arrowX+28,y);ctx.lineTo(arrowX+20,y+5);ctx.fillStyle='#3B82F6';ctx.fill();
+                }
+            });
+            // Animated O2 particles
+            for(let i=0;i<6;i++){
+                let px=(t*2+i*100)%580,py=200+Math.sin(t*0.03+i)*20;
+                ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);
+                ctx.fillStyle='rgba(59,130,246,0.5)';ctx.fill();
+                ctx.font='8px sans-serif';ctx.fillStyle='#3B82F6';ctx.fillText('O₂',px,py+3);
+            }
+            // Info text
+            ctx.font='11px sans-serif';ctx.fillStyle='#6B7280';ctx.textAlign='center';
+            ctx.fillText('Oxygen flows through the system to reach body cells',290,270);
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=380)
+        return True
+
+    elif anim_type == "spiracles_skin":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #EDE9FE, #DDD6FE); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#5B21B6; margin:0 0 10px;">🎬 Insect Spiracles vs Earthworm Skin Breathing</h4>
+        <canvas id="c" width="580" height="260"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0;
+        function draw(){
+            ctx.clearRect(0,0,580,260);
+            // LEFT: Insect spiracles
+            ctx.font='bold 13px sans-serif';ctx.fillStyle='#5B21B6';ctx.textAlign='center';
+            ctx.fillText('🦗 Insect — Spiracles',150,25);
+            // Draw insect body
+            ctx.beginPath();ctx.ellipse(150,100,60,30,0,0,Math.PI*2);
+            ctx.fillStyle='#A78BFA';ctx.fill();ctx.strokeStyle='#7C3AED';ctx.lineWidth=2;ctx.stroke();
+            // Spiracle holes with air going in
+            for(let i=0;i<4;i++){
+                let sx=100+i*30,sy=100;
+                ctx.beginPath();ctx.arc(sx,sy+30,4,0,Math.PI*2);ctx.fillStyle='#FDE68A';ctx.fill();
+                // Air arrow going in
+                let airY=sy+30-10-Math.abs(Math.sin(t*0.05+i))*15;
+                ctx.font='10px serif';ctx.fillText('💨',sx,airY);
+            }
+            // Trachea tubes inside
+            ctx.setLineDash([3,3]);
+            ctx.beginPath();ctx.moveTo(110,100);ctx.lineTo(190,100);ctx.strokeStyle='#EAB308';ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.font='10px sans-serif';ctx.fillStyle='#6B7280';
+            ctx.fillText('Spiracle holes → Trachea tubes → Cells',150,160);
+            ctx.fillText('No lungs! Air goes directly to cells.',150,178);
+
+            // RIGHT: Earthworm skin
+            ctx.font='bold 13px sans-serif';ctx.fillStyle='#5B21B6';ctx.textAlign='center';
+            ctx.fillText('🪱 Earthworm — Skin',430,25);
+            // Draw worm body
+            let wormY=100+Math.sin(t*0.03)*5;
+            ctx.beginPath();ctx.ellipse(430,wormY,50,18,0,0,Math.PI*2);
+            ctx.fillStyle='#FBBF24';ctx.fill();ctx.strokeStyle='#D97706';ctx.lineWidth=2;ctx.stroke();
+            // Moisture drops on skin
+            for(let i=0;i<5;i++){
+                let dx=395+i*18,dy=wormY-20+Math.sin(t*0.04+i)*3;
+                ctx.font='8px serif';ctx.fillText('💧',dx,dy);
+            }
+            // O2 arrows going through skin
+            for(let i=0;i<3;i++){
+                let ox=410+i*20,oy=wormY+25+Math.sin(t*0.05+i)*5;
+                ctx.font='9px sans-serif';ctx.fillStyle='#3B82F6';
+                ctx.fillText('O₂↓',ox,oy);
+            }
+            ctx.font='10px sans-serif';ctx.fillStyle='#6B7280';
+            ctx.fillText('Moist skin → O₂ dissolves → Into blood',430,160);
+            ctx.fillText('Must stay wet or it cannot breathe!',430,178);
+
+            // Divider
+            ctx.beginPath();ctx.moveTo(290,20);ctx.lineTo(290,200);
+            ctx.strokeStyle='#D1D5DB';ctx.lineWidth=1;ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);
+
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=310)
+        return True
+
+    elif anim_type == "land_movement":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #FFF7ED, #FED7AA); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#9A3412; margin:0 0 10px;">🎬 How Animals Move on Land</h4>
+        <canvas id="c" width="580" height="250"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0;
+        function draw(){
+            ctx.clearRect(0,0,580,250);
+            // Ground line
+            ctx.beginPath();ctx.moveTo(0,200);ctx.lineTo(580,200);ctx.strokeStyle='#92400E';ctx.lineWidth=2;ctx.stroke();
+            // Animals moving across screen
+            const animals=[
+                {icon:'🐕',y:175,speed:1.5,label:'Walk (4 legs)'},
+                {icon:'🦎',y:185,speed:0.8,label:'Crawl'},
+                {icon:'🐍',y:192,speed:1.2,label:'Slither (no legs!)'},
+                {icon:'🐜',y:188,speed:2,label:'6 legs (insect)'},
+                {icon:'🦘',y:160,speed:1.8,label:'Hop'}
+            ];
+            animals.forEach((a,i)=>{
+                let x=(t*a.speed+i*120)%640-30;
+                let hopBounce=a.icon==='🦘'?Math.abs(Math.sin(t*0.08))*25:0;
+                let slither=a.icon==='🐍'?Math.sin(t*0.1)*8:0;
+                ctx.font='28px serif';ctx.textAlign='center';
+                ctx.fillText(a.icon,x,a.y-hopBounce+slither);
+                // Label under each
+                if(x>50&&x<530){
+                    ctx.font='10px sans-serif';ctx.fillStyle='#78350F';
+                    ctx.fillText(a.label,x,210);
+                }
+            });
+            // Snake explanation
+            ctx.font='11px sans-serif';ctx.fillStyle='#9A3412';ctx.textAlign='center';
+            ctx.fillText('🐍 Snakes use: Belly scales + S-shaped muscles + Flexible backbone',290,238);
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=310)
+        return True
+
+    elif anim_type == "animal_movement":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #F0FDF4, #DCFCE7); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#166534; margin:0 0 10px;">🎬 Flying & Swimming — Adaptations in Motion</h4>
+        <canvas id="c" width="580" height="280"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0;
+        function draw(){
+            ctx.clearRect(0,0,580,280);
+            // SKY section (top half)
+            ctx.fillStyle='#EFF6FF';ctx.fillRect(0,0,580,130);
+            ctx.font='bold 11px sans-serif';ctx.fillStyle='#1E40AF';ctx.textAlign='left';
+            ctx.fillText('✈️ SKY',10,20);
+            // Flying bird with wing flap
+            let birdX=(t*1.5)%640-30;
+            let wingY=Math.sin(t*0.12)*10;
+            ctx.font='30px serif';ctx.textAlign='center';
+            ctx.fillText('🦅',birdX,60+wingY);
+            // Bird adaptations labels
+            ctx.font='10px sans-serif';ctx.fillStyle='#1E40AF';ctx.textAlign='center';
+            ctx.fillText('Hollow bones + Wings + Streamlined body + Tail steering',290,110);
+            // Bat
+            let batX=(t*1.2+200)%640-30;
+            ctx.font='22px serif';ctx.fillText('🦇',batX,90+Math.sin(t*0.1+1)*8);
+
+            // WATER section (bottom half)
+            ctx.fillStyle='#DBEAFE';ctx.fillRect(0,135,580,145);
+            ctx.font='bold 11px sans-serif';ctx.fillStyle='#0C4A6E';ctx.textAlign='left';
+            ctx.fillText('🌊 WATER',10,152);
+            // Swimming fish
+            let fishX=(t*1.8)%640-30;
+            ctx.font='28px serif';ctx.textAlign='center';
+            ctx.fillText('🐠',fishX,190+Math.sin(t*0.06)*5);
+            // Duck with webbed feet
+            let duckX=(t*1.0+300)%640-30;
+            ctx.font='24px serif';ctx.fillText('🦆',duckX,175);
+            // Penguin swimming
+            let penX=(t*1.4+150)%640-30;
+            ctx.font='22px serif';ctx.fillText('🐧',penX,210+Math.sin(t*0.08+2)*5);
+            // Water adaptations
+            ctx.font='10px sans-serif';ctx.fillStyle='#0C4A6E';ctx.textAlign='center';
+            ctx.fillText('Fins + Streamlined body + Webbed feet (ducks) + Flippers (penguins)',290,255);
+            // Divider line
+            ctx.beginPath();ctx.moveTo(0,133);ctx.lineTo(580,133);ctx.strokeStyle='#93C5FD';ctx.lineWidth=2;ctx.stroke();
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=340)
+        return True
+
+    elif anim_type == "migration_map":
+        components.html("""
+        <div style="background: linear-gradient(135deg, #EFF6FF, #BFDBFE); border-radius: 16px; padding: 20px; font-family: sans-serif;">
+        <h4 style="text-align:center; color:#1E40AF; margin:0 0 10px;">🎬 Epic Migration Routes — Animals on the Move!</h4>
+        <canvas id="c" width="580" height="300"></canvas>
+        <script>
+        const c=document.getElementById('c'),ctx=c.getContext('2d');
+        let t=0;
+        const routes=[
+            {icon:'🏔️',from:'Siberia',to:'India',animal:'🦢 Siberian Crane',dist:'5000+ km',y:40,color:'#DBEAFE'},
+            {icon:'🧊',from:'Arctic',to:'Antarctic',animal:'🕊️ Arctic Tern',dist:'70,000 km!',y:95,color:'#D1FAE5'},
+            {icon:'🍁',from:'Canada',to:'Mexico',animal:'🦋 Monarch Butterfly',dist:'4000 km',y:150,color:'#FEF3C7'},
+            {icon:'🌊',from:'Ocean',to:'Odisha, India',animal:'🐢 Olive Ridley Turtle',dist:'1000s km',y:205,color:'#FCE7F3'},
+            {icon:'🏞️',from:'River birth',to:'Ocean & back',animal:'🐟 Salmon',dist:'Round trip!',y:260,color:'#E0E7FF'}
+        ];
+        function draw(){
+            ctx.clearRect(0,0,580,300);
+            routes.forEach((r,i)=>{
+                // Background bar
+                ctx.fillStyle=r.color;ctx.beginPath();ctx.roundRect(10,r.y,560,45,8);ctx.fill();
+                // From label
+                ctx.font='11px sans-serif';ctx.fillStyle='#6B7280';ctx.textAlign='left';
+                ctx.fillText(r.from,20,r.y+18);
+                // To label
+                ctx.textAlign='right';ctx.fillText(r.to,570,r.y+18);
+                // Animal moving along the route
+                let progress=(t*0.005+i*0.2)%1;
+                let animalX=60+progress*460;
+                ctx.font='18px serif';ctx.textAlign='center';
+                ctx.fillText(r.animal.split(' ')[0],animalX,r.y+38);
+                // Dotted path
+                ctx.setLineDash([4,4]);ctx.beginPath();
+                ctx.moveTo(60,r.y+32);ctx.lineTo(540,r.y+32);
+                ctx.strokeStyle='#9CA3AF';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+                // Animal name + distance
+                ctx.font='bold 11px sans-serif';ctx.fillStyle='#1F2937';ctx.textAlign='center';
+                ctx.fillText(r.animal+' — '+r.dist,290,r.y+15);
+            });
+            t++;requestAnimationFrame(draw);
+        }
+        draw();
+        </script></div>
+        """, height=360)
+        return True
+
+    return False
+
+
 def render_animation(animation_config):
-    """Render CSS animations based on animation type."""
+    """Render animations — try interactive JS first, fall back to CSS."""
     anim_type = animation_config.get("type", "")
+
+    # Try interactive animation first
+    if render_interactive_animation(anim_type):
+        return
+
+    # Fall back to CSS animations for Chapter 1 and Chapter 3
 
     if anim_type == "germination_stages":
         st.markdown("""
