@@ -804,6 +804,283 @@ def render_animation(animation_config):
         </div>
         """, unsafe_allow_html=True)
 
+    elif anim_type == "skeleton_functions":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #F5F3FF, #EDE9FE);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #5B21B6;">🎬 What Does Your Skeleton Do?</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
+                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite;">🏗️</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Shape</div>
+                    <div style="font-size: 10px; color: #6B7280;">Gives body<br>its form</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
+                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.3s;">🧍</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Support</div>
+                    <div style="font-size: 10px; color: #6B7280;">Stand<br>upright</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
+                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.6s;">🛡️</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Protect</div>
+                    <div style="font-size: 10px; color: #6B7280;">Brain, heart<br>lungs, spine</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
+                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.9s;">🏃</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Movement</div>
+                    <div style="font-size: 10px; color: #6B7280;">With muscles<br>at joints</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); min-width: 95px;">
+                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 1.2s;">🩸</div>
+                    <div style="font-size: 11px; font-weight: bold; margin-top: 5px;">Blood Cells</div>
+                    <div style="font-size: 10px; color: #6B7280;">Made in<br>bone marrow</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "bone_structure":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #FFF7ED, #FFEDD5);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #9A3412;">🎬 Inside a Bone — Layers Revealed</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite;">🦴</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Compact Bone</div>
+                    <div style="font-size: 10px; color: #6B7280;">(Hard outer layer)</div>
+                </div>
+                <div style="font-size: 24px; color: #EA580C;">→</div>
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.5s;">🧽</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Spongy Bone</div>
+                    <div style="font-size: 10px; color: #6B7280;">(Lightweight inside)</div>
+                </div>
+                <div style="font-size: 24px; color: #EA580C;">→</div>
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1s;">🩸</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 5px;">Bone Marrow</div>
+                    <div style="font-size: 10px; color: #6B7280;">(Makes blood cells)</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 15px; font-size: 12px; background: #FEF3C7; padding: 8px; border-radius: 8px;">
+                + Nerves (feel pain) + Blood Vessels (nutrients) + Calcium (strength)
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "skull_parts":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #F0F9FF, #E0F2FE);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #0C4A6E;">🎬 The Skull — 22 Bones</div>
+            <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 3px 12px rgba(0,0,0,0.1); min-width: 150px;">
+                    <div style="font-size: 45px; animation: bounce 2s ease-in-out infinite;">🧠</div>
+                    <div style="font-size: 14px; font-weight: bold; margin-top: 8px; color: #0C4A6E;">Cranium</div>
+                    <div style="font-size: 22px; font-weight: bold; color: #0284C7;">8 bones</div>
+                    <div style="font-size: 11px; color: #6B7280;">Protects the brain</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: white; border-radius: 16px; box-shadow: 0 3px 12px rgba(0,0,0,0.1); min-width: 150px;">
+                    <div style="font-size: 45px; animation: bounce 2s ease-in-out infinite 0.5s;">😊</div>
+                    <div style="font-size: 14px; font-weight: bold; margin-top: 8px; color: #0C4A6E;">Face</div>
+                    <div style="font-size: 22px; font-weight: bold; color: #0284C7;">14 bones</div>
+                    <div style="font-size: 11px; color: #6B7280;">Gives face its shape</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 15px; background: #DBEAFE; padding: 10px; border-radius: 10px;">
+                <span style="font-size: 13px;">👄 Only the <strong>lower jaw</strong> can move! (eating, talking, yawning)</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "skeleton_parts":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #ECFDF5, #D1FAE5);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #065F46;">🎬 The Complete Skeleton</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 8px;">
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
+                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite;">🔗</div>
+                    <div style="font-size: 11px; font-weight: bold;">Backbone</div>
+                    <div style="font-size: 10px; color: #065F46;">33 vertebrae</div>
+                </div>
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
+                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite 0.3s;">🫁</div>
+                    <div style="font-size: 11px; font-weight: bold;">Ribcage</div>
+                    <div style="font-size: 10px; color: #065F46;">12 pairs + sternum</div>
+                </div>
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
+                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite 0.6s;">💪</div>
+                    <div style="font-size: 11px; font-weight: bold;">Arms</div>
+                    <div style="font-size: 10px; color: #065F46;">Humerus, Radius, Ulna</div>
+                </div>
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
+                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite 0.9s;">🦵</div>
+                    <div style="font-size: 11px; font-weight: bold;">Legs</div>
+                    <div style="font-size: 10px; color: #065F46;">Femur, Tibia, Fibula</div>
+                </div>
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); min-width: 85px;">
+                    <div style="font-size: 28px; animation: bounce 1.8s ease-in-out infinite 1.2s;">⭕</div>
+                    <div style="font-size: 11px; font-weight: bold;">Girdles</div>
+                    <div style="font-size: 10px; color: #065F46;">Shoulder + Hip</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 12px; font-size: 11px; background: #D1FAE5; padding: 8px; border-radius: 8px;">
+                🪢 <strong>Ligaments</strong> hold bones together | <strong>Femur</strong> = longest bone | <strong>Floating ribs</strong> = last 2 pairs
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "ball_socket_joint":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #FDF4FF, #FAE8FF);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #86198F;">🎬 Ball and Socket Joint</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 20px; background: white; border-radius: 50%; width: 110px; height: 110px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite;">⚽</div>
+                    <div style="font-size: 10px;">Ball in cup</div>
+                </div>
+                <div style="font-size: 24px; color: #A855F7;">↔️↕️🔄</div>
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <div style="font-size: 13px; font-weight: bold; color: #86198F;">ALL directions!</div>
+                    <div style="margin-top: 8px; display: flex; gap: 12px;">
+                        <div style="text-align: center;"><div style="font-size: 25px; animation: bounce 1.5s infinite;">💪</div><div style="font-size: 10px;">Shoulder</div></div>
+                        <div style="text-align: center;"><div style="font-size: 25px; animation: bounce 1.5s infinite 0.3s;">🦵</div><div style="font-size: 10px;">Hip</div></div>
+                        <div style="text-align: center;"><div style="font-size: 25px; animation: bounce 1.5s infinite 0.6s;">🕹️</div><div style="font-size: 10px;">Joystick!</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "hinge_joint":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #FEF9C3, #FEF08A);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #854D0E;">🎬 Hinge Joint — One Direction Only!</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 40px; animation: bounce 1.5s ease-in-out infinite;">🚪</div>
+                    <div style="font-size: 11px; font-weight: bold;">Like a Door</div>
+                    <div style="font-size: 10px; color: #6B7280;">ONE way only</div>
+                </div>
+                <div style="font-size: 24px; color: #CA8A04;">=</div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="font-size: 28px; animation: bounce 1.5s infinite 0.2s;">💪</div>
+                    <div style="font-size: 10px;">Elbow</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="font-size: 28px; animation: bounce 1.5s infinite 0.4s;">🦵</div>
+                    <div style="font-size: 10px;">Knee</div>
+                </div>
+                <div style="text-align: center; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div style="font-size: 28px; animation: bounce 1.5s infinite 0.6s;">🖐️</div>
+                    <div style="font-size: 10px;">Fingers</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 10px; background: #FEF3C7; padding: 6px; border-radius: 8px; font-size: 11px;">↕️ Back & forth ONLY — no rotation or sideways!</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "pivot_gliding_joint":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #F0FDFA, #CCFBF1);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #134E4A;">🎬 Pivot & Gliding Joints</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
+                <div style="text-align: center; padding: 18px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); flex: 1; min-width: 160px;">
+                    <div style="font-size: 38px; animation: bounce 2s ease-in-out infinite;">🔄</div>
+                    <div style="font-size: 13px; font-weight: bold; margin: 6px 0; color: #134E4A;">Pivot Joint</div>
+                    <div style="font-size: 11px; color: #6B7280;">One bone rotates around another</div>
+                    <div style="margin-top: 6px; background: #CCFBF1; padding: 5px; border-radius: 8px; font-size: 11px;">🙆 <strong>Neck</strong> — turn & nod</div>
+                </div>
+                <div style="text-align: center; padding: 18px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); flex: 1; min-width: 160px;">
+                    <div style="font-size: 38px; animation: bounce 2s ease-in-out infinite 0.5s;">🫳</div>
+                    <div style="font-size: 13px; font-weight: bold; margin: 6px 0; color: #134E4A;">Gliding Joint</div>
+                    <div style="font-size: 11px; color: #6B7280;">Flat bones slide over each other</div>
+                    <div style="margin-top: 6px; background: #CCFBF1; padding: 5px; border-radius: 8px; font-size: 11px;">✋ <strong>Wrist & Ankle</strong></div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "muscle_contraction":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #FEF2F2, #FECACA);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #991B1B;">🎬 How Muscles Move Bones</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite;">💪</div>
+                    <div style="font-size: 12px; font-weight: bold;">Contract</div>
+                    <div style="font-size: 10px; color: #6B7280;">Gets SHORT → Pulls bone</div>
+                </div>
+                <div style="font-size: 24px; color: #DC2626;">⟷</div>
+                <div style="text-align: center; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite 0.5s;">🤲</div>
+                    <div style="font-size: 12px; font-weight: bold;">Relax</div>
+                    <div style="font-size: 10px; color: #6B7280;">Gets LONG → Bone returns</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 12px; display: inline-flex; align-items: center; gap: 5px; background: #FEE2E2; padding: 6px 12px; border-radius: 15px; font-size: 11px; margin-left: auto; margin-right: auto; width: fit-content;">
+                🔗 Tendon joins 💪 Muscle to 🦴 Bone
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "muscle_types":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #FFF1F2, #FFE4E6);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #9F1239;">🎬 Three Types of Muscles</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;">
+                <div style="text-align: center; padding: 14px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); min-width: 130px; flex: 1;">
+                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite;">🦓</div>
+                    <div style="font-size: 12px; font-weight: bold; color: #9F1239;">Striped (Voluntary)</div>
+                    <div style="font-size: 10px; color: #6B7280;">YOU control them<br>Arms, legs<br>Can get tired</div>
+                </div>
+                <div style="text-align: center; padding: 14px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); min-width: 130px; flex: 1;">
+                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.4s;">🫧</div>
+                    <div style="font-size: 12px; font-weight: bold; color: #9F1239;">Smooth (Involuntary)</div>
+                    <div style="font-size: 10px; color: #6B7280;">Automatic<br>Stomach, intestines<br>Brain controls</div>
+                </div>
+                <div style="text-align: center; padding: 14px; background: white; border-radius: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); min-width: 130px; flex: 1;">
+                    <div style="font-size: 32px; animation: bounce 2s ease-in-out infinite 0.8s;">❤️</div>
+                    <div style="font-size: 12px; font-weight: bold; color: #9F1239;">Cardiac (Heart)</div>
+                    <div style="font-size: 10px; color: #6B7280;">Only in heart<br>Works 24/7<br>Never tires!</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "body_system_overview":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #EDE9FE, #DDD6FE);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #5B21B6;">🎬 How It All Works Together</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite;">🦴</div>
+                    <div style="font-size: 10px; font-weight: bold;">Skeleton</div>
+                </div>
+                <div style="font-size: 16px; color: #7C3AED;">+</div>
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 0.3s;">🔧</div>
+                    <div style="font-size: 10px; font-weight: bold;">Joints</div>
+                </div>
+                <div style="font-size: 16px; color: #7C3AED;">+</div>
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 0.6s;">💪</div>
+                    <div style="font-size: 10px; font-weight: bold;">Muscles</div>
+                </div>
+                <div style="font-size: 16px; color: #7C3AED;">+</div>
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 0.9s;">🔗</div>
+                    <div style="font-size: 10px; font-weight: bold;">Tendons</div>
+                </div>
+                <div style="font-size: 16px; color: #7C3AED;">+</div>
+                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 1.2s;">🪢</div>
+                    <div style="font-size: 10px; font-weight: bold;">Ligaments</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 12px; font-size: 13px; color: #5B21B6; font-weight: bold;">= YOU CAN MOVE! 🏃</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+
 
 # ─── Session State Initialization ─────────────────────────────────────────────
 
@@ -834,94 +1111,71 @@ if "challenge_submitted" not in st.session_state:
 if "challenge_score" not in st.session_state:
     st.session_state.challenge_score = 0
 
-if "experiment_result" not in st.session_state:
-    st.session_state.experiment_result = None
-
 if "activity_submitted" not in st.session_state:
     st.session_state.activity_submitted = False
 
 if "activity_score" not in st.session_state:
     st.session_state.activity_score = 0
 
-if "scene_xp_awarded" not in st.session_state:
-    st.session_state.scene_xp_awarded = set()
+if "experiment_result" not in st.session_state:
+    st.session_state.experiment_result = None
 
-# ─── Header (conditional) ─────────────────────────────────────────────────────
+
+# ─── Header / Home Page ───────────────────────────────────────────────────────
 
 if not st.session_state.chapter_started:
-    # Full header on home page
-    col_logo, col_xp = st.columns([4, 1])
+    # Full branding header on home
+    st.markdown("""
+    <div style='text-align: center; padding: 20px 0;'>
+        <h1 style='font-size: 2.5em; color: #2563EB;'>🌟 WonderLearn</h1>
+        <p style='font-size: 1.2em; color: #6B7280;'>Learn Through Stories, Explore Through Adventures</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    with col_logo:
-        st.title("🌟 WonderLearn")
-        st.subheader("Learn Through Stories, Explore Through Adventures")
+if not st.session_state.chapter_started:
+    # Load chapters list
+    chapters_file = Path("content/class5/science/chapters.json")
+    if chapters_file.exists():
+        with open(chapters_file, "r", encoding="utf-8") as f:
+            chapters = json.load(f)
+    else:
+        chapters = []
 
+    # XP and badges display
+    col_xp, col_badge = st.columns(2)
     with col_xp:
-        st.metric("⭐ XP", st.session_state.xp)
-        if st.session_state.badges:
-            st.write("🏆 " + ", ".join(st.session_state.badges))
+        st.metric("⭐ Total XP", st.session_state.xp)
+    with col_badge:
+        badges_str = ", ".join(st.session_state.badges) if st.session_state.badges else "None yet"
+        st.metric("🏆 Badges", len(st.session_state.badges))
 
-    # Student Info
-    col1, col2, col3 = st.columns(3)
+    st.write("")
+    st.subheader("📚 Choose Your Adventure")
+    st.write("")
 
-    with col1:
-        student_name = st.text_input("Student Name", value="Explorer")
+    # Chapter cards
+    for ch in chapters:
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.markdown(f"""
+            <div style='background: white; border-radius: 15px; padding: 20px; margin: 10px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 5px solid #3B82F6;'>
+                <h3 style='margin: 0; color: #1E40AF;'>Chapter {ch['id']}: {ch['title']}</h3>
+                <p style='margin: 5px 0 0 0; color: #6B7280;'>{ch.get('description', '')}</p>
+                <span style='font-size: 12px; color: #9CA3AF;'>Badge: {ch.get('badge', '🏆')}</span>
+            </div>
+            """, unsafe_allow_html=True)
+        with col2:
+            if st.button(f"▶️ Start", key=f"start_ch_{ch['id']}", use_container_width=True):
+                st.session_state.selected_chapter = ch["id"]
+                st.session_state.chapter_started = True
+                st.session_state.scene_index = 0
+                st.session_state.quiz_submitted = False
+                st.session_state.challenge_submitted = False
+                st.session_state.activity_submitted = False
+                st.session_state.experiment_result = None
+                st.rerun()
 
-    with col2:
-        selected_class = st.selectbox("Class", ["Class 5"])
-
-    with col3:
-        subject = st.selectbox("Subject", ["General Science"])
-else:
-    # Minimal header during chapter - just XP in corner
-    student_name = "Explorer"
-
-# ─── Load Chapters Index ──────────────────────────────────────────────────────
-
-json_file = Path("content/class5/science/chapters.json")
-data = None
-
-if json_file.exists():
-    with open(json_file, "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-# ─── Home Screen ──────────────────────────────────────────────────────────────
-
-if not st.session_state.chapter_started:
-    st.success(f"Welcome {student_name}! 🚀 Choose an adventure to begin.")
-
-    if data:
-        st.subheader("📚 Available Adventures")
-
-        for chapter in data["chapters"]:
-            col_ch, col_badge = st.columns([4, 1])
-
-            with col_ch:
-                st.markdown(f"### Chapter {chapter['id']} — {chapter['title']}")
-
-            with col_badge:
-                st.write(f"🏆 {chapter['badge']}")
-
-            chapter_folder = Path(f"content/class5/science/chapter{chapter['id']}")
-            chapter_file = chapter_folder / "chapter.json"
-            scene_file = chapter_folder / "scenes.json"
-
-            if chapter_file.exists() and scene_file.exists():
-                if st.button(f"🚀 Start: {chapter['title']}", key=f"chapter_{chapter['id']}"):
-                    st.session_state.chapter_started = True
-                    st.session_state.selected_chapter = chapter["id"]
-                    st.session_state.scene_index = 0
-                    st.session_state.quiz_submitted = False
-                    st.session_state.challenge_submitted = False
-                    st.session_state.activity_submitted = False
-                    st.session_state.experiment_result = None
-                    st.rerun()
-            else:
-                st.info("🚧 Coming Soon")
-
-            st.divider()
-
-# ─── Scene Rendering Engine ───────────────────────────────────────────────────
+# ─── Chapter Playback Mode ────────────────────────────────────────────────────
 
 if st.session_state.chapter_started:
 
@@ -944,6 +1198,7 @@ if st.session_state.chapter_started:
     with col_xp_mini:
         st.metric("⭐ XP", st.session_state.xp)
 
+    # Load chapter data
     chapter_data = load_chapter(st.session_state.selected_chapter)
     scenes_data = load_scenes(st.session_state.selected_chapter)
 
@@ -955,18 +1210,17 @@ if st.session_state.chapter_started:
     scene = scenes_data["scenes"][st.session_state.scene_index]
     scene_type = scene.get("scene_type", "story")
 
-    # Scene type badge
+    # Scene type indicator
     type_labels = {
         "story": "📖 Story", "explore": "🔍 Explore", "experiment": "🧪 Experiment",
         "activity": "🎮 Activity", "challenge": "⚡ Challenge", "quiz": "📝 Quiz",
-        "summary": "📋 Summary", "badge": "🏆 Badge Award"
+        "summary": "📋 Summary", "badge": "🏆 Badge"
     }
-    st.markdown(f"<span class='scene-type-badge'>{type_labels.get(scene_type, scene_type)}</span>",
-                unsafe_allow_html=True)
+    st.caption(f"{type_labels.get(scene_type, '📖 Scene')} | {chapter_data['title']}")
 
-    # Background image (only if not "none")
+    # Background (if any)
     bg = scene.get("background", "none")
-    if bg and bg != "none":
+    if bg != "none":
         background_file = f"assets/backgrounds/{bg}.jpg"
         if Path(background_file).exists():
             st.image(background_file, use_container_width=True)
@@ -1022,7 +1276,7 @@ if st.session_state.chapter_started:
             if Path(character_file).exists():
                 st.image(character_file, width=250)
 
-    # ─── Scene Type: EXPLORE ──────────────────────────────────────────────────
+    # ─── Scene Type: EXPLORE ─────────────────────────────────────────────────
 
     elif scene_type == "explore":
         st.header(scene["title"])
@@ -1101,46 +1355,28 @@ if st.session_state.chapter_started:
             if Path(character_file).exists():
                 st.image(character_file, width=200)
 
+        if "animation" in scene:
+            render_animation(scene["animation"])
+
         if "experiment" in scene:
             exp = scene["experiment"]
             st.write("")
             st.subheader(f"🧪 {exp['title']}")
             st.write(exp["instructions"])
 
-            st.write("")
-            conditions_state = {}
+            if "steps" in exp:
+                for step in exp["steps"]:
+                    st.markdown(f"**{step['step_number']}.** {step['text']}")
 
-            for condition in exp["conditions"]:
-                conditions_state[condition["id"]] = st.toggle(
-                    f"{condition['icon']} {condition['name']}",
-                    key=f"exp_{scene['id']}_{condition['id']}"
-                )
-                if conditions_state[condition["id"]]:
-                    st.caption(f"   ↳ {condition['description']}")
+            if "observation_question" in exp:
+                st.write("")
+                st.info(f"🔬 Observe: {exp['observation_question']}")
+                user_obs = st.text_area("Your observation:", key=f"obs_{scene['id']}")
+                if st.button("Check", key=f"exp_check_{scene['id']}"):
+                    st.session_state.experiment_result = True
+                    st.success(f"✅ Great observation! {exp.get('expected_result', '')}")
 
-            st.write("")
-            if st.button("🔬 Run Experiment", key=f"run_exp_{scene['id']}"):
-                required = [c for c in exp["conditions"] if c["required"]]
-                all_required_on = all(conditions_state[c["id"]] for c in required)
-
-                if all_required_on:
-                    st.session_state.experiment_result = "success"
-                else:
-                    st.session_state.experiment_result = "failure"
-
-            if st.session_state.experiment_result == "success":
-                st.success(f"✅ {exp['success_message']}")
-                for condition in exp["conditions"]:
-                    if not condition["required"] and conditions_state.get(condition["id"]):
-                        st.info(f"💡 {condition['name']}: {condition['description']}")
-
-            elif st.session_state.experiment_result == "failure":
-                st.error(f"❌ {exp['failure_message']}")
-                missing = [c for c in exp["conditions"] if c["required"] and not conditions_state.get(c["id"])]
-                for m in missing:
-                    st.warning(f"Missing: {m['icon']} {m['name']} — {m['description']}")
-
-    # ─── Scene Type: ACTIVITY (Matching / Sequence) ───────────────────────────
+    # ─── Scene Type: ACTIVITY ─────────────────────────────────────────────────
 
     elif scene_type == "activity":
         st.header(scene["title"])
@@ -1156,7 +1392,6 @@ if st.session_state.chapter_started:
                 </div>
                 """, unsafe_allow_html=True)
 
-            st.write("")
             st.write("")
             st.write(scene["narration"])
 
@@ -1217,7 +1452,8 @@ if st.session_state.chapter_started:
                         is_correct = user_ans == pair["match"]
                         icon = "✅" if is_correct else "❌"
                         st.markdown(f"**{icon} {pair['item']}** → Correct: **{pair['match']}**")
-                        st.caption(f"   {pair['explanation']}")
+                        if "explanation" in pair:
+                            st.caption(f"   {pair['explanation']}")
 
             # ─── Sequence Activity ────────────────────────────────────────────
             elif activity["type"] == "sequence":
@@ -1247,19 +1483,13 @@ if st.session_state.chapter_started:
                         st.balloons()
                         st.success(f"🎉 Perfect order! All {total} steps correct!")
                     elif score >= total * 0.7:
-                        st.success(f"👍 Great job! {score}/{total} in the right position!")
+                        st.success(f"👍 Good effort! {score}/{total} in correct position!")
                     else:
-                        st.warning(f"You got {score}/{total} in the right position. Here's the correct order:")
+                        st.warning(f"You got {score}/{total} correct. The correct order is:")
+                        for step in sorted(activity["steps"], key=lambda x: x["correct_position"]):
+                            st.markdown(f"**{step['correct_position']}.** {step['name']}")
 
-                    for step in sorted(activity["steps"], key=lambda s: s["correct_position"]):
-                        st.markdown(f"""
-                        <div class='step-card'>
-                            <strong>{step['icon']} Step {step['correct_position']}: {step['name']}</strong><br>
-                            {step['description']}
-                        </div>
-                        """, unsafe_allow_html=True)
-
-    # ─── Scene Type: CHALLENGE (True/False) ───────────────────────────────────
+    # ─── Scene Type: CHALLENGE ────────────────────────────────────────────────
 
     elif scene_type == "challenge":
         st.header(scene["title"])
@@ -1319,22 +1549,18 @@ if st.session_state.chapter_started:
                     st.balloons()
                     st.success(f"🎉 Perfect! All {total} correct!")
                 elif score >= total * 0.7:
-                    st.success(f"👍 Great job! {score}/{total} correct!")
+                    st.success(f"👍 Great! {score}/{total} correct!")
                 else:
-                    st.warning(f"Keep trying! {score}/{total} correct.")
+                    st.warning(f"You got {score}/{total}. Review:")
 
                 for q in challenge["questions"]:
                     user_bool = user_answers[q["id"]] == "True"
                     is_correct = user_bool == q["answer"]
-                    css_class = "quiz-correct" if is_correct else "quiz-wrong"
                     icon = "✅" if is_correct else "❌"
-                    correct_text = "True" if q["answer"] else "False"
-                    st.markdown(f"""
-                    <div class='{css_class}'>
-                        {icon} <strong>{q['statement']}</strong> → Answer: <strong>{correct_text}</strong><br>
-                        <em>{q['explanation']}</em>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    correct_str = "True" if q["answer"] else "False"
+                    st.markdown(f"**{icon}** {q['statement']} → **{correct_str}**")
+                    if "explanation" in q:
+                        st.caption(f"   {q['explanation']}")
 
     # ─── Scene Type: QUIZ ─────────────────────────────────────────────────────
 
@@ -1411,7 +1637,7 @@ if st.session_state.chapter_started:
                     <div class='{css_class}'>
                         {icon} <strong>{q['question']}</strong><br>
                         Your answer: {user_ans} | Correct: <strong>{correct_answer}</strong><br>
-                        <em>{q['explanation']}</em>
+                        <em>{q.get('explanation', '')}</em>
                     </div>
                     """, unsafe_allow_html=True)
 
@@ -1499,9 +1725,9 @@ if st.session_state.chapter_started:
 
     # ─── XP Award ─────────────────────────────────────────────────────────────
 
-    if scene.get("xp") and f"xp_scene_{scene['id']}" not in st.session_state:
+    if scene.get("xp") and f"xp_scene_{scene['id']}_ch{st.session_state.selected_chapter}" not in st.session_state:
         st.session_state.xp += scene["xp"]
-        st.session_state[f"xp_scene_{scene['id']}"] = True
+        st.session_state[f"xp_scene_{scene['id']}_ch{st.session_state.selected_chapter}"] = True
 
     # ─── Navigation ───────────────────────────────────────────────────────────
 
@@ -1514,6 +1740,8 @@ if st.session_state.chapter_started:
             if st.button("⬅️ Previous", use_container_width=True):
                 st.session_state.scene_index -= 1
                 st.session_state.quiz_submitted = False
+                st.session_state.challenge_submitted = False
+                st.session_state.activity_submitted = False
                 st.rerun()
 
     with nav_col2:
@@ -1529,6 +1757,8 @@ if st.session_state.chapter_started:
             if st.button("Next ➡️", use_container_width=True):
                 st.session_state.scene_index += 1
                 st.session_state.quiz_submitted = False
+                st.session_state.challenge_submitted = False
+                st.session_state.activity_submitted = False
                 st.rerun()
         else:
             if st.button("🏠 Home", use_container_width=True):
