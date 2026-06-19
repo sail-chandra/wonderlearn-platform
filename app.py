@@ -1123,58 +1123,69 @@ if "experiment_result" not in st.session_state:
 
 # ─── Header / Home Page ───────────────────────────────────────────────────────
 
-if not st.session_state.chapter_started:
-    # Full branding header on home
-    st.markdown("""
-    <div style='text-align: center; padding: 20px 0;'>
-        <h1 style='font-size: 2.5em; color: #2563EB;'>🌟 WonderLearn</h1>
-        <p style='font-size: 1.2em; color: #6B7280;'>Learn Through Stories, Explore Through Adventures</p>
-    </div>
-    """, unsafe_allow_html=True)
+st.title("🌟 WonderLearn")
+st.subheader("Learn Through Stories, Explore Through Adventures")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    student_name = st.text_input("Student Name", value="Explorer")
+
+with col2:
+    selected_class = st.selectbox("Class", ["Class 5"])
+
+with col3:
+    subject = st.selectbox("Subject", ["General Science"])
 
 if not st.session_state.chapter_started:
-    # Load chapters list
-    chapters_file = Path("content/class5/science/chapters.json")
-    if chapters_file.exists():
-        with open(chapters_file, "r", encoding="utf-8") as f:
-            chapters_data = json.load(f)
-        chapters = chapters_data.get("chapters", []) if isinstance(chapters_data, dict) else chapters_data
-    else:
-        chapters = []
+    st.success(f"Welcome {student_name}! 🚀")
 
-    # XP and badges display
-    col_xp, col_badge = st.columns(2)
-    with col_xp:
-        st.metric("⭐ Total XP", st.session_state.xp)
-    with col_badge:
-        badges_str = ", ".join(st.session_state.badges) if st.session_state.badges else "None yet"
-        st.metric("🏆 Badges", len(st.session_state.badges))
+json_file = Path("content/class5/science/chapters.json")
 
-    st.write("")
-    st.subheader("📚 Choose Your Adventure")
-    st.write("")
+if json_file.exists():
+    with open(json_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
-    # Chapter cards
-    for ch in chapters:
-        col1, col2 = st.columns([4, 1])
-        with col1:
-            st.markdown(f"""
-            <div style='background: white; border-radius: 15px; padding: 20px; margin: 10px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 5px solid #3B82F6;'>
-                <h3 style='margin: 0; color: #1E40AF;'>Chapter {ch['id']}: {ch['title']}</h3>
-                <p style='margin: 5px 0 0 0; color: #6B7280;'>{ch.get('description', '')}</p>
-                <span style='font-size: 12px; color: #9CA3AF;'>Badge: {ch.get('badge', '🏆')}</span>
-            </div>
-            """, unsafe_allow_html=True)
-        with col2:
-            if st.button(f"▶️ Start", key=f"start_ch_{ch['id']}", use_container_width=True):
-                st.session_state.selected_chapter = ch["id"]
+if not st.session_state.chapter_started:
+
+    st.subheader("📚 Available Adventures")
+
+    for chapter in data["chapters"]:
+
+        st.markdown(
+            f"### Chapter {chapter['id']} - {chapter['title']}"
+        )
+
+        st.write(
+            f"🏆 Badge: {chapter['badge']}"
+        )
+
+        chapter_folder = Path(
+            f"content/class5/science/chapter{chapter['id']}"
+        )
+
+        chapter_file = chapter_folder / "chapter.json"
+        scene_file = chapter_folder / "scenes.json"
+
+        if chapter_file.exists() and scene_file.exists():
+
+            if st.button(
+                f"Start {chapter['title']}",
+                key=f"chapter_{chapter['id']}"
+            ):
                 st.session_state.chapter_started = True
+                st.session_state.selected_chapter = chapter["id"]
                 st.session_state.scene_index = 0
                 st.session_state.quiz_submitted = False
                 st.session_state.challenge_submitted = False
                 st.session_state.activity_submitted = False
                 st.session_state.experiment_result = None
                 st.rerun()
+
+        else:
+            st.info("🚧 Coming Soon")
+
+        st.divider()
 
 # ─── Chapter Playback Mode ────────────────────────────────────────────────────
 
