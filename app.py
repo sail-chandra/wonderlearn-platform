@@ -2706,4 +2706,18 @@ else:
 
     with col_home:
         if st.button("🏠 Home", key="nav_home"):
-            st.session
+            st.session_state.current_chapter = None
+            st.session_state.scene_index = 0
+            st.rerun()
+
+    with col_next:
+        if st.button("Next ➡", disabled=(st.session_state.scene_index >= len(scenes) - 1), key="nav_next"):
+            st.session_state.scene_index += 1
+            st.rerun()
+
+# ─── Footer ───────────────────────────────────────────────────────────────────
+st.markdown("---")
+st.markdown(
+    "<p style='text-align:center;color:#888;font-size:12px;'>🌟 WonderLearn — Learn Through Stories, Explore Through Adventures</p>",
+    unsafe_allow_html=True
+)
