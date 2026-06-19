@@ -1,1 +1,492 @@
-
+{
+  "chapter_id": 3,
+  "total_scenes": 22,
+  "total_xp": 370,
+  "scenes": [
+    {
+      "id": 1,
+      "title": "Welcome to the Body Framework",
+      "scene_type": "story",
+      "character": "tara",
+      "background": "none",
+      "narration": "Welcome, explorer! Today we're going inside the human body to discover its amazing framework. Just like a house needs pillars and beams to stand up, your body has a skeleton made of bones that holds everything together!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Did you know that when you were born, you had over 300 bones? But as you grew, some of them joined together. Now an adult has exactly 206 bones! Let me introduce you to someone who knows ALL about bones..."
+      },
+      "fun_fact": "A newborn baby has more than 300 bones, but as the baby grows, some bones fuse together. By adulthood, only 206 bones remain! The smallest bone in your body is the stirrup bone inside your ear - it's only 3mm long!",
+      "xp": 10,
+      "tts": true
+    },
+    {
+      "id": 2,
+      "title": "Meet Bone Bot - Your Skeleton Guide",
+      "scene_type": "story",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Say hello to Bone Bot! He's a friendly skeleton who knows everything about the 206 bones in your body. He'll help you understand how your skeletal system works and why it's so important.",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "Hey there, buddy! I'm Bone Bot and I'm made entirely of bones! Without me, you'd just be a blob on the floor. Your skeleton gives you shape, lets you stand tall, and protects your most important organs. Ready to explore?"
+      },
+      "fun_fact": "Animals without a backbone are called invertebrates (like jellyfish, worms, and insects). Animals with a backbone — like humans — are called vertebrates!",
+      "xp": 10,
+      "tts": true
+    },
+    {
+      "id": 3,
+      "title": "The Skeletal System - Functions",
+      "scene_type": "explore",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "The skeletal system is the framework of bones that supports our body and provides rigidity. It performs several critical functions that keep us alive and moving every day.",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "Think of me as your body's building! I give you shape, help you stand straight, and I'm like a suit of armour protecting your brain, heart, and lungs inside. Pretty cool, right?"
+      },
+      "hotspots": [
+        {"icon": "🏗️", "name": "Gives Shape", "description": "The skeleton gives your body its shape. Without bones, you would have no defined form — just like a tent without poles would collapse into a heap of fabric."},
+        {"icon": "🧍", "name": "Provides Support", "description": "Bones provide support so we can stand erect and walk upright. The skeleton holds up all the soft tissues of the body against gravity."},
+        {"icon": "🛡️", "name": "Protects Organs", "description": "Bones protect vital internal organs. The skull protects the brain, the ribcage protects the heart and lungs, and the backbone protects the spinal cord."},
+        {"icon": "🏃", "name": "Helps Movement", "description": "Bones, along with muscles, help us move our body parts. Muscles pull on bones to create movement at joints."},
+        {"icon": "🩸", "name": "Produces Blood Cells", "description": "Inside bones is soft tissue called bone marrow, where new blood cells are produced. Bones also store calcium for the body."}
+      ],
+      "animation": {"type": "skeleton_functions", "description": "Animated infographic showing 5 functions of the skeletal system"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 4,
+      "title": "Inside a Bone - Structure",
+      "scene_type": "explore",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Bones might look solid from outside, but they have a fascinating structure inside! They are hard on the outside but soft and spongy on the inside, and they contain living tissue.",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "People think bones are dead and dry — but we're actually alive! We have nerves, blood vessels, and inside us is bone marrow that makes your blood cells. Let me show you my layers!"
+      },
+      "hotspots": [
+        {"icon": "🦴", "name": "Compact Bone (Outside)", "description": "The outer layer of bone is hard, dense, and strong. This is called compact bone and gives the bone its white, smooth appearance."},
+        {"icon": "🧽", "name": "Spongy Bone (Inside)", "description": "Inside the compact bone is spongy bone. It looks like a honeycomb with tiny spaces. This makes bones lighter without losing strength."},
+        {"icon": "🩸", "name": "Bone Marrow (Centre)", "description": "At the very centre is bone marrow — a soft, jelly-like tissue. Red bone marrow produces new blood cells (red blood cells, white blood cells, and platelets)."},
+        {"icon": "🧬", "name": "Nerves and Blood Vessels", "description": "Bones contain nerves (which is why a broken bone hurts!) and blood vessels that supply nutrients and oxygen to bone cells."},
+        {"icon": "💪", "name": "Calcium Storage", "description": "Bones store calcium — a mineral that keeps bones hard and strong. Drinking milk and eating dairy helps maintain calcium levels."}
+      ],
+      "animation": {"type": "bone_structure", "description": "Animated cross-section of a bone showing layers"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 5,
+      "title": "The Skull - Protector of the Brain",
+      "scene_type": "explore",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "The skull is like a natural helmet made of 22 bones! It protects your brain — the most important organ in your body — and gives your face its unique shape.",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "My head is made of 22 bones! 8 bones form a protective case around the brain called the cranium, and 14 bones make up the face. Only ONE bone in the skull can move — guess which one?"
+      },
+      "hotspots": [
+        {"icon": "🧠", "name": "Cranium (8 bones)", "description": "Eight bones are fused together to form the cranium — a strong protective case that completely surrounds and protects the brain from injury."},
+        {"icon": "😊", "name": "Face Bones (14 bones)", "description": "Fourteen bones make up your face, including your cheekbones, nose bone, and jaw. These give your face its unique characteristic shape."},
+        {"icon": "👄", "name": "Lower Jaw (Only Movable Bone)", "description": "The lower jaw bone (mandible) is the ONLY movable bone in the skull! It lets you open your mouth to eat, talk, and yawn."},
+        {"icon": "👀", "name": "Eye Sockets & Ear Protection", "description": "The skull has special hollows called sockets that protect the eyes. It also protects the inner parts of the ear and the nose."},
+        {"icon": "👦👧", "name": "Male vs Female Skull", "description": "The male skull is slightly different from the female skull. The skull changes shape slightly as people grow older."}
+      ],
+      "animation": {"type": "skull_parts", "description": "Animated skull diagram showing cranium and face bones"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 6,
+      "title": "Backbone, Ribcage, Limbs & Girdles",
+      "scene_type": "explore",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Beyond the skull, your skeleton has many more parts — the backbone that holds you upright, the ribcage that guards your heart and lungs, the limbs that let you move, and the girdles that connect everything together!",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "My backbone has 33 bones called vertebrae stacked like coins! My ribcage has 12 pairs of bow-shaped bones. And did you know the femur (thigh bone) is the longest bone in your body?"
+      },
+      "hotspots": [
+        {"icon": "🔗", "name": "Backbone (33 vertebrae)", "description": "The backbone (spine) is made of 33 bones called vertebrae forming the vertebral column. It protects the spinal cord. Discs between vertebrae give some flexibility so you can bend. Individual vertebra cannot move, but together the spine can bend and twist."},
+        {"icon": "🫁", "name": "Ribcage (12 pairs of ribs)", "description": "12 pairs of bow-shaped bones protect the heart and lungs. Ribs attach to the sternum (breastbone) in front and backbone at the back. The last 2 pairs attach only to the backbone — called floating ribs!"},
+        {"icon": "🦵", "name": "Limbs (Arms and Legs)", "description": "Forelimbs (arms): humerus (upper arm), radius and ulna (lower arm). Hindlimbs (legs): femur/thigh bone (longest bone in body!), tibia and fibula (below knee). The femur bears the whole weight of the body."},
+        {"icon": "⭕", "name": "Girdles (Shoulder & Hip)", "description": "Girdles are semi-circular bone structures that connect limbs to the main skeleton. Pectoral girdle forms the shoulder (connects humerus). Pelvic girdle forms the hip (connects femur and supports upper body)."},
+        {"icon": "🪢", "name": "Ligaments", "description": "Bones are held together by strong tissues called ligaments. Remember: Ligament joins Like to Like (bone to bone). They keep your joints stable and prevent bones from moving too far apart."}
+      ],
+      "animation": {"type": "skeleton_parts", "description": "Animated full skeleton showing backbone, ribcage, limbs, girdles"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 7,
+      "title": "Skeleton Parts - Match the Numbers",
+      "scene_type": "activity",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Now let's test what you've learned! Can you match each skeleton part to the correct number of bones?",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "I know exactly how many bones are in each part of me! Do you? Match each body part to its bone count!"
+      },
+      "activity": {
+        "type": "matching",
+        "title": "Match the Skeleton Part to Its Bone Count",
+        "instructions": "Select the correct number of bones for each skeleton part.",
+        "pairs": [
+          {"item": "Adult Human Body", "icon": "🦴", "match": "206 bones", "hint": "Total bones in an adult.", "explanation": "An adult human skeleton has exactly 206 bones."},
+          {"item": "Skull", "icon": "💀", "match": "22 bones", "hint": "Cranium (8) + Face (14).", "explanation": "The skull has 22 bones: 8 cranium + 14 face bones."},
+          {"item": "Backbone", "icon": "🔗", "match": "33 vertebrae", "hint": "Stacked like coins in a column.", "explanation": "The backbone is made up of 33 bones called vertebrae."},
+          {"item": "Ribcage", "icon": "🫁", "match": "12 pairs of ribs", "hint": "Bow-shaped bones protecting heart and lungs.", "explanation": "The ribcage has 12 pairs (24 total) of bow-shaped rib bones."},
+          {"item": "Floating Ribs", "icon": "🎈", "match": "Last 2 pairs", "hint": "Attached only to backbone, not sternum.", "explanation": "The last 2 pairs of ribs attach only to backbone — called floating ribs."},
+          {"item": "Newborn Baby", "icon": "👶", "match": "300+ bones", "hint": "More than adults — some fuse together later.", "explanation": "Babies have 300+ bones that gradually fuse to become 206 in adults."}
+        ],
+        "options": ["206 bones", "22 bones", "33 vertebrae", "12 pairs of ribs", "Last 2 pairs", "300+ bones"]
+      },
+      "xp": 20,
+      "tts": true
+    },
+    {
+      "id": 8,
+      "title": "What Are Joints?",
+      "scene_type": "story",
+      "character": "tara",
+      "background": "none",
+      "narration": "When you kick a football, your knee bends. When you play badminton, your arm swings. These movements happen because two bones are joined together at places called joints. The bones bend at the joints!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Try bending your arm at the elbow — see how it moves? That's a joint in action! Without joints, you'd be as stiff as a statue. Joints are where the magic of movement happens!"
+      },
+      "fun_fact": "All joints in the skull are immovable (fixed) joints EXCEPT the lower jaw. That's why you can open your mouth but can't wiggle the top of your head! All other joints in the body are movable joints.",
+      "xp": 10,
+      "tts": true
+    },
+    {
+      "id": 9,
+      "title": "Ball and Socket Joint",
+      "scene_type": "explore",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "The ball and socket joint is the most flexible joint in your body! One bone has a ball-shaped end that fits into a cup-shaped socket of another bone. This lets the bone move in ANY direction — like a joystick!",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "Imagine pushing a pencil into a soft ball, then putting that ball into a cup. The pencil can rotate in every direction! That's exactly how your shoulder and hip work. Pretty amazing engineering!"
+      },
+      "hotspots": [
+        {"icon": "⚽", "name": "How It Works", "description": "A ball-shaped end of one bone fits snugly into a cup-shaped socket of another bone. This allows the widest range of movement — in any direction! This type of movement is called rotary motion."},
+        {"icon": "💪", "name": "Shoulder Joint", "description": "Your shoulder is a ball and socket joint. The round head of the humerus (upper arm bone) fits into the socket of the shoulder blade. This lets you swing your arm in circles, up, down, sideways!"},
+        {"icon": "🦵", "name": "Hip Joint", "description": "Your hip is also a ball and socket joint. The round head of the femur (thigh bone) fits into the socket of the pelvic girdle. This lets your leg move forward, backward, and to the sides."},
+        {"icon": "🕹️", "name": "Like a Joystick", "description": "A ball and socket joint works just like a joystick on a gaming controller — it can move in all directions with full rotation!"}
+      ],
+      "animation": {"type": "ball_socket_joint", "description": "Animated ball fitting into socket showing rotary movement"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 10,
+      "title": "Hinge Joint",
+      "scene_type": "explore",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Have you noticed how a door opens and closes? It swings in only ONE direction because of metal clips called hinges. Your body has similar joints — they let bones move back and forth in just one direction!",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "Try bending your elbow — it only goes one way, right? You can't bend it backwards! That's because your elbow is a hinge joint. It works exactly like a door on hinges — open and close, that's it!"
+      },
+      "hotspots": [
+        {"icon": "🚪", "name": "How It Works", "description": "Like a door hinge, this joint allows movement in only ONE direction — back and forth (open and close). You cannot rotate or move sideways at a hinge joint."},
+        {"icon": "💪", "name": "Elbow", "description": "Your elbow is a hinge joint. It lets your forearm bend up toward your shoulder and extend back straight — but only in that one plane of movement."},
+        {"icon": "🦵", "name": "Knee", "description": "Your knee is also a hinge joint. It lets your lower leg bend backward (when you squat or run) and straighten out — movement in one direction only."},
+        {"icon": "🖐️", "name": "Fingers and Toes", "description": "All your finger joints and toe joints are hinge joints too! They can curl inward and straighten out, but cannot bend sideways or rotate."}
+      ],
+      "animation": {"type": "hinge_joint", "description": "Animated hinge comparison with door and elbow movement"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 11,
+      "title": "Pivot Joint & Gliding Joint",
+      "scene_type": "explore",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Two more amazing joint types! The pivot joint lets your head turn from side to side and nod up and down. The gliding joint lets small bones slide smoothly over each other in your wrists and ankles.",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "Shake your head 'no' — that's your pivot joint! Now wiggle your wrist in all directions — that's gliding joints at work! Both give you amazing flexibility for everyday movements."
+      },
+      "hotspots": [
+        {"icon": "🔄", "name": "Pivot Joint - How It Works", "description": "In a pivot joint, one bone rotates around another bone that stays still. It allows sideways movement AND up-and-down movement. Also called a rotary joint."},
+        {"icon": "🙆", "name": "Pivot Joint - The Neck", "description": "The pivot joint between the skull and the first vertebra of the backbone lets your head turn left and right (saying 'no') and nod up and down (saying 'yes'). That's why your neck can move in all directions!"},
+        {"icon": "🫳", "name": "Gliding Joint - How It Works", "description": "In a gliding joint, flat bone surfaces slide (glide) over each other in any direction. These allow small but smooth movements. Also called a planar joint."},
+        {"icon": "✋", "name": "Gliding Joint - Wrists & Ankles", "description": "Your wrists and ankles have gliding joints. The small bones glide over each other letting you wave, write, and flex your feet. They're also present in the backbone, helping it bend and twist."}
+      ],
+      "animation": {"type": "pivot_gliding_joint", "description": "Animated comparison of pivot (neck rotation) and gliding (wrist) joints"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 12,
+      "title": "Joints - Match the Type",
+      "scene_type": "activity",
+      "character": "tara",
+      "background": "none",
+      "narration": "Can you identify which type of joint is at work in each body part? Remember: ball and socket moves in all directions, hinge moves in one direction, pivot rotates, and gliding slides!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Think about how each body part moves. Does it swing in circles? Open like a door? Turn around? Or slide smoothly? That will tell you the joint type!"
+      },
+      "activity": {
+        "type": "matching",
+        "title": "Match the Body Part to Its Joint Type",
+        "instructions": "Select the correct joint type for each body part.",
+        "pairs": [
+          {"item": "Shoulder", "icon": "💪", "match": "Ball and Socket", "hint": "Can move in all directions.", "explanation": "The shoulder uses a ball and socket joint — full rotary movement in any direction."},
+          {"item": "Elbow", "icon": "🦾", "match": "Hinge", "hint": "Opens and closes like a door.", "explanation": "The elbow is a hinge joint — it bends and straightens in one direction only."},
+          {"item": "Neck", "icon": "🙆", "match": "Pivot", "hint": "Turns side to side and up and down.", "explanation": "The neck has a pivot joint — allowing the head to rotate and nod."},
+          {"item": "Wrist", "icon": "✋", "match": "Gliding", "hint": "Small bones slide over each other.", "explanation": "The wrist has gliding joints — small bones slide over each other smoothly."},
+          {"item": "Knee", "icon": "🦵", "match": "Hinge", "hint": "Bends in one direction.", "explanation": "The knee is a hinge joint — it bends and straightens like a door."},
+          {"item": "Hip", "icon": "🏃", "match": "Ball and Socket", "hint": "Can move in all directions.", "explanation": "The hip uses a ball and socket joint — full rotary motion."}
+        ],
+        "options": ["Ball and Socket", "Hinge", "Pivot", "Gliding"]
+      },
+      "xp": 20,
+      "tts": true
+    },
+    {
+      "id": 13,
+      "title": "The Muscular System",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "narration": "Bones can't move on their own — they need muscles! A muscle is a special tissue that can expand and contract like an elastic band. There are over 600 muscles in your body, and about half your body weight is made up of muscles!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Flex your arm and feel that bulge — that's your bicep muscle contracting! When muscles contract, they get shorter and pull bones closer. When they relax, they get longer and bones move apart."
+      },
+      "hotspots": [
+        {"icon": "💪", "name": "What Muscles Do", "description": "Muscles contract (shorten) and relax (lengthen) to move bones. When you bend your knee, leg muscles contract and become shorter. When you extend your leg, they relax and become longer."},
+        {"icon": "🔗", "name": "Tendons (Muscle to Bone)", "description": "Muscles are attached to bones by tough tissues called tendons. Remember: Tendon joins Two Types (muscle to bone). When a muscle contracts, the tendon pulls the bone!"},
+        {"icon": "🏋️", "name": "Over 600 Muscles", "description": "Your body has more than 600 muscles spread all over. They help you move, maintain posture, and do work. About half your body weight is muscle!"},
+        {"icon": "📝", "name": "Tendons vs Ligaments", "description": "Ligament = Like to Like (bone to bone). Tendon = Two Types (muscle to bone). Both connect body parts to make the skeleton work, but they connect different things!"},
+        {"icon": "🏃", "name": "Movement, Posture & Work", "description": "Muscles help with three things: movement (walking, running, jumping), maintaining posture (sitting upright, standing), and doing work with hands (writing, lifting, carrying)."}
+      ],
+      "animation": {"type": "muscle_contraction", "description": "Animated arm showing muscle contraction and relaxation"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 14,
+      "title": "Types of Muscles",
+      "scene_type": "explore",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Your body has three different types of muscles. Some you can control (like moving your arm), some work automatically (like your heart beating), and some move food through your body without you thinking about it!",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "Not all muscles are the same! The ones in your arms and legs listen to your brain's commands. But your heart muscles and stomach muscles work on their own — even when you're asleep!"
+      },
+      "hotspots": [
+        {"icon": "🦓", "name": "Striped/Striated (Voluntary) Muscles", "description": "These muscles have stripes like a zebra! They are under YOUR control — you can move them according to your will. Found in arms, legs, hands, and feet. Also called voluntary or skeletal muscles."},
+        {"icon": "🫧", "name": "Smooth (Involuntary) Muscles", "description": "These muscles have NO stripes and are NOT under your control. They work automatically for breathing, moving food through intestines, and blood flow. Controlled by brain and spinal cord."},
+        {"icon": "❤️", "name": "Cardiac Muscles (Heart)", "description": "Special muscles found ONLY in the heart. They are NOT attached to any bone. They work 24 hours a day, throughout your lifetime, without getting tired! They are also involuntary (not under your control)."},
+        {"icon": "⚡", "name": "Key Differences", "description": "Voluntary muscles: you control them, have stripes, get tired. Involuntary muscles: automatic, no stripes, work continuously. Cardiac: automatic, special stripes, never tire, only in heart."}
+      ],
+      "animation": {"type": "muscle_types", "description": "Animated comparison of three muscle types with their features"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 15,
+      "title": "Muscles - Sort Voluntary vs Involuntary",
+      "scene_type": "activity",
+      "character": "tara",
+      "background": "none",
+      "narration": "Can you figure out which actions use voluntary muscles (you control) and which use involuntary muscles (automatic)?",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Think carefully — can you START and STOP this action whenever you want? If yes, it's voluntary. If it happens automatically without your control, it's involuntary!"
+      },
+      "activity": {
+        "type": "matching",
+        "title": "Sort: Voluntary or Involuntary?",
+        "instructions": "Classify each action as using voluntary or involuntary muscles.",
+        "pairs": [
+          {"item": "Kicking a ball", "icon": "⚽", "match": "Voluntary", "hint": "You decide to kick.", "explanation": "Kicking uses leg muscles that you consciously control."},
+          {"item": "Heartbeat", "icon": "❤️", "match": "Involuntary", "hint": "Does it ever stop when you want it to?", "explanation": "Your heart beats automatically using cardiac muscles — you can't stop it by thinking!"},
+          {"item": "Writing with a pen", "icon": "✏️", "match": "Voluntary", "hint": "You choose to move your hand.", "explanation": "Writing uses hand and finger muscles that you control with your will."},
+          {"item": "Digesting food", "icon": "🫃", "match": "Involuntary", "hint": "Do you tell your stomach to work?", "explanation": "Digestion uses smooth involuntary muscles that work automatically."},
+          {"item": "Blinking your eyes", "icon": "👁️", "match": "Involuntary", "hint": "It mostly happens on its own.", "explanation": "Blinking is mostly involuntary — it happens automatically to protect your eyes."},
+          {"item": "Lifting weights", "icon": "🏋️", "match": "Voluntary", "hint": "You choose to lift.", "explanation": "Lifting uses arm muscles (biceps, triceps) that you consciously control."}
+        ],
+        "options": ["Voluntary", "Involuntary"]
+      },
+      "xp": 20,
+      "tts": true
+    },
+    {
+      "id": 16,
+      "title": "Keeping Bones & Muscles Healthy",
+      "scene_type": "story",
+      "character": "tara",
+      "background": "none",
+      "narration": "Regular exercise keeps muscles healthy and in good condition. Correct posture also helps keep the skeletal system in proper shape. Eating calcium-rich foods like milk, cheese, and green vegetables makes bones strong!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Here's a fun fact that surprises many people: fat in your body CANNOT be converted into muscle by exercise! Fat and muscle are completely different tissues. Exercise makes muscles stronger, but it doesn't turn fat into muscle."
+      },
+      "fun_fact": "Your heart is made of cardiac muscle that beats about 100,000 times a day — that's over 3 billion beats in a lifetime! It never gets tired because cardiac muscles are specially built to work non-stop.",
+      "xp": 10,
+      "tts": true
+    },
+    {
+      "id": 17,
+      "title": "Tendons vs Ligaments - Sequence",
+      "scene_type": "activity",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Let's arrange how movement happens in the body — from the brain's signal all the way to bone movement!",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "Put these steps in order! How does your brain's command turn into actual body movement? Think about the chain of events."
+      },
+      "activity": {
+        "type": "sequence",
+        "title": "How Movement Happens - Put in Order",
+        "instructions": "Arrange the steps of body movement from start to finish.",
+        "steps": [
+          {"id": 1, "icon": "🧠", "name": "Brain sends signal through nerves", "correct_position": 1},
+          {"id": 2, "icon": "💪", "name": "Muscle receives the signal", "correct_position": 2},
+          {"id": 3, "icon": "📏", "name": "Muscle contracts (gets shorter)", "correct_position": 3},
+          {"id": 4, "icon": "🔗", "name": "Tendon pulls on the bone", "correct_position": 4},
+          {"id": 5, "icon": "🦴", "name": "Bone moves at the joint", "correct_position": 5}
+        ]
+      },
+      "xp": 20,
+      "tts": true
+    },
+    {
+      "id": 18,
+      "title": "Full Body Review - How It All Connects",
+      "scene_type": "explore",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Let's put it all together! The skeletal system and muscular system work as a team. Bones provide the framework, joints allow movement, muscles provide the force, tendons connect muscles to bones, and ligaments connect bones to bones.",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "Think of it like this: I'm the robot frame (skeleton), joints are my hinges, muscles are my motors, tendons are the cables connecting motors to frame, and ligaments are the bolts holding my frame together!"
+      },
+      "hotspots": [
+        {"icon": "🦴", "name": "Skeleton = Framework", "description": "206 bones give shape, support, protection. Made of skull (22), backbone (33), ribcage (24 ribs + sternum), limbs (arms and legs), and girdles (shoulder and hip)."},
+        {"icon": "🔧", "name": "Joints = Connections", "description": "Where two bones meet. Four movable types: Ball and socket (all directions), Hinge (one direction), Pivot (rotation), Gliding (sliding). Plus immovable joints in the skull."},
+        {"icon": "💪", "name": "Muscles = Motors", "description": "600+ muscles that contract and relax. Three types: Striped/voluntary (you control), Smooth/involuntary (automatic), Cardiac (heart, never tires)."},
+        {"icon": "🔗", "name": "Tendons & Ligaments = Connectors", "description": "Tendons: join muscle TO bone (Two Types). Ligaments: join bone TO bone (Like to Like). Both are strong, flexible tissues that hold the system together."}
+      ],
+      "animation": {"type": "body_system_overview", "description": "Animated overview showing how skeleton, joints, muscles, tendons work together"},
+      "xp": 15,
+      "tts": true
+    },
+    {
+      "id": 19,
+      "title": "True or False Challenge",
+      "scene_type": "challenge",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Time to test your knowledge with Bone Bot's challenge! Read each statement and decide — is it TRUE or FALSE?",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "I've got 8 tricky questions about bones, joints, and muscles. Think carefully before you answer — some of these might catch you off guard!"
+      },
+      "challenge": {
+        "title": "True or False — Bones, Joints & Muscles",
+        "questions": [
+          {"id": 1, "statement": "An adult human body has 206 bones.", "answer": true, "explanation": "Correct! An adult has exactly 206 bones, down from 300+ at birth."},
+          {"id": 2, "statement": "The skull has 32 bones in total.", "answer": false, "explanation": "False! The skull has 22 bones (8 cranium + 14 face bones)."},
+          {"id": 3, "statement": "The knee is a ball and socket joint.", "answer": false, "explanation": "False! The knee is a hinge joint — it moves in only one direction."},
+          {"id": 4, "statement": "Cardiac muscles can get tired after exercise.", "answer": false, "explanation": "False! Cardiac muscles are specially designed to never get tired — they beat 24/7 for your entire life."},
+          {"id": 5, "statement": "Ligaments connect bone to bone.", "answer": true, "explanation": "Correct! Ligaments join Like to Like — bone to bone."},
+          {"id": 6, "statement": "The femur is the longest bone in the human body.", "answer": true, "explanation": "Correct! The femur (thigh bone) is the longest and strongest bone."},
+          {"id": 7, "statement": "Smooth muscles are voluntary muscles.", "answer": false, "explanation": "False! Smooth muscles are involuntary — they work automatically and are NOT under your control."},
+          {"id": 8, "statement": "The pivot joint in the neck allows head movement in all directions.", "answer": true, "explanation": "Correct! The pivot joint between skull and backbone lets the head move sideways and up/down."}
+        ]
+      },
+      "xp": 30,
+      "tts": true
+    },
+    {
+      "id": 20,
+      "title": "Final Quiz - Skeleton Detective",
+      "scene_type": "quiz",
+      "character": "tara",
+      "background": "none",
+      "narration": "You've learned so much about bones, joints, and muscles! Now it's time for the final quiz. Answer at least 7 out of 10 correctly to earn your Skeleton Detective badge!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "This is the big one! Show Bone Bot and me everything you've learned about the skeletal and muscular system. Good luck, detective!"
+      },
+      "quiz": {
+        "title": "Final Quiz — Skeleton Detective",
+        "pass_score": 7,
+        "questions": [
+          {"id": 1, "question": "How many bones does an adult human skeleton have?", "options": ["106", "206", "306", "406"], "correct": 1, "explanation": "An adult human skeleton has exactly 206 bones."},
+          {"id": 2, "question": "Which is the only movable bone in the skull?", "options": ["Cheekbone", "Nose bone", "Lower jaw bone", "Forehead bone"], "correct": 2, "explanation": "The lower jaw bone (mandible) is the only movable bone in the skull."},
+          {"id": 3, "question": "What type of joint is the shoulder?", "options": ["Hinge joint", "Pivot joint", "Ball and socket joint", "Gliding joint"], "correct": 2, "explanation": "The shoulder is a ball and socket joint allowing movement in all directions."},
+          {"id": 4, "question": "What connects muscles to bones?", "options": ["Ligaments", "Tendons", "Cartilage", "Nerves"], "correct": 1, "explanation": "Tendons connect muscles to bones. Remember: Tendon = Two Types (muscle to bone)."},
+          {"id": 5, "question": "How many vertebrae make up the backbone?", "options": ["23", "33", "43", "53"], "correct": 1, "explanation": "The backbone is made of 33 vertebrae forming the vertebral column."},
+          {"id": 6, "question": "Which type of muscle is found ONLY in the heart?", "options": ["Striped muscles", "Smooth muscles", "Cardiac muscles", "Voluntary muscles"], "correct": 2, "explanation": "Cardiac muscles are special muscles found only in the heart that never get tired."},
+          {"id": 7, "question": "What are the last two pairs of ribs called?", "options": ["Fixed ribs", "True ribs", "Floating ribs", "False ribs"], "correct": 2, "explanation": "The last 2 pairs attach only to the backbone, not the sternum — called floating ribs."},
+          {"id": 8, "question": "Which is the longest bone in the human body?", "options": ["Humerus", "Tibia", "Femur", "Radius"], "correct": 2, "explanation": "The femur (thigh bone) is the longest bone, bearing the whole body weight."},
+          {"id": 9, "question": "What type of joint allows your wrist to move?", "options": ["Ball and socket", "Hinge", "Pivot", "Gliding"], "correct": 3, "explanation": "The wrist has gliding joints where small bones slide over each other."},
+          {"id": 10, "question": "What is produced inside bone marrow?", "options": ["Calcium", "New blood cells", "Muscles", "Cartilage"], "correct": 1, "explanation": "Bone marrow produces new blood cells — red blood cells, white blood cells, and platelets."}
+        ]
+      },
+      "xp": 50,
+      "tts": true
+    },
+    {
+      "id": 21,
+      "title": "Chapter Summary",
+      "scene_type": "summary",
+      "character": "tara",
+      "background": "none",
+      "narration": "What an incredible journey through the human body's framework! You've mastered the skeletal system, joints, and muscular system. Let's review everything.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "You now know how 206 bones, 4 types of joints, and 600+ muscles all work together to help you move, stand, and live. You're a true Skeleton Detective!"
+      },
+      "summary_points": [
+        {"icon": "🦴", "title": "Skeletal System", "text": "206 bones give shape, support, protection, movement, and produce blood cells in bone marrow."},
+        {"icon": "💀", "title": "Skull", "text": "22 bones (8 cranium + 14 face). Only the lower jaw is movable. Protects the brain."},
+        {"icon": "🔗", "title": "Backbone & Ribcage", "text": "33 vertebrae protect spinal cord. 12 pairs of ribs protect heart and lungs. Last 2 pairs are floating ribs."},
+        {"icon": "🦵", "title": "Limbs & Girdles", "text": "Arms (humerus, radius, ulna) and legs (femur, tibia, fibula). Pectoral girdle (shoulder) and pelvic girdle (hip) connect limbs to skeleton."},
+        {"icon": "🔧", "title": "Joints", "text": "Ball and socket (all directions: shoulder, hip), Hinge (one direction: elbow, knee), Pivot (rotation: neck), Gliding (sliding: wrist, ankle)."},
+        {"icon": "💪", "title": "Muscles", "text": "600+ muscles. Striped/voluntary (you control), Smooth/involuntary (automatic), Cardiac (heart, never tires)."},
+        {"icon": "🪢", "title": "Connectors", "text": "Tendons join muscle to bone (Two Types). Ligaments join bone to bone (Like to Like)."},
+        {"icon": "🏃", "title": "Staying Healthy", "text": "Exercise keeps muscles healthy. Good posture maintains skeleton shape. Calcium-rich food strengthens bones."}
+      ],
+      "xp": 10,
+      "tts": true
+    },
+    {
+      "id": 22,
+      "title": "Badge Awarded - Skeleton Detective!",
+      "scene_type": "badge",
+      "character": "bone_bot",
+      "background": "none",
+      "narration": "Congratulations, detective! You've cracked the case of the skeletal and muscular system! You now know how bones, joints, and muscles work together to make your body move.",
+      "dialogue": {
+        "speaker": "Bone Bot",
+        "text": "You did it! You know all my 206 bones, 4 joint types, and 3 muscle types! I'm so proud of you, detective! Wear this Skeleton Detective badge with honour!"
+      },
+      "badge": {
+        "name": "Skeleton Detective",
+        "icon": "🦴",
+        "description": "Awarded for mastering the skeletal system, joints, muscles, tendons, and ligaments!"
+      },
+      "xp": 10,
+      "tts": true
+    }
+  ]
+}
