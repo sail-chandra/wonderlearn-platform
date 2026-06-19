@@ -347,554 +347,769 @@ st.markdown("""
 # ─── Animation Renderers ──────────────────────────────────────────────────────
 
 def render_interactive_animation(anim_type):
-    """Render interactive HTML5 Canvas/JS animations for motion-based concept demos."""
+    """Render professional interactive HTML5 Canvas/JS animations with RTL motion."""
 
     if anim_type == "habitat_types":
         components.html("""
-        <div style="background: linear-gradient(135deg, #FEF3C7, #ECFDF5); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#92400E; margin:0 0 15px;">🎬 Animal Habitats — Where Do They Live?</h4>
-        <canvas id="c" width="580" height="260"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0;
-        const habitats=[
-            {x:60,y:130,icon:'🦁',label:'Terrestrial',color:'#D1FAE5',desc:'Land'},
-            {x:175,y:130,icon:'🐟',label:'Aquatic',color:'#DBEAFE',desc:'Water'},
-            {x:290,y:130,icon:'🐸',label:'Amphibious',color:'#E0E7FF',desc:'Both'},
-            {x:405,y:130,icon:'🐒',label:'Arboreal',color:'#D1FAE5',desc:'Trees'},
-            {x:520,y:130,icon:'🦅',label:'Aerial',color:'#F3E8FF',desc:'Sky'}
-        ];
-        function draw(){
-            ctx.clearRect(0,0,580,260);
-            habitats.forEach((h,i)=>{
-                let bounce=Math.sin(t*0.03+i*1.2)*8;
-                // Background circle
-                ctx.beginPath();ctx.arc(h.x,h.y+bounce,45,0,Math.PI*2);
-                ctx.fillStyle=h.color;ctx.fill();
-                ctx.strokeStyle='#9CA3AF';ctx.lineWidth=2;ctx.stroke();
-                // Icon
-                ctx.font='32px serif';ctx.textAlign='center';
-                ctx.fillText(h.icon,h.x,h.y+bounce+10);
-                // Label
-                ctx.font='bold 12px sans-serif';ctx.fillStyle='#1F2937';
-                ctx.fillText(h.label,h.x,h.y+bounce+55);
-                ctx.font='11px sans-serif';ctx.fillStyle='#6B7280';
-                ctx.fillText(h.desc,h.x,h.y+bounce+70);
-            });
-            // Animated arrow cycling between habitats
-            let arrowIdx=Math.floor(t*0.02)%5;
-            ctx.beginPath();ctx.arc(habitats[arrowIdx].x,habitats[arrowIdx].y-55,8,0,Math.PI*2);
-            ctx.fillStyle='#F59E0B';ctx.fill();
-            ctx.font='12px sans-serif';ctx.fillStyle='#92400E';
-            ctx.fillText('▼',habitats[arrowIdx].x,habitats[arrowIdx].y-48);
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=320)
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#f8fafc;margin:0 0 16px;font-size:18px;letter-spacing:0.5px;">Animal Habitats — Where Do They Live?</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<p style="text-align:center;color:#94a3b8;font-size:11px;margin:8px 0 0;">Click any habitat to explore</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;
+c.style.width='600px';c.style.height='280px';
+ctx.scale(dpr,dpr);
+let t=0,selected=-1,hovered=-1;
+const habitats=[
+  {x:60,y:140,icon:'🦁',label:'Terrestrial',desc:'Land-dwelling animals',bg:'#065f46',glow:'#10b981',examples:'Lion, Elephant, Deer'},
+  {x:180,y:140,icon:'🐟',label:'Aquatic',desc:'Live entirely in water',bg:'#1e3a5f',glow:'#3b82f6',examples:'Fish, Whale, Jellyfish'},
+  {x:300,y:140,icon:'🐸',label:'Amphibious',desc:'Live on land & water',bg:'#3b0764',glow:'#a855f7',examples:'Frog, Toad, Salamander'},
+  {x:420,y:140,icon:'🐒',label:'Arboreal',desc:'Tree-dwelling animals',bg:'#365314',glow:'#84cc16',examples:'Monkey, Koala, Sloth'},
+  {x:540,y:140,icon:'🦅',label:'Aerial',desc:'Spend most time flying',bg:'#7c2d12',glow:'#f97316',examples:'Eagle, Hawk, Swift'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();
+  const mx=(e.clientX-r.left),my=(e.clientY-r.top);
+  selected=-1;
+  habitats.forEach((h,i)=>{if(Math.hypot(mx-h.x,my-h.y)<42)selected=i;});
+});
+c.addEventListener('mousemove',e=>{
+  const r=c.getBoundingClientRect();
+  const mx=(e.clientX-r.left),my=(e.clientY-r.top);
+  hovered=-1;
+  habitats.forEach((h,i)=>{if(Math.hypot(mx-h.x,my-h.y)<42)hovered=i;});
+  c.style.cursor=hovered>=0?'pointer':'default';
+});
+function easeOut(x){return 1-Math.pow(1-x,3);}
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // Floating particles (RTL)
+  for(let i=0;i<12;i++){
+    let px=600-((t*0.3+i*55)%640),py=30+i*22+Math.sin(t*0.02+i)*10;
+    ctx.beginPath();ctx.arc(px,py,1.5,0,Math.PI*2);
+    ctx.fillStyle='rgba(148,163,184,0.3)';ctx.fill();
+  }
+  habitats.forEach((h,i)=>{
+    let isActive=selected===i||hovered===i;
+    let bounce=Math.sin(t*0.025+i*0.8)*4;
+    let scale=isActive?1.12:1;
+    ctx.save();ctx.translate(h.x,h.y+bounce);ctx.scale(scale,scale);
+    // Glow
+    if(isActive){
+      ctx.shadowColor=h.glow;ctx.shadowBlur=20;
+    }
+    // Circle bg
+    let grad=ctx.createRadialGradient(0,-10,5,0,0,40);
+    grad.addColorStop(0,h.glow+'44');grad.addColorStop(1,h.bg);
+    ctx.beginPath();ctx.arc(0,0,40,0,Math.PI*2);
+    ctx.fillStyle=grad;ctx.fill();
+    ctx.strokeStyle=isActive?h.glow:'rgba(255,255,255,0.15)';
+    ctx.lineWidth=isActive?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;
+    // Icon
+    ctx.font='34px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(h.icon,0,2);
+    ctx.restore();
+    // Label
+    ctx.font='bold 11px "Segoe UI",sans-serif';ctx.fillStyle='#e2e8f0';ctx.textAlign='center';
+    ctx.fillText(h.label,h.x,h.y+bounce+58);
+  });
+  // Detail panel
+  if(selected>=0){
+    let h=habitats[selected];
+    ctx.fillStyle='rgba(15,23,42,0.9)';
+    ctx.beginPath();ctx.roundRect(60,230,480,40,10);ctx.fill();
+    ctx.strokeStyle=h.glow;ctx.lineWidth=1.5;ctx.stroke();
+    ctx.font='13px "Segoe UI",sans-serif';ctx.fillStyle='#f1f5f9';ctx.textAlign='center';
+    ctx.fillText(h.icon+' '+h.desc+' — e.g. '+h.examples,300,254);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=360)
         return True
 
     elif anim_type == "body_coverings_1":
         components.html("""
-        <div style="background: linear-gradient(135deg, #ECFDF5, #D1FAE5); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#065F46; margin:0 0 10px;">🎬 Body Coverings — Nature's Armour</h4>
-        <canvas id="c" width="580" height="280"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0,selected=-1;
-        const items=[
-            {x:60,y:100,icon:'🪶',name:'Feathers',animal:'Birds',purpose:'Fly & warmth',color:'#FEF3C7'},
-            {x:175,y:100,icon:'🐍',name:'Scales',animal:'Fish/Reptiles',purpose:'Protection',color:'#DBEAFE'},
-            {x:290,y:100,icon:'🐢',name:'Shell',animal:'Tortoise/Snail',purpose:'Hard home',color:'#F3E8FF'},
-            {x:405,y:100,icon:'🐑',name:'Wool',animal:'Sheep',purpose:'Trap warmth',color:'#FEF9C3'},
-            {x:520,y:100,icon:'🐻‍❄️',name:'Fur',animal:'Polar Bear',purpose:'Insulation',color:'#E0F2FE'}
-        ];
-        c.addEventListener('click',e=>{
-            const r=c.getBoundingClientRect();
-            const mx=e.clientX-r.left,my=e.clientY-r.top;
-            selected=-1;
-            items.forEach((it,i)=>{if(Math.abs(mx-it.x)<40&&Math.abs(my-it.y)<40)selected=i;});
-        });
-        function draw(){
-            ctx.clearRect(0,0,580,280);
-            items.forEach((it,i)=>{
-                let s=selected===i?1.15:1;
-                let bounce=Math.sin(t*0.04+i*1.3)*5;
-                // Card
-                ctx.save();ctx.translate(it.x,it.y+bounce);ctx.scale(s,s);
-                ctx.beginPath();ctx.roundRect(-40,-40,80,80,12);
-                ctx.fillStyle=it.color;ctx.fill();
-                ctx.strokeStyle=selected===i?'#22C55E':'#D1D5DB';ctx.lineWidth=selected===i?3:1;ctx.stroke();
-                ctx.font='30px serif';ctx.textAlign='center';ctx.fillText(it.icon,0,10);
-                ctx.restore();
-                // Labels below
-                ctx.font='bold 11px sans-serif';ctx.fillStyle='#1F2937';ctx.textAlign='center';
-                ctx.fillText(it.name,it.x,it.y+bounce+55);
-                ctx.font='10px sans-serif';ctx.fillStyle='#6B7280';
-                ctx.fillText(it.animal,it.x,it.y+bounce+68);
-            });
-            // Detail panel
-            if(selected>=0){
-                let it=items[selected];
-                ctx.fillStyle='#F0FDF4';ctx.beginPath();ctx.roundRect(90,200,400,50,10);ctx.fill();
-                ctx.strokeStyle='#22C55E';ctx.lineWidth=2;ctx.stroke();
-                ctx.font='14px sans-serif';ctx.fillStyle='#065F46';ctx.textAlign='center';
-                ctx.fillText(it.icon+' '+it.name+' — '+it.purpose+' (Found on: '+it.animal+')',290,230);
-            } else {
-                ctx.font='12px sans-serif';ctx.fillStyle='#9CA3AF';ctx.textAlign='center';
-                ctx.fillText('👆 Click on any covering to learn more!',290,230);
-            }
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=340)
+<div style="background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#f8fafc;margin:0 0 16px;font-size:18px;">Body Coverings — Nature's Armour</h4>
+<canvas id="c" width="600" height="300"></canvas>
+<p style="text-align:center;color:#94a3b8;font-size:11px;margin:8px 0 0;">Click to learn about each covering</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=300*dpr;
+c.style.width='600px';c.style.height='300px';
+ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const items=[
+  {x:60,y:100,icon:'🪶',name:'Feathers',animal:'Birds',purpose:'Flight + warmth insulation',color:'#fbbf24',bg:'#78350f'},
+  {x:180,y:100,icon:'🐍',name:'Scales',animal:'Fish & Reptiles',purpose:'Waterproof protection',color:'#60a5fa',bg:'#1e3a5f'},
+  {x:300,y:100,icon:'🐢',name:'Shell',animal:'Tortoise & Snail',purpose:'Portable hard home',color:'#a78bfa',bg:'#3b0764'},
+  {x:420,y:100,icon:'🐑',name:'Wool',animal:'Sheep & Yak',purpose:'Traps air for warmth',color:'#f9fafb',bg:'#374151'},
+  {x:540,y:100,icon:'🐻‍❄️',name:'Fur/Hair',animal:'Polar Bear & Dog',purpose:'Thick insulation layer',color:'#67e8f9',bg:'#164e63'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();
+  const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  items.forEach((it,i)=>{if(Math.hypot(mx-it.x,my-it.y)<38)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,300);
+  items.forEach((it,i)=>{
+    let active=selected===i;
+    let bounce=Math.sin(t*0.03+i*1.1)*4;
+    let s=active?1.15:1;
+    ctx.save();ctx.translate(it.x,it.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=it.color;ctx.shadowBlur=18;}
+    // Hexagonal-ish card
+    ctx.beginPath();ctx.roundRect(-36,-36,72,72,active?18:14);
+    let g=ctx.createLinearGradient(-36,-36,36,36);
+    g.addColorStop(0,it.bg);g.addColorStop(1,active?it.color+'33':it.bg);
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle=active?it.color:'rgba(255,255,255,0.1)';
+    ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.font='28px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(it.icon,0,0);
+    ctx.restore();
+    // Name below
+    ctx.font=(active?'bold ':'')+' 11px "Segoe UI",sans-serif';
+    ctx.fillStyle=active?it.color:'#cbd5e1';ctx.textAlign='center';
+    ctx.fillText(it.name,it.x,it.y+bounce+52);
+    ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#64748b';
+    ctx.fillText(it.animal,it.x,it.y+bounce+66);
+  });
+  // Info panel
+  if(selected>=0){
+    let it=items[selected];
+    ctx.fillStyle='rgba(15,23,42,0.95)';
+    ctx.beginPath();ctx.roundRect(50,200,500,70,12);ctx.fill();
+    ctx.strokeStyle=it.color+'88';ctx.lineWidth=1.5;ctx.stroke();
+    // Animated shine (RTL)
+    let shineX=550-((t*3)%550);
+    let sg=ctx.createLinearGradient(shineX-30,0,shineX+30,0);
+    sg.addColorStop(0,'transparent');sg.addColorStop(0.5,it.color+'22');sg.addColorStop(1,'transparent');
+    ctx.fillStyle=sg;ctx.beginPath();ctx.roundRect(50,200,500,70,12);ctx.fill();
+    ctx.font='bold 14px "Segoe UI",sans-serif';ctx.fillStyle=it.color;ctx.textAlign='center';
+    ctx.fillText(it.icon+' '+it.name,300,225);
+    ctx.font='12px "Segoe UI",sans-serif';ctx.fillStyle='#e2e8f0';
+    ctx.fillText(it.purpose,300,248);
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#94a3b8';
+    ctx.fillText('Found on: '+it.animal,300,265);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=380)
         return True
 
     elif anim_type == "body_coverings_2":
         components.html("""
-        <div style="background: linear-gradient(135deg, #FEF9C3, #FEF08A); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#854D0E; margin:0 0 10px;">🎬 Special Defence — Hide or Fight!</h4>
-        <canvas id="c" width="580" height="280"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0,selected=-1;
-        const items=[
-            {x:60,y:100,icon:'🦓',name:'Camouflage',desc:'Stripes/colour blend with surroundings',color:'#F3F4F6'},
-            {x:175,y:100,icon:'🪲',name:'Cuticle',desc:'Hard outer layer on insects like armour',color:'#FEF3C7'},
-            {x:290,y:100,icon:'🦔',name:'Quills',desc:'Sharp spines raised to scare enemies',color:'#FEE2E2'},
-            {x:405,y:100,icon:'🛡️',name:'Armour Plates',desc:'Bony plates — armadillo curls into ball',color:'#E0E7FF'},
-            {x:520,y:100,icon:'🦎',name:'Colour Change',desc:'Chameleon matches any background',color:'#D1FAE5'}
-        ];
-        c.addEventListener('click',e=>{
-            const r=c.getBoundingClientRect();
-            const mx=e.clientX-r.left,my=e.clientY-r.top;
-            selected=-1;
-            items.forEach((it,i)=>{if(Math.abs(mx-it.x)<40&&Math.abs(my-it.y)<40)selected=i;});
-        });
-        function draw(){
-            ctx.clearRect(0,0,580,280);
-            // Camouflage demo - zebra fading in/out
-            if(selected===0){
-                let alpha=0.3+0.7*Math.abs(Math.sin(t*0.05));
-                ctx.globalAlpha=alpha;
-            }
-            items.forEach((it,i)=>{
-                ctx.globalAlpha=1;
-                let pulse=selected===i?3+Math.sin(t*0.1)*3:0;
-                let bounce=Math.sin(t*0.04+i)*5;
-                ctx.beginPath();ctx.roundRect(it.x-40,it.y+bounce-40,80,80,12);
-                ctx.fillStyle=it.color;ctx.fill();
-                ctx.strokeStyle=selected===i?'#EAB308':'#D1D5DB';
-                ctx.lineWidth=selected===i?3:1;ctx.stroke();
-                ctx.font='30px serif';ctx.textAlign='center';
-                ctx.fillText(it.icon,it.x,it.y+bounce+10);
-                ctx.font='bold 10px sans-serif';ctx.fillStyle='#1F2937';
-                ctx.fillText(it.name,it.x,it.y+bounce+55);
-            });
-            if(selected>=0){
-                ctx.fillStyle='#FFFBEB';ctx.beginPath();ctx.roundRect(90,195,400,55,10);ctx.fill();
-                ctx.strokeStyle='#EAB308';ctx.lineWidth=2;ctx.stroke();
-                ctx.font='13px sans-serif';ctx.fillStyle='#78350F';ctx.textAlign='center';
-                ctx.fillText(items[selected].icon+' '+items[selected].name,290,217);
-                ctx.font='12px sans-serif';ctx.fillStyle='#92400E';
-                ctx.fillText(items[selected].desc,290,237);
-            } else {
-                ctx.font='12px sans-serif';ctx.fillStyle='#9CA3AF';ctx.textAlign='center';
-                ctx.fillText('👆 Click on a defence mechanism to see it in action!',290,225);
-            }
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=340)
+<div style="background:linear-gradient(135deg,#1a1a2e,#0f172a);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#f8fafc;margin:0 0 16px;font-size:18px;">Defence Mechanisms — Survive or Perish!</h4>
+<canvas id="c" width="600" height="320"></canvas>
+<p style="text-align:center;color:#94a3b8;font-size:11px;margin:8px 0 0;">Click to see each defence in action</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=320*dpr;
+c.style.width='600px';c.style.height='320px';
+ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const items=[
+  {x:60,y:110,icon:'🦓',name:'Camouflage',desc:'Blends with environment to become invisible to predators',color:'#22c55e',demo:'fade'},
+  {x:180,y:110,icon:'🪲',name:'Cuticle',desc:'Hard exoskeleton acts like full-body armour plating',color:'#eab308',demo:'shield'},
+  {x:300,y:110,icon:'🦔',name:'Quills/Spines',desc:'Sharp needle-like spines raised when threatened',color:'#ef4444',demo:'spike'},
+  {x:420,y:110,icon:'🛡️',name:'Armour Plates',desc:'Armadillo rolls into impenetrable armoured ball',color:'#8b5cf6',demo:'roll'},
+  {x:540,y:110,icon:'🦎',name:'Colour Change',desc:'Chameleon changes skin colour to match any surface',color:'#06b6d4',demo:'color'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();
+  const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  items.forEach((it,i)=>{if(Math.hypot(mx-it.x,my-it.y)<40)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,320);
+  items.forEach((it,i)=>{
+    let active=selected===i;
+    let bounce=Math.sin(t*0.03+i*1.2)*4;
+    let s=active?1.15:1;
+    // Demo effects when active
+    if(active&&it.demo==='fade'){
+      ctx.globalAlpha=0.3+0.7*Math.abs(Math.sin(t*0.04));
+    }
+    ctx.save();ctx.translate(it.x,it.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=it.color;ctx.shadowBlur=22;}
+    ctx.beginPath();ctx.arc(0,0,38,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-8,4,0,0,38);
+    g.addColorStop(0,it.color+'44');g.addColorStop(1,'#1e293b');
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle=active?it.color:'rgba(255,255,255,0.12)';
+    ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;
+    // Spikes animation
+    if(active&&it.demo==='spike'){
+      for(let s=0;s<8;s++){
+        let angle=s*Math.PI/4+t*0.02;
+        let len=38+8+Math.sin(t*0.1+s)*5;
+        ctx.beginPath();ctx.moveTo(Math.cos(angle)*38,Math.sin(angle)*38);
+        ctx.lineTo(Math.cos(angle)*len,Math.sin(angle)*len);
+        ctx.strokeStyle='#ef4444';ctx.lineWidth=2;ctx.stroke();
+      }
+    }
+    ctx.font='30px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(it.icon,0,2);
+    ctx.restore();
+    ctx.globalAlpha=1;
+    ctx.font=(active?'bold ':'')+' 11px "Segoe UI",sans-serif';
+    ctx.fillStyle=active?it.color:'#cbd5e1';ctx.textAlign='center';
+    ctx.fillText(it.name,it.x,it.y+bounce+55);
+  });
+  // Detail panel
+  if(selected>=0){
+    let it=items[selected];
+    ctx.fillStyle='rgba(15,23,42,0.95)';
+    ctx.beginPath();ctx.roundRect(50,220,500,70,12);ctx.fill();
+    ctx.strokeStyle=it.color+'66';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.font='bold 14px "Segoe UI",sans-serif';ctx.fillStyle=it.color;ctx.textAlign='center';
+    ctx.fillText(it.icon+' '+it.name+' Defence',300,248);
+    ctx.font='12px "Segoe UI",sans-serif';ctx.fillStyle='#e2e8f0';
+    ctx.fillText(it.desc,300,268);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=400)
         return True
 
     elif anim_type == "herbivore_teeth":
         components.html("""
-        <div style="background: linear-gradient(135deg, #F0FDF4, #BBF7D0); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#166534; margin:0 0 10px;">🎬 Herbivore Feeding System</h4>
-        <canvas id="c" width="580" height="240"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0;
-        function draw(){
-            ctx.clearRect(0,0,580,240);
-            // Animated flow: Plant → Bite → Grind → Digest
-            const steps=[
-                {x:80,icon:'🌿',label:'Plant Food',sub:'leaves, grass'},
-                {x:210,icon:'🦷',label:'Sharp Incisors',sub:'bite & cut'},
-                {x:340,icon:'🔲',label:'Flat Molars',sub:'grind & crush'},
-                {x:470,icon:'🐄',label:'Long Gut',sub:'slow digestion'}
-            ];
-            // Animated food particle traveling
-            let foodX=80+(t*1.5)%480;
-            ctx.beginPath();ctx.arc(foodX,40,6,0,Math.PI*2);
-            ctx.fillStyle='#22C55E';ctx.fill();
-            ctx.font='10px sans-serif';ctx.fillStyle='#166534';ctx.textAlign='center';
-            ctx.fillText('🌱',foodX,44);
-
-            steps.forEach((s,i)=>{
-                let bounce=Math.sin(t*0.04+i)*6;
-                // Circle
-                ctx.beginPath();ctx.arc(s.x,110+bounce,40,0,Math.PI*2);
-                ctx.fillStyle='white';ctx.fill();
-                ctx.strokeStyle='#22C55E';ctx.lineWidth=2;ctx.stroke();
-                ctx.font='28px serif';ctx.textAlign='center';
-                ctx.fillText(s.icon,s.x,120+bounce);
-                // Arrow
-                if(i<3){
-                    ctx.beginPath();ctx.moveTo(s.x+45,110);ctx.lineTo(s.x+85,110);
-                    ctx.strokeStyle='#16A34A';ctx.lineWidth=2;ctx.stroke();
-                    ctx.beginPath();ctx.moveTo(s.x+80,105);ctx.lineTo(s.x+88,110);ctx.lineTo(s.x+80,115);
-                    ctx.fillStyle='#16A34A';ctx.fill();
-                }
-                ctx.font='bold 12px sans-serif';ctx.fillStyle='#1F2937';
-                ctx.fillText(s.label,s.x,170+bounce);
-                ctx.font='10px sans-serif';ctx.fillStyle='#6B7280';
-                ctx.fillText(s.sub,s.x,185+bounce);
-            });
-            // Bottom bar
-            ctx.font='11px sans-serif';ctx.fillStyle='#166534';ctx.textAlign='center';
-            ctx.fillText('🦌 Deer  🐴 Horse  🐄 Cow  🐰 Rabbit — all have hard hooves for walking long distances',290,220);
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=300)
+<div style="background:linear-gradient(135deg,#052e16,#14532d);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#bbf7d0;margin:0 0 16px;font-size:18px;">Herbivore Digestive Pipeline</h4>
+<canvas id="c" width="600" height="260"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=260*dpr;
+c.style.width='600px';c.style.height='260px';
+ctx.scale(dpr,dpr);
+let t=0;
+const steps=[
+  {x:510,icon:'🌿',label:'Plant Food',sub:'Leaves & Grass',color:'#22c55e'},
+  {x:370,icon:'🦷',label:'Incisors',sub:'Bite & Cut',color:'#86efac'},
+  {x:230,icon:'⚙️',label:'Flat Molars',sub:'Grind & Crush',color:'#4ade80'},
+  {x:90,icon:'🐄',label:'Long Gut',sub:'Slow Digestion',color:'#16a34a'}
+];
+function draw(){
+  ctx.clearRect(0,0,600,260);
+  // Pipeline background
+  ctx.fillStyle='rgba(5,46,22,0.5)';
+  ctx.beginPath();ctx.roundRect(50,75,510,90,20);ctx.fill();
+  // Animated food particles (RTL)
+  for(let i=0;i<4;i++){
+    let px=550-((t*1.2+i*140)%540);
+    let py=120+Math.sin(t*0.04+i*2)*8;
+    ctx.font='14px serif';ctx.textAlign='center';
+    ctx.globalAlpha=0.7;ctx.fillText('🌱',px,py);ctx.globalAlpha=1;
+  }
+  // Steps
+  steps.forEach((s,i)=>{
+    let pulse=Math.sin(t*0.04+i*1.5)*3;
+    // Connector arrow (RTL)
+    if(i<3){
+      ctx.beginPath();ctx.moveTo(s.x-35,120);ctx.lineTo(steps[i+1].x+40,120);
+      ctx.strokeStyle=s.color+'66';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.stroke();ctx.setLineDash([]);
+      // Arrow head pointing left
+      let ax=steps[i+1].x+42;
+      ctx.beginPath();ctx.moveTo(ax+8,115);ctx.lineTo(ax,120);ctx.lineTo(ax+8,125);
+      ctx.strokeStyle=s.color;ctx.lineWidth=2;ctx.stroke();
+    }
+    // Circle
+    ctx.save();ctx.translate(s.x,120);
+    ctx.shadowColor=s.color;ctx.shadowBlur=12;
+    ctx.beginPath();ctx.arc(0,0,32+pulse,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-5,3,0,0,34);
+    g.addColorStop(0,s.color+'66');g.addColorStop(1,'#052e16');
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle=s.color;ctx.lineWidth=2;ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.font='24px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(s.icon,0,0);
+    ctx.restore();
+    // Labels
+    ctx.font='bold 12px "Segoe UI",sans-serif';ctx.fillStyle='#dcfce7';ctx.textAlign='center';
+    ctx.fillText(s.label,s.x,170);
+    ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#86efac';
+    ctx.fillText(s.sub,s.x,185);
+  });
+  // Bottom info
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#6ee7b7';ctx.textAlign='center';
+  ctx.fillText('🦌 Deer  🐴 Horse  🐄 Cow  🐰 Rabbit — flat teeth for grinding, hard hooves for long walks',300,230);
+  // Direction indicator
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#4ade80';ctx.textAlign='right';
+  ctx.fillText('Food flows ←',580,50);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=320)
         return True
 
     elif anim_type == "carnivore_feeders":
         components.html("""
-        <div style="background: linear-gradient(135deg, #FEF2F2, #FECACA); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#991B1B; margin:0 0 10px;">🎬 Carnivores & Special Feeders</h4>
-        <canvas id="c" width="580" height="280"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0,selected=-1;
-        const items=[
-            {x:60,y:100,icon:'🦁',name:'Carnivore',tool:'Sharp teeth + Claws',food:'Meat only',color:'#FEE2E2'},
-            {x:175,y:100,icon:'🐻',name:'Omnivore',tool:'Mixed teeth',food:'Plants + Meat',color:'#FEF3C7'},
-            {x:290,y:100,icon:'🐿️',name:'Rodent',tool:'Ever-growing teeth',food:'Nuts & seeds',color:'#E0F2FE'},
-            {x:405,y:100,icon:'🦋',name:'Proboscis',tool:'Coiled tube',food:'Nectar',color:'#F3E8FF'},
-            {x:520,y:100,icon:'🦟',name:'Needle tube',tool:'Piercing tube',food:'Blood',color:'#FCE7F3'}
-        ];
-        c.addEventListener('click',e=>{
-            const r=c.getBoundingClientRect();
-            const mx=e.clientX-r.left,my=e.clientY-r.top;
-            selected=-1;
-            items.forEach((it,i)=>{if(Math.abs(mx-it.x)<40&&Math.abs(my-it.y)<40)selected=i;});
-        });
-        function draw(){
-            ctx.clearRect(0,0,580,280);
-            items.forEach((it,i)=>{
-                let bounce=Math.sin(t*0.04+i*1.2)*5;
-                let s=selected===i?1.1:1;
-                ctx.save();ctx.translate(it.x,it.y+bounce);ctx.scale(s,s);
-                ctx.beginPath();ctx.roundRect(-38,-38,76,76,12);
-                ctx.fillStyle=it.color;ctx.fill();
-                ctx.strokeStyle=selected===i?'#DC2626':'#E5E7EB';ctx.lineWidth=selected===i?3:1;ctx.stroke();
-                ctx.font='28px serif';ctx.textAlign='center';ctx.fillText(it.icon,0,8);
-                ctx.restore();
-                ctx.font='bold 10px sans-serif';ctx.fillStyle='#1F2937';ctx.textAlign='center';
-                ctx.fillText(it.name,it.x,it.y+bounce+52);
-            });
-            // Animated feeding demo for selected
-            if(selected>=0){
-                let it=items[selected];
-                ctx.fillStyle='#FFF';ctx.beginPath();ctx.roundRect(80,190,420,60,10);ctx.fill();
-                ctx.strokeStyle='#DC2626';ctx.lineWidth=1.5;ctx.stroke();
-                ctx.font='13px sans-serif';ctx.fillStyle='#991B1B';ctx.textAlign='center';
-                ctx.fillText(it.icon+' '+it.name+': '+it.tool,290,212);
-                ctx.font='12px sans-serif';ctx.fillStyle='#6B7280';
-                ctx.fillText('Food: '+it.food,290,232);
-                // Mini feeding animation
-                let fx=180+Math.sin(t*0.08)*20;
-                ctx.font='16px serif';ctx.fillText(it.icon,fx,245);
-            } else {
-                ctx.font='12px sans-serif';ctx.fillStyle='#9CA3AF';ctx.textAlign='center';
-                ctx.fillText('👆 Click an animal to see how it feeds!',290,220);
-            }
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=340)
+<div style="background:linear-gradient(135deg,#450a0a,#1c1917);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#fecaca;margin:0 0 16px;font-size:18px;">Carnivores & Special Feeding Adaptations</h4>
+<canvas id="c" width="600" height="300"></canvas>
+<p style="text-align:center;color:#a8a29e;font-size:11px;margin:8px 0 0;">Click any animal to explore its feeding tools</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=300*dpr;
+c.style.width='600px';c.style.height='300px';
+ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const items=[
+  {x:60,y:100,icon:'🦁',name:'Carnivore',tool:'Sharp canines + Retractable claws',food:'Meat (hunt prey)',color:'#ef4444'},
+  {x:180,y:100,icon:'🐻',name:'Omnivore',tool:'Mixed teeth — canines + molars',food:'Plants + Meat (flexible diet)',color:'#f59e0b'},
+  {x:300,y:100,icon:'🐿️',name:'Rodent',tool:'Ever-growing gnawing incisors',food:'Nuts, seeds, bark',color:'#22d3ee'},
+  {x:420,y:100,icon:'🦋',name:'Proboscis',tool:'Long coiled sucking tube',food:'Flower nectar',color:'#c084fc'},
+  {x:540,y:100,icon:'🦟',name:'Piercer',tool:'Needle-like piercing mouthpart',food:'Blood (parasitic)',color:'#f472b6'}
+];
+c.addEventListener('click',e=>{
+  const r=c.getBoundingClientRect();
+  const mx=e.clientX-r.left,my=e.clientY-r.top;
+  let prev=selected;selected=-1;
+  items.forEach((it,i)=>{if(Math.hypot(mx-it.x,my-it.y)<38)selected=i;});
+  if(selected===prev)selected=-1;
+});
+function draw(){
+  ctx.clearRect(0,0,600,300);
+  // Ambient particles RTL
+  for(let i=0;i<8;i++){
+    let px=600-((t*0.5+i*80)%650),py=20+i*35+Math.sin(t*0.02+i)*8;
+    ctx.beginPath();ctx.arc(px,py,1.2,0,Math.PI*2);
+    ctx.fillStyle='rgba(239,68,68,0.2)';ctx.fill();
+  }
+  items.forEach((it,i)=>{
+    let active=selected===i;
+    let bounce=Math.sin(t*0.03+i*1.1)*4;
+    let s=active?1.18:1;
+    ctx.save();ctx.translate(it.x,it.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=it.color;ctx.shadowBlur=20;}
+    ctx.beginPath();ctx.arc(0,0,36,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-6,3,0,0,36);
+    g.addColorStop(0,it.color+'44');g.addColorStop(1,'#1c1917');
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle=active?it.color:'rgba(255,255,255,0.1)';
+    ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.font='28px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(it.icon,0,0);
+    ctx.restore();
+    ctx.font=(active?'bold ':'')+' 11px "Segoe UI",sans-serif';
+    ctx.fillStyle=active?it.color:'#d6d3d1';ctx.textAlign='center';
+    ctx.fillText(it.name,it.x,it.y+bounce+52);
+  });
+  if(selected>=0){
+    let it=items[selected];
+    ctx.fillStyle='rgba(28,25,23,0.95)';
+    ctx.beginPath();ctx.roundRect(40,195,520,85,14);ctx.fill();
+    ctx.strokeStyle=it.color+'55';ctx.lineWidth=1.5;ctx.stroke();
+    // Animated hunting line RTL
+    let hx=560-((t*2)%540);
+    ctx.beginPath();ctx.moveTo(hx,195);ctx.lineTo(hx,280);
+    ctx.strokeStyle=it.color+'33';ctx.lineWidth=1;ctx.stroke();
+    ctx.font='bold 15px "Segoe UI",sans-serif';ctx.fillStyle=it.color;ctx.textAlign='center';
+    ctx.fillText(it.icon+' '+it.name,300,220);
+    ctx.font='12px "Segoe UI",sans-serif';ctx.fillStyle='#e7e5e4';
+    ctx.fillText('Tool: '+it.tool,300,242);
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#a8a29e';
+    ctx.fillText('Diet: '+it.food,300,262);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=380)
         return True
 
     elif anim_type == "breathing_systems":
         components.html("""
-        <div style="background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#1E40AF; margin:0 0 10px;">🎬 How Animals Breathe — Watch the Flow!</h4>
-        <canvas id="c" width="580" height="300"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0,selected=0;
-        const systems=[
-            {icon:'🫁',name:'Lungs',animal:'Mammals/Birds',flow:['Nostrils','Windpipe','Lungs','Blood (O₂)'],color:'#DBEAFE'},
-            {icon:'🐟',name:'Gills',animal:'Fish/Tadpoles',flow:['Water in mouth','Over gills','O₂ absorbed','Blood carries'],color:'#D1FAE5'},
-            {icon:'🦗',name:'Spiracles',animal:'Insects',flow:['Spiracle holes','Trachea tubes','Directly to cells','No blood needed'],color:'#EDE9FE'},
-            {icon:'🪱',name:'Skin',animal:'Earthworm',flow:['Moist skin','O₂ dissolves','Into blood','Must stay wet!'],color:'#FEF3C7'},
-            {icon:'🐋',name:'Blowhole',animal:'Whales/Dolphins',flow:['Surface','Blowhole opens','Air to lungs','Dive again'],color:'#E0F2FE'}
-        ];
-        // Tab buttons
-        const tabs=document.createElement('div');
-        tabs.style.cssText='display:flex;justify-content:center;gap:8px;margin-bottom:10px;';
-        systems.forEach((s,i)=>{
-            const btn=document.createElement('button');
-            btn.textContent=s.icon+' '+s.name;
-            btn.style.cssText='padding:5px 12px;border-radius:20px;border:2px solid '+(i===0?'#3B82F6':'#D1D5DB')+';background:'+(i===0?'#EFF6FF':'white')+';cursor:pointer;font-size:12px;';
-            btn.onclick=()=>{selected=i;document.querySelectorAll('button').forEach((b,j)=>{b.style.border='2px solid '+(j===i?'#3B82F6':'#D1D5DB');b.style.background=j===i?'#EFF6FF':'white';});};
-            tabs.appendChild(btn);
-        });
-        c.parentElement.insertBefore(tabs,c);
-        function draw(){
-            ctx.clearRect(0,0,580,300);
-            let sys=systems[selected];
-            // Title
-            ctx.font='16px sans-serif';ctx.fillStyle='#1E40AF';ctx.textAlign='center';
-            ctx.fillText(sys.icon+' '+sys.name+' — '+sys.animal,290,30);
-            // Animated flow pipeline
-            sys.flow.forEach((step,i)=>{
-                let x=80+i*140,y=120;
-                let progress=(t*0.02)%4;
-                let active=Math.floor(progress)===i;
-                // Box
-                ctx.beginPath();ctx.roundRect(x-50,y-30,100,60,10);
-                ctx.fillStyle=active?sys.color:'white';ctx.fill();
-                ctx.strokeStyle=active?'#3B82F6':'#D1D5DB';ctx.lineWidth=active?3:1;ctx.stroke();
-                ctx.font=(active?'bold ':'')+' 12px sans-serif';ctx.fillStyle='#1F2937';ctx.textAlign='center';
-                ctx.fillText(step,x,y+5);
-                // Arrow
-                if(i<3){
-                    let arrowX=x+55;
-                    ctx.beginPath();ctx.moveTo(arrowX,y);ctx.lineTo(arrowX+25,y);
-                    ctx.strokeStyle='#3B82F6';ctx.lineWidth=2;ctx.stroke();
-                    ctx.beginPath();ctx.moveTo(arrowX+20,y-5);ctx.lineTo(arrowX+28,y);ctx.lineTo(arrowX+20,y+5);ctx.fillStyle='#3B82F6';ctx.fill();
-                }
-            });
-            // Animated O2 particles
-            for(let i=0;i<6;i++){
-                let px=(t*2+i*100)%580,py=200+Math.sin(t*0.03+i)*20;
-                ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);
-                ctx.fillStyle='rgba(59,130,246,0.5)';ctx.fill();
-                ctx.font='8px sans-serif';ctx.fillStyle='#3B82F6';ctx.fillText('O₂',px,py+3);
-            }
-            // Info text
-            ctx.font='11px sans-serif';ctx.fillStyle='#6B7280';ctx.textAlign='center';
-            ctx.fillText('Oxygen flows through the system to reach body cells',290,270);
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=380)
+<div style="background:linear-gradient(135deg,#0c1929,#172554);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#bfdbfe;margin:0 0 4px;font-size:18px;">How Animals Breathe</h4>
+<div id="tabs" style="display:flex;justify-content:center;gap:6px;margin:10px 0;"></div>
+<canvas id="c" width="600" height="260"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=260*dpr;
+c.style.width='600px';c.style.height='260px';
+ctx.scale(dpr,dpr);
+let t=0,selected=0;
+const systems=[
+  {icon:'🫁',name:'Lungs',animal:'Mammals & Birds',flow:['Nostrils','Windpipe','Lungs','O₂ → Blood'],color:'#3b82f6',bgc:'#1e3a5f'},
+  {icon:'🐟',name:'Gills',animal:'Fish & Tadpoles',flow:['Water enters mouth','Passes over gills','O₂ extracted','Blood carries O₂'],color:'#10b981',bgc:'#064e3b'},
+  {icon:'🦗',name:'Spiracles',animal:'Insects',flow:['Spiracle holes','Trachea tubes','Direct to cells','No blood needed!'],color:'#a855f7',bgc:'#3b0764'},
+  {icon:'🪱',name:'Skin',animal:'Earthworm & Frog',flow:['Moist skin surface','O₂ dissolves in','Absorbed into blood','Must stay wet!'],color:'#f59e0b',bgc:'#78350f'},
+  {icon:'🐋',name:'Blowhole',animal:'Whales & Dolphins',flow:['Rise to surface','Blowhole opens','Air fills lungs','Dive 30+ min'],color:'#06b6d4',bgc:'#164e63'}
+];
+// Create tab buttons
+const tabsEl=document.getElementById('tabs');
+systems.forEach((s,i)=>{
+  const btn=document.createElement('button');
+  btn.textContent=s.icon+' '+s.name;
+  btn.style.cssText='padding:6px 14px;border-radius:20px;border:2px solid '+(i===0?s.color:'#334155')+';background:'+(i===0?s.bgc:'transparent')+';color:'+(i===0?'#f1f5f9':'#94a3b8')+';cursor:pointer;font-size:11px;font-family:inherit;transition:all 0.2s;';
+  btn.onmouseenter=()=>{if(i!==selected)btn.style.borderColor='#64748b';};
+  btn.onmouseleave=()=>{if(i!==selected)btn.style.borderColor='#334155';};
+  btn.onclick=()=>{
+    selected=i;
+    tabsEl.querySelectorAll('button').forEach((b,j)=>{
+      b.style.border='2px solid '+(j===i?systems[j].color:'#334155');
+      b.style.background=j===i?systems[j].bgc:'transparent';
+      b.style.color=j===i?'#f1f5f9':'#94a3b8';
+    });
+  };
+  tabsEl.appendChild(btn);
+});
+function draw(){
+  ctx.clearRect(0,0,600,260);
+  let sys=systems[selected];
+  // Title
+  ctx.font='14px "Segoe UI",sans-serif';ctx.fillStyle='#e2e8f0';ctx.textAlign='center';
+  ctx.fillText(sys.icon+' '+sys.name+' Breathing — '+sys.animal,300,25);
+  // Flow boxes RTL layout
+  sys.flow.forEach((step,i)=>{
+    let x=500-i*130,y=100;
+    let progress=(t*0.015)%4;
+    let active=Math.floor(progress)===i;
+    let glow=active?12:0;
+    ctx.save();
+    if(active){ctx.shadowColor=sys.color;ctx.shadowBlur=glow;}
+    ctx.beginPath();ctx.roundRect(x-55,y-28,110,56,12);
+    ctx.fillStyle=active?sys.bgc:'rgba(15,23,42,0.8)';ctx.fill();
+    ctx.strokeStyle=active?sys.color:sys.color+'44';
+    ctx.lineWidth=active?2:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.restore();
+    ctx.font=(active?'bold ':'')+'12px "Segoe UI",sans-serif';
+    ctx.fillStyle=active?'#f1f5f9':'#94a3b8';ctx.textAlign='center';
+    ctx.fillText(step,x,y+5);
+    // Arrow pointing left
+    if(i<3){
+      let ax=x-58;
+      ctx.beginPath();ctx.moveTo(ax+25,y);ctx.lineTo(ax,y);
+      ctx.strokeStyle=sys.color+'88';ctx.lineWidth=2;ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ax+7,y-4);ctx.lineTo(ax,y);ctx.lineTo(ax+7,y+4);
+      ctx.fillStyle=sys.color;ctx.fill();
+    }
+  });
+  // O2 particles flowing RTL
+  for(let i=0;i<8;i++){
+    let px=580-((t*1.5+i*80)%620),py=170+Math.sin(t*0.025+i)*15;
+    ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2);
+    ctx.fillStyle=sys.color+'55';ctx.fill();
+    ctx.font='8px sans-serif';ctx.fillStyle=sys.color+'88';ctx.textAlign='center';
+    ctx.fillText('O₂',px,py+3);
+  }
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#64748b';ctx.textAlign='center';
+  ctx.fillText('← Oxygen flows through the respiratory system to body cells',300,235);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=370)
         return True
 
     elif anim_type == "spiracles_skin":
         components.html("""
-        <div style="background: linear-gradient(135deg, #EDE9FE, #DDD6FE); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#5B21B6; margin:0 0 10px;">🎬 Insect Spiracles vs Earthworm Skin Breathing</h4>
-        <canvas id="c" width="580" height="260"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0;
-        function draw(){
-            ctx.clearRect(0,0,580,260);
-            // LEFT: Insect spiracles
-            ctx.font='bold 13px sans-serif';ctx.fillStyle='#5B21B6';ctx.textAlign='center';
-            ctx.fillText('🦗 Insect — Spiracles',150,25);
-            // Draw insect body
-            ctx.beginPath();ctx.ellipse(150,100,60,30,0,0,Math.PI*2);
-            ctx.fillStyle='#A78BFA';ctx.fill();ctx.strokeStyle='#7C3AED';ctx.lineWidth=2;ctx.stroke();
-            // Spiracle holes with air going in
-            for(let i=0;i<4;i++){
-                let sx=100+i*30,sy=100;
-                ctx.beginPath();ctx.arc(sx,sy+30,4,0,Math.PI*2);ctx.fillStyle='#FDE68A';ctx.fill();
-                // Air arrow going in
-                let airY=sy+30-10-Math.abs(Math.sin(t*0.05+i))*15;
-                ctx.font='10px serif';ctx.fillText('💨',sx,airY);
-            }
-            // Trachea tubes inside
-            ctx.setLineDash([3,3]);
-            ctx.beginPath();ctx.moveTo(110,100);ctx.lineTo(190,100);ctx.strokeStyle='#EAB308';ctx.stroke();
-            ctx.setLineDash([]);
-            ctx.font='10px sans-serif';ctx.fillStyle='#6B7280';
-            ctx.fillText('Spiracle holes → Trachea tubes → Cells',150,160);
-            ctx.fillText('No lungs! Air goes directly to cells.',150,178);
+<div style="background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#c4b5fd;margin:0 0 16px;font-size:18px;">Spiracles vs Skin Breathing — A Comparison</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=280*dpr;
+c.style.width='600px';c.style.height='280px';
+ctx.scale(dpr,dpr);
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // LEFT panel - Insect
+  ctx.fillStyle='rgba(30,27,75,0.6)';
+  ctx.beginPath();ctx.roundRect(15,10,270,260,14);ctx.fill();
+  ctx.strokeStyle='#7c3aed44';ctx.lineWidth=1;ctx.stroke();
+  ctx.font='bold 13px "Segoe UI",sans-serif';ctx.fillStyle='#c4b5fd';ctx.textAlign='center';
+  ctx.fillText('🦗 Insect — Spiracle System',150,35);
+  // Insect body
+  ctx.beginPath();ctx.ellipse(150,110,55,25,0,0,Math.PI*2);
+  let ig=ctx.createLinearGradient(95,85,205,135);
+  ig.addColorStop(0,'#7c3aed');ig.addColorStop(1,'#4c1d95');
+  ctx.fillStyle=ig;ctx.fill();ctx.strokeStyle='#a78bfa';ctx.lineWidth=1.5;ctx.stroke();
+  // Spiracle holes with pulsing air (RTL)
+  for(let i=0;i<5;i++){
+    let sx=185-i*20,sy=115;
+    let pulse=2+Math.sin(t*0.06+i)*1.5;
+    ctx.beginPath();ctx.arc(sx,sy+22,pulse,0,Math.PI*2);
+    ctx.fillStyle='#fbbf24';ctx.fill();
+    // Air flowing in from right
+    let airX=sx+12-Math.abs(Math.sin(t*0.04+i))*10;
+    ctx.font='9px serif';ctx.fillText('💨',airX,sy+10);
+  }
+  // Trachea network
+  ctx.setLineDash([2,3]);ctx.strokeStyle='#fbbf2488';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(110,110);ctx.lineTo(190,110);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(130,100);ctx.lineTo(130,120);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(170,100);ctx.lineTo(170,120);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#a78bfa';ctx.textAlign='center';
+  ctx.fillText('Spiracle → Trachea → Cells',150,170);
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#7c3aed';
+  ctx.fillText('No lungs needed!',150,188);
+  ctx.fillText('Air reaches cells directly.',150,203);
 
-            // RIGHT: Earthworm skin
-            ctx.font='bold 13px sans-serif';ctx.fillStyle='#5B21B6';ctx.textAlign='center';
-            ctx.fillText('🪱 Earthworm — Skin',430,25);
-            // Draw worm body
-            let wormY=100+Math.sin(t*0.03)*5;
-            ctx.beginPath();ctx.ellipse(430,wormY,50,18,0,0,Math.PI*2);
-            ctx.fillStyle='#FBBF24';ctx.fill();ctx.strokeStyle='#D97706';ctx.lineWidth=2;ctx.stroke();
-            // Moisture drops on skin
-            for(let i=0;i<5;i++){
-                let dx=395+i*18,dy=wormY-20+Math.sin(t*0.04+i)*3;
-                ctx.font='8px serif';ctx.fillText('💧',dx,dy);
-            }
-            // O2 arrows going through skin
-            for(let i=0;i<3;i++){
-                let ox=410+i*20,oy=wormY+25+Math.sin(t*0.05+i)*5;
-                ctx.font='9px sans-serif';ctx.fillStyle='#3B82F6';
-                ctx.fillText('O₂↓',ox,oy);
-            }
-            ctx.font='10px sans-serif';ctx.fillStyle='#6B7280';
-            ctx.fillText('Moist skin → O₂ dissolves → Into blood',430,160);
-            ctx.fillText('Must stay wet or it cannot breathe!',430,178);
+  // RIGHT panel - Earthworm
+  ctx.fillStyle='rgba(30,27,75,0.6)';
+  ctx.beginPath();ctx.roundRect(315,10,270,260,14);ctx.fill();
+  ctx.strokeStyle='#f59e0b44';ctx.lineWidth=1;ctx.stroke();
+  ctx.font='bold 13px "Segoe UI",sans-serif';ctx.fillStyle='#fde68a';ctx.textAlign='center';
+  ctx.fillText('🪱 Earthworm — Skin Breathing',450,35);
+  // Worm body
+  let wormY=110+Math.sin(t*0.025)*4;
+  ctx.beginPath();ctx.ellipse(450,wormY,48,16,0,0,Math.PI*2);
+  let wg=ctx.createLinearGradient(402,wormY,498,wormY);
+  wg.addColorStop(0,'#d97706');wg.addColorStop(0.5,'#fbbf24');wg.addColorStop(1,'#d97706');
+  ctx.fillStyle=wg;ctx.fill();ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.5;ctx.stroke();
+  // Moisture layer (shimmer RTL)
+  for(let i=0;i<6;i++){
+    let dx=490-i*16-((t*0.3)%16),dy=wormY-20+Math.sin(t*0.03+i)*3;
+    ctx.font='7px serif';ctx.globalAlpha=0.6;ctx.fillText('💧',dx,dy);ctx.globalAlpha=1;
+  }
+  // O2 arrows going down through skin
+  for(let i=0;i<4;i++){
+    let ox=425+i*18,progress=(t*0.04+i*0.5)%2;
+    let oy=wormY-10+progress*20;
+    ctx.font='9px sans-serif';ctx.fillStyle='#60a5fa';ctx.textAlign='center';
+    ctx.globalAlpha=1-progress/2;ctx.fillText('O₂',ox,oy);ctx.globalAlpha=1;
+  }
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#fde68a';ctx.textAlign='center';
+  ctx.fillText('Moist skin → Dissolve O₂ → Blood',450,170);
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#f59e0b';
+  ctx.fillText('Must stay wet to breathe!',450,188);
+  ctx.fillText('Dries out = suffocates.',450,203);
 
-            // Divider
-            ctx.beginPath();ctx.moveTo(290,20);ctx.lineTo(290,200);
-            ctx.strokeStyle='#D1D5DB';ctx.lineWidth=1;ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);
-
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=310)
+  // VS divider
+  ctx.font='bold 16px "Segoe UI",sans-serif';ctx.fillStyle='#64748b';ctx.textAlign='center';
+  ctx.fillText('VS',300,120);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
         return True
 
     elif anim_type == "land_movement":
         components.html("""
-        <div style="background: linear-gradient(135deg, #FFF7ED, #FED7AA); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#9A3412; margin:0 0 10px;">🎬 How Animals Move on Land</h4>
-        <canvas id="c" width="580" height="250"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0;
-        function draw(){
-            ctx.clearRect(0,0,580,250);
-            // Ground line
-            ctx.beginPath();ctx.moveTo(0,200);ctx.lineTo(580,200);ctx.strokeStyle='#92400E';ctx.lineWidth=2;ctx.stroke();
-            // Animals moving across screen
-            const animals=[
-                {icon:'🐕',y:175,speed:1.5,label:'Walk (4 legs)'},
-                {icon:'🦎',y:185,speed:0.8,label:'Crawl'},
-                {icon:'🐍',y:192,speed:1.2,label:'Slither (no legs!)'},
-                {icon:'🐜',y:188,speed:2,label:'6 legs (insect)'},
-                {icon:'🦘',y:160,speed:1.8,label:'Hop'}
-            ];
-            animals.forEach((a,i)=>{
-                let x=(t*a.speed+i*120)%640-30;
-                let hopBounce=a.icon==='🦘'?Math.abs(Math.sin(t*0.08))*25:0;
-                let slither=a.icon==='🐍'?Math.sin(t*0.1)*8:0;
-                ctx.font='28px serif';ctx.textAlign='center';
-                ctx.fillText(a.icon,x,a.y-hopBounce+slither);
-                // Label under each
-                if(x>50&&x<530){
-                    ctx.font='10px sans-serif';ctx.fillStyle='#78350F';
-                    ctx.fillText(a.label,x,210);
-                }
-            });
-            // Snake explanation
-            ctx.font='11px sans-serif';ctx.fillStyle='#9A3412';ctx.textAlign='center';
-            ctx.fillText('🐍 Snakes use: Belly scales + S-shaped muscles + Flexible backbone',290,238);
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=310)
+<div style="background:linear-gradient(135deg,#431407,#1c1917);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#fed7aa;margin:0 0 16px;font-size:18px;">How Animals Move on Land</h4>
+<canvas id="c" width="600" height="260"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=260*dpr;
+c.style.width='600px';c.style.height='260px';
+ctx.scale(dpr,dpr);
+let t=0;
+const animals=[
+  {icon:'🐕',y:60,speed:1.2,label:'Walk — 4 legs',color:'#f97316',motion:'walk'},
+  {icon:'🦎',y:105,speed:0.6,label:'Crawl — belly low',color:'#84cc16',motion:'crawl'},
+  {icon:'🐍',y:145,speed:0.9,label:'Slither — no legs!',color:'#a855f7',motion:'slither'},
+  {icon:'🐜',y:185,speed:1.8,label:'Scurry — 6 tiny legs',color:'#22d3ee',motion:'scurry'},
+  {icon:'🦘',y:220,speed:1.4,label:'Hop — powerful hind legs',color:'#f472b6',motion:'hop'}
+];
+function draw(){
+  ctx.clearRect(0,0,600,260);
+  // Lane backgrounds
+  animals.forEach((a,i)=>{
+    ctx.fillStyle=i%2===0?'rgba(67,20,7,0.3)':'rgba(28,25,23,0.3)';
+    ctx.fillRect(0,a.y-20,600,42);
+    // Lane label (right side)
+    ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle=a.color+'aa';ctx.textAlign='right';
+    ctx.fillText(a.label,590,a.y+5);
+  });
+  // Animals moving RIGHT to LEFT
+  animals.forEach((a,i)=>{
+    let x=600-((t*a.speed+i*100)%680)+40;
+    let yOff=0;
+    if(a.motion==='hop') yOff=-Math.abs(Math.sin(t*0.07))*18;
+    if(a.motion==='slither') yOff=Math.sin(t*0.08)*6;
+    if(a.motion==='walk') yOff=Math.abs(Math.sin(t*0.1))*3;
+    if(a.motion==='scurry') yOff=Math.sin(t*0.15)*2;
+    ctx.font='28px serif';ctx.textAlign='center';
+    ctx.fillText(a.icon,x,a.y+yOff+8);
+    // Motion trail (fading)
+    for(let tr=1;tr<=3;tr++){
+      ctx.globalAlpha=0.15/tr;
+      ctx.fillText(a.icon,x+tr*25,a.y+8);
+      ctx.globalAlpha=1;
+    }
+  });
+  // Direction arrow
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#fdba74';ctx.textAlign='center';
+  ctx.fillText('← Direction of movement',300,252);
+  // Bottom info
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#a8a29e';ctx.textAlign='center';
+  ctx.fillText('🐍 Snake: Belly scales + S-shaped muscles + Flexible spine = movement without legs!',300,240);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=330)
         return True
 
     elif anim_type == "animal_movement":
         components.html("""
-        <div style="background: linear-gradient(135deg, #F0FDF4, #DCFCE7); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#166534; margin:0 0 10px;">🎬 Flying & Swimming — Adaptations in Motion</h4>
-        <canvas id="c" width="580" height="280"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0;
-        function draw(){
-            ctx.clearRect(0,0,580,280);
-            // SKY section (top half)
-            ctx.fillStyle='#EFF6FF';ctx.fillRect(0,0,580,130);
-            ctx.font='bold 11px sans-serif';ctx.fillStyle='#1E40AF';ctx.textAlign='left';
-            ctx.fillText('✈️ SKY',10,20);
-            // Flying bird with wing flap
-            let birdX=(t*1.5)%640-30;
-            let wingY=Math.sin(t*0.12)*10;
-            ctx.font='30px serif';ctx.textAlign='center';
-            ctx.fillText('🦅',birdX,60+wingY);
-            // Bird adaptations labels
-            ctx.font='10px sans-serif';ctx.fillStyle='#1E40AF';ctx.textAlign='center';
-            ctx.fillText('Hollow bones + Wings + Streamlined body + Tail steering',290,110);
-            // Bat
-            let batX=(t*1.2+200)%640-30;
-            ctx.font='22px serif';ctx.fillText('🦇',batX,90+Math.sin(t*0.1+1)*8);
+<div style="background:linear-gradient(180deg,#0c4a6e 0%,#082f49 45%,#172554 55%,#1e3a5f 100%);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#e0f2fe;margin:0 0 16px;font-size:18px;">Flying & Swimming — Motion Adaptations</h4>
+<canvas id="c" width="600" height="300"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=300*dpr;
+c.style.width='600px';c.style.height='300px';
+ctx.scale(dpr,dpr);
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,600,300);
+  // SKY region
+  ctx.fillStyle='rgba(12,74,110,0.3)';ctx.fillRect(0,0,600,140);
+  ctx.font='bold 11px "Segoe UI",sans-serif';ctx.fillStyle='#7dd3fc';ctx.textAlign='left';
+  ctx.fillText('SKY',15,20);
+  // Clouds RTL
+  for(let i=0;i<3;i++){
+    let cx=600-((t*0.4+i*220)%720);
+    ctx.beginPath();ctx.ellipse(cx,30+i*15,30,10,0,0,Math.PI*2);
+    ctx.fillStyle='rgba(186,230,253,0.1)';ctx.fill();
+  }
+  // Bird RTL with wing flap
+  let birdX=620-((t*1.3)%700);
+  let wingY=Math.sin(t*0.1)*8;
+  ctx.font='32px serif';ctx.textAlign='center';
+  ctx.fillText('🦅',birdX,65+wingY);
+  // Bat RTL
+  let batX=620-((t*1.0+250)%700);
+  ctx.font='24px serif';ctx.fillText('🦇',batX,100+Math.sin(t*0.08+1)*6);
+  // Sky adaptations
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#bae6fd';ctx.textAlign='center';
+  ctx.fillText('Hollow bones + Wings + Streamlined body + Tail for steering',300,130);
 
-            // WATER section (bottom half)
-            ctx.fillStyle='#DBEAFE';ctx.fillRect(0,135,580,145);
-            ctx.font='bold 11px sans-serif';ctx.fillStyle='#0C4A6E';ctx.textAlign='left';
-            ctx.fillText('🌊 WATER',10,152);
-            // Swimming fish
-            let fishX=(t*1.8)%640-30;
-            ctx.font='28px serif';ctx.textAlign='center';
-            ctx.fillText('🐠',fishX,190+Math.sin(t*0.06)*5);
-            // Duck with webbed feet
-            let duckX=(t*1.0+300)%640-30;
-            ctx.font='24px serif';ctx.fillText('🦆',duckX,175);
-            // Penguin swimming
-            let penX=(t*1.4+150)%640-30;
-            ctx.font='22px serif';ctx.fillText('🐧',penX,210+Math.sin(t*0.08+2)*5);
-            // Water adaptations
-            ctx.font='10px sans-serif';ctx.fillStyle='#0C4A6E';ctx.textAlign='center';
-            ctx.fillText('Fins + Streamlined body + Webbed feet (ducks) + Flippers (penguins)',290,255);
-            // Divider line
-            ctx.beginPath();ctx.moveTo(0,133);ctx.lineTo(580,133);ctx.strokeStyle='#93C5FD';ctx.lineWidth=2;ctx.stroke();
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=340)
+  // Divider wave
+  ctx.beginPath();
+  for(let x=0;x<=600;x+=5){
+    ctx.lineTo(x,148+Math.sin(x*0.02+t*0.03)*4);
+  }
+  ctx.strokeStyle='#38bdf844';ctx.lineWidth=2;ctx.stroke();
+
+  // WATER region
+  ctx.fillStyle='rgba(23,37,84,0.4)';ctx.fillRect(0,155,600,145);
+  ctx.font='bold 11px "Segoe UI",sans-serif';ctx.fillStyle='#67e8f9';ctx.textAlign='left';
+  ctx.fillText('WATER',15,172);
+  // Fish RTL
+  let fishX=630-((t*1.6)%700);
+  ctx.font='30px serif';ctx.textAlign='center';
+  ctx.fillText('🐠',fishX,200+Math.sin(t*0.05)*4);
+  // Duck RTL
+  let duckX=630-((t*0.8+300)%700);
+  ctx.font='26px serif';ctx.fillText('🦆',duckX,185);
+  // Penguin RTL
+  let penX=630-((t*1.2+180)%700);
+  ctx.font='24px serif';ctx.fillText('🐧',penX,230+Math.sin(t*0.06+2)*4);
+  // Bubbles
+  for(let i=0;i<5;i++){
+    let bx=100+i*120,by=260-((t*0.5+i*40)%100);
+    ctx.beginPath();ctx.arc(bx,by,2,0,Math.PI*2);
+    ctx.fillStyle='rgba(103,232,249,0.3)';ctx.fill();
+  }
+  // Water adaptations
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#67e8f9';ctx.textAlign='center';
+  ctx.fillText('Fins + Streamlined shape + Webbed feet (duck) + Flippers (penguin)',300,280);
+  // Direction
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#7dd3fc55';ctx.textAlign='right';
+  ctx.fillText('← movement',590,295);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=370)
         return True
 
     elif anim_type == "migration_map":
         components.html("""
-        <div style="background: linear-gradient(135deg, #EFF6FF, #BFDBFE); border-radius: 16px; padding: 20px; font-family: sans-serif;">
-        <h4 style="text-align:center; color:#1E40AF; margin:0 0 10px;">🎬 Epic Migration Routes — Animals on the Move!</h4>
-        <canvas id="c" width="580" height="300"></canvas>
-        <script>
-        const c=document.getElementById('c'),ctx=c.getContext('2d');
-        let t=0;
-        const routes=[
-            {icon:'🏔️',from:'Siberia',to:'India',animal:'🦢 Siberian Crane',dist:'5000+ km',y:40,color:'#DBEAFE'},
-            {icon:'🧊',from:'Arctic',to:'Antarctic',animal:'🕊️ Arctic Tern',dist:'70,000 km!',y:95,color:'#D1FAE5'},
-            {icon:'🍁',from:'Canada',to:'Mexico',animal:'🦋 Monarch Butterfly',dist:'4000 km',y:150,color:'#FEF3C7'},
-            {icon:'🌊',from:'Ocean',to:'Odisha, India',animal:'🐢 Olive Ridley Turtle',dist:'1000s km',y:205,color:'#FCE7F3'},
-            {icon:'🏞️',from:'River birth',to:'Ocean & back',animal:'🐟 Salmon',dist:'Round trip!',y:260,color:'#E0E7FF'}
-        ];
-        function draw(){
-            ctx.clearRect(0,0,580,300);
-            routes.forEach((r,i)=>{
-                // Background bar
-                ctx.fillStyle=r.color;ctx.beginPath();ctx.roundRect(10,r.y,560,45,8);ctx.fill();
-                // From label
-                ctx.font='11px sans-serif';ctx.fillStyle='#6B7280';ctx.textAlign='left';
-                ctx.fillText(r.from,20,r.y+18);
-                // To label
-                ctx.textAlign='right';ctx.fillText(r.to,570,r.y+18);
-                // Animal moving along the route
-                let progress=(t*0.005+i*0.2)%1;
-                let animalX=60+progress*460;
-                ctx.font='18px serif';ctx.textAlign='center';
-                ctx.fillText(r.animal.split(' ')[0],animalX,r.y+38);
-                // Dotted path
-                ctx.setLineDash([4,4]);ctx.beginPath();
-                ctx.moveTo(60,r.y+32);ctx.lineTo(540,r.y+32);
-                ctx.strokeStyle='#9CA3AF';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
-                // Animal name + distance
-                ctx.font='bold 11px sans-serif';ctx.fillStyle='#1F2937';ctx.textAlign='center';
-                ctx.fillText(r.animal+' — '+r.dist,290,r.y+15);
-            });
-            t++;requestAnimationFrame(draw);
-        }
-        draw();
-        </script></div>
-        """, height=360)
+<div style="background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#e2e8f0;margin:0 0 16px;font-size:18px;">Epic Migration Routes — Thousands of Kilometres!</h4>
+<canvas id="c" width="600" height="310"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;
+c.width=600*dpr;c.height=310*dpr;
+c.style.width='600px';c.style.height='310px';
+ctx.scale(dpr,dpr);
+let t=0;
+const routes=[
+  {from:'Siberia',to:'India',animal:'🦢',name:'Siberian Crane',dist:'5,000+ km',y:15,color:'#60a5fa'},
+  {from:'Arctic',to:'Antarctic',animal:'🕊️',name:'Arctic Tern',dist:'71,000 km!',y:75,color:'#34d399'},
+  {from:'Canada',to:'Mexico',animal:'🦋',name:'Monarch Butterfly',dist:'4,000 km',y:135,color:'#fbbf24'},
+  {from:'Open Ocean',to:'Odisha, India',animal:'🐢',name:'Olive Ridley Turtle',dist:'1,000s km',y:195,color:'#f472b6'},
+  {from:'River (birth)',to:'Ocean & back',animal:'🐟',name:'Salmon',dist:'Round trip!',y:255,color:'#a78bfa'}
+];
+function draw(){
+  ctx.clearRect(0,0,600,310);
+  routes.forEach((r,i)=>{
+    // Lane bg
+    ctx.fillStyle=i%2===0?'rgba(30,41,59,0.6)':'rgba(15,23,42,0.6)';
+    ctx.beginPath();ctx.roundRect(10,r.y,580,52,10);ctx.fill();
+    ctx.strokeStyle=r.color+'22';ctx.lineWidth=1;ctx.stroke();
+    // From (right side) and To (left side) — RTL migration
+    ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#94a3b8';
+    ctx.textAlign='right';ctx.fillText(r.from,580,r.y+15);
+    ctx.textAlign='left';ctx.fillText(r.to,20,r.y+15);
+    // Dotted route line
+    ctx.setLineDash([4,6]);ctx.beginPath();
+    ctx.moveTo(50,r.y+35);ctx.lineTo(560,r.y+35);
+    ctx.strokeStyle=r.color+'44';ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([]);
+    // Animal moving RTL
+    let progress=(t*0.004+i*0.15)%1;
+    let animalX=560-progress*510;
+    // Trail glow
+    ctx.beginPath();
+    ctx.moveTo(animalX,r.y+35);ctx.lineTo(animalX+60,r.y+35);
+    let tg=ctx.createLinearGradient(animalX,0,animalX+60,0);
+    tg.addColorStop(0,r.color+'66');tg.addColorStop(1,'transparent');
+    ctx.strokeStyle=tg;ctx.lineWidth=3;ctx.setLineDash([]);ctx.stroke();
+    // Animal icon
+    ctx.font='20px serif';ctx.textAlign='center';
+    ctx.fillText(r.animal,animalX,r.y+41);
+    // Name and distance
+    ctx.font='bold 11px "Segoe UI",sans-serif';ctx.fillStyle=r.color;ctx.textAlign='center';
+    ctx.fillText(r.name+' — '+r.dist,300,r.y+15);
+  });
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=390)
         return True
 
     return False
+
 
 
 def render_animation(animation_config):
@@ -1625,19 +1840,17 @@ def render_animation(animation_config):
                 </div>
                 <div style="font-size: 16px; color: #7C3AED;">+</div>
                 <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
-                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 0.9s;">🔗</div>
-                    <div style="font-size: 10px; font-weight: bold;">Tendons</div>
+                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 0.9s;">🧠</div>
+                    <div style="font-size: 10px; font-weight: bold;">Brain Signal</div>
                 </div>
-                <div style="font-size: 16px; color: #7C3AED;">+</div>
-                <div style="text-align: center; padding: 10px; background: white; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
-                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 1.2s;">🪢</div>
-                    <div style="font-size: 10px; font-weight: bold;">Ligaments</div>
+                <div style="font-size: 16px; color: #7C3AED;">=</div>
+                <div style="text-align: center; padding: 10px; background: #7C3AED; border-radius: 12px; color: white;">
+                    <div style="font-size: 28px; animation: bounce 1.5s ease-in-out infinite 1.2s;">🏃</div>
+                    <div style="font-size: 10px; font-weight: bold;">Movement!</div>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 12px; font-size: 13px; color: #5B21B6; font-weight: bold;">= YOU CAN MOVE! 🏃</div>
         </div>
         """, unsafe_allow_html=True)
-
 
 
 # ─── Session State Initialization ─────────────────────────────────────────────
@@ -1654,700 +1867,313 @@ if "selected_chapter" not in st.session_state:
 if "xp" not in st.session_state:
     st.session_state.xp = 0
 
-if "badges" not in st.session_state:
-    st.session_state.badges = []
+if "student_name" not in st.session_state:
+    st.session_state.student_name = "Explorer"
 
-if "quiz_submitted" not in st.session_state:
-    st.session_state.quiz_submitted = False
-
-if "quiz_score" not in st.session_state:
-    st.session_state.quiz_score = 0
-
-if "challenge_submitted" not in st.session_state:
-    st.session_state.challenge_submitted = False
-
-if "challenge_score" not in st.session_state:
-    st.session_state.challenge_score = 0
-
-if "activity_submitted" not in st.session_state:
-    st.session_state.activity_submitted = False
-
-if "activity_score" not in st.session_state:
-    st.session_state.activity_score = 0
-
-if "experiment_result" not in st.session_state:
-    st.session_state.experiment_result = None
-
-
-# ─── Header / Home Page ───────────────────────────────────────────────────────
-
-st.title("🌟 WonderLearn")
-st.subheader("Learn Through Stories, Explore Through Adventures")
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    student_name = st.text_input("Student Name", value="Explorer")
-
-with col2:
-    selected_class = st.selectbox("Class", ["Class 5"])
-
-with col3:
-    subject = st.selectbox("Subject", ["General Science"])
-
-if not st.session_state.chapter_started:
-    st.success(f"Welcome {student_name}! 🚀")
-
-json_file = Path("content/class5/science/chapters.json")
-
-if json_file.exists():
-    with open(json_file, "r", encoding="utf-8") as f:
-        data = json.load(f)
+# ─── HOME PAGE ────────────────────────────────────────────────────────────────
 
 if not st.session_state.chapter_started:
 
-    st.subheader("📚 Available Adventures")
+    st.title("🌟 WonderLearn")
+    st.subheader("Learn Through Stories, Explore Through Adventures")
 
-    for chapter in data["chapters"]:
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        student_name = st.text_input("Student Name", value=st.session_state.student_name)
+        st.session_state.student_name = student_name
+    with col2:
+        selected_class = st.selectbox("Class", ["Class 5"])
+    with col3:
+        subject = st.selectbox("Subject", ["General Science"])
 
-        st.markdown(
-            f"### Chapter {chapter['id']} - {chapter['title']}"
-        )
+    st.divider()
 
-        st.write(
-            f"🏆 Badge: {chapter['badge']}"
-        )
+    # Load chapters
+    chapters_file = Path("content/class5/science/chapters.json")
+    if chapters_file.exists():
+        with open(chapters_file) as f:
+            chapters_data = json.load(f)
+        chapters = chapters_data.get("chapters", [])
+    else:
+        chapters = []
 
-        chapter_folder = Path(
-            f"content/class5/science/chapter{chapter['id']}"
-        )
+    st.subheader(f"📚 {selected_class} — {subject}")
 
-        chapter_file = chapter_folder / "chapter.json"
-        scene_file = chapter_folder / "scenes.json"
+    for ch in chapters:
+        col_info, col_btn = st.columns([4, 1])
+        with col_info:
+            st.write(f"**Chapter {ch['id']}:** {ch['title']}")
+            st.caption(f"🏆 Badge: {ch.get('badge', 'N/A')}")
+        with col_btn:
+            # Only enable chapters that have content
+            chapter_path = Path(f"content/class5/science/chapter{ch['id']}/scenes.json")
+            if chapter_path.exists():
+                if st.button(f"▶ Start", key=f"start_ch{ch['id']}"):
+                    st.session_state.selected_chapter = ch['id']
+                    st.session_state.chapter_started = True
+                    st.session_state.scene_index = 0
+                    st.rerun()
+            else:
+                st.button("🔒 Coming Soon", key=f"soon_ch{ch['id']}", disabled=True)
 
-        if chapter_file.exists() and scene_file.exists():
-
-            if st.button(
-                f"Start {chapter['title']}",
-                key=f"chapter_{chapter['id']}"
-            ):
-                st.session_state.chapter_started = True
-                st.session_state.selected_chapter = chapter["id"]
-                st.session_state.scene_index = 0
-                st.session_state.quiz_submitted = False
-                st.session_state.challenge_submitted = False
-                st.session_state.activity_submitted = False
-                st.session_state.experiment_result = None
-                st.rerun()
-
-        else:
-            st.info("🚧 Coming Soon")
-
+    # XP display
+    if st.session_state.xp > 0:
         st.divider()
+        st.metric("⭐ Total XP Earned", st.session_state.xp)
 
-# ─── Chapter Playback Mode ────────────────────────────────────────────────────
 
-if st.session_state.chapter_started:
+# ─── CHAPTER PLAYBACK ─────────────────────────────────────────────────────────
 
-    # Compact top bar: Home button + Chapter title + XP
-    col_home, col_title, col_xp_mini = st.columns([1, 4, 1])
-
-    with col_home:
-        if st.button("🏠 Home"):
-            st.session_state.chapter_started = False
-            st.session_state.scene_index = 0
-            st.session_state.quiz_submitted = False
-            st.session_state.challenge_submitted = False
-            st.session_state.activity_submitted = False
-            st.session_state.experiment_result = None
-            st.rerun()
-
-    with col_title:
-        st.markdown("**🌟 WonderLearn**")
-
-    with col_xp_mini:
-        st.metric("⭐ XP", st.session_state.xp)
-
+else:
     # Load chapter data
-    chapter_data = load_chapter(st.session_state.selected_chapter)
-    scenes_data = load_scenes(st.session_state.selected_chapter)
+    ch_id = st.session_state.selected_chapter
+    chapter_file = Path(f"content/class5/science/chapter{ch_id}/chapter.json")
+    scenes_file = Path(f"content/class5/science/chapter{ch_id}/scenes.json")
+
+    chapter_data = None
+    scenes_data = None
+
+    if chapter_file.exists():
+        with open(chapter_file) as f:
+            chapter_data = json.load(f)
+    if scenes_file.exists():
+        with open(scenes_file) as f:
+            scenes_data = json.load(f)
 
     if chapter_data is None or scenes_data is None:
-        st.warning("🚧 This adventure is under development.")
+        st.warning("🚧 This adventure is under development and will be available soon.")
+        if st.button("🏠 Return to Home"):
+            st.session_state.chapter_started = False
+            st.session_state.scene_index = 0
+            st.rerun()
         st.stop()
 
     scene_count = len(scenes_data["scenes"])
     scene = scenes_data["scenes"][st.session_state.scene_index]
-    scene_type = scene.get("scene_type", "story")
 
-    # Scene type indicator
-    type_labels = {
-        "story": "📖 Story", "explore": "🔍 Explore", "experiment": "🧪 Experiment",
-        "activity": "🎮 Activity", "challenge": "⚡ Challenge", "quiz": "📝 Quiz",
-        "summary": "📋 Summary", "badge": "🏆 Badge"
-    }
-    st.caption(f"{type_labels.get(scene_type, '📖 Scene')} | {chapter_data['title']}")
+    # Progress bar
+    st.progress((st.session_state.scene_index + 1) / scene_count)
+    col_progress, col_xp = st.columns([3, 1])
+    with col_progress:
+        st.caption(f"📖 Chapter {ch_id}: {chapter_data.get('title', '')} — Scene {st.session_state.scene_index + 1} of {scene_count}")
+    with col_xp:
+        st.caption(f"⭐ XP: {st.session_state.xp}")
 
-    # Background (if any)
-    bg = scene.get("background", "none")
-    if bg != "none":
-        background_file = f"assets/backgrounds/{bg}.jpg"
-        if Path(background_file).exists():
-            st.image(background_file, use_container_width=True)
+    st.divider()
 
-    # ─── Scene Type: STORY ────────────────────────────────────────────────────
+    # ─── Scene Title ──────────────────────────────────────────────────────────
+    st.header(scene["title"])
 
-    if scene_type == "story":
-        col_content, col_char = st.columns([3, 1])
+    # ─── Character + Narration ────────────────────────────────────────────────
+    col_content, col_char = st.columns([3, 1])
 
-        with col_content:
-            st.header(scene["title"])
-
-            if "dialogue" in scene:
-                st.markdown(f"""
-                <div class='dialogue-box'>
-                    <div class='speaker'>{scene['dialogue']['speaker']}</div>
-                    <br>{scene['dialogue']['text']}
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.write("")
-            st.write(scene["narration"])
-
-            # TTS audio
-            if scene.get("tts"):
-                with st.expander("🔊 Listen to Narration"):
-                    render_audio_player(scene["narration"], scene["id"])
-
-            # Animation
-            if "animation" in scene:
-                render_animation(scene["animation"])
-
-            # Steps display
-            if "steps_display" in scene:
-                st.write("")
-                for i, step in enumerate(scene["steps_display"]):
-                    st.markdown(f"""
-                    <div class='step-card' style='animation-delay: {i * 0.2}s;'>
-                        <strong>{step['icon']} Step {step['step']}: {step['title']}</strong><br>
-                        {step['description']}
-                    </div>
-                    """, unsafe_allow_html=True)
-
-            if "fun_fact" in scene:
-                st.markdown(f"""
-                <div class='fun-fact-box'>
-                    <strong>🧠 Fun Fact:</strong> {scene['fun_fact']}
-                </div>
-                """, unsafe_allow_html=True)
-
-        with col_char:
-            character_file = f"assets/characters/{scene['character']}.png"
-            if Path(character_file).exists():
-                st.image(character_file, width=250)
-
-    # ─── Scene Type: EXPLORE ─────────────────────────────────────────────────
-
-    elif scene_type == "explore":
-        st.header(scene["title"])
-
-        col_content, col_char = st.columns([3, 1])
-
-        with col_content:
-            if "dialogue" in scene:
-                st.markdown(f"""
-                <div class='dialogue-box'>
-                    <div class='speaker'>{scene['dialogue']['speaker']}</div>
-                    <br>{scene['dialogue']['text']}
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.write("")
-            st.write(scene["narration"])
-
-            # TTS audio
-            if scene.get("tts"):
-                with st.expander("🔊 Listen to Narration"):
-                    render_audio_player(scene["narration"], scene["id"])
-
-        with col_char:
-            character_file = f"assets/characters/{scene['character']}.png"
-            if Path(character_file).exists():
-                st.image(character_file, width=200)
-
-        # Animation
-        if "animation" in scene:
-            render_animation(scene["animation"])
+    with col_content:
+        # Speaker tag
+        character_name = scene.get("character", "Tara").title()
+        st.markdown(f"**🎭 {character_name}**")
 
         st.write("")
-        st.subheader("🔍 Explore — Click to Learn More")
-
-        if "hotspots" in scene:
-            for hotspot in scene["hotspots"]:
-                with st.expander(f"{hotspot['icon']} {hotspot['name']}", expanded=False):
-                    st.write(hotspot["description"])
-                    if "examples" in hotspot:
-                        examples_str = ", ".join(hotspot["examples"])
-                        st.info(f"📌 Examples: {examples_str}")
-                    if "fun_fact" in hotspot:
-                        st.markdown(f"""
-                        <div class='fun-fact-box'>
-                            <strong>🧠 Fun Fact:</strong> {hotspot['fun_fact']}
-                        </div>
-                        """, unsafe_allow_html=True)
-
-    # ─── Scene Type: EXPERIMENT ───────────────────────────────────────────────
-
-    elif scene_type == "experiment":
-        st.header(scene["title"])
-
-        col_content, col_char = st.columns([3, 1])
-
-        with col_content:
-            if "dialogue" in scene:
-                st.markdown(f"""
-                <div class='dialogue-box'>
-                    <div class='speaker'>{scene['dialogue']['speaker']}</div>
-                    <br>{scene['dialogue']['text']}
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.write("")
-            st.write(scene["narration"])
-
-            # TTS audio
-            if scene.get("tts"):
-                with st.expander("🔊 Listen to Narration"):
-                    render_audio_player(scene["narration"], scene["id"])
-
-        with col_char:
-            character_file = f"assets/characters/{scene['character']}.png"
-            if Path(character_file).exists():
-                st.image(character_file, width=200)
-
-        if "animation" in scene:
-            render_animation(scene["animation"])
-
-        if "experiment" in scene:
-            exp = scene["experiment"]
-            st.write("")
-            st.subheader(f"🧪 {exp['title']}")
-            st.write(exp["instructions"])
-
-            if "steps" in exp:
-                for step in exp["steps"]:
-                    st.markdown(f"**{step['step_number']}.** {step['text']}")
-
-            if "observation_question" in exp:
-                st.write("")
-                st.info(f"🔬 Observe: {exp['observation_question']}")
-                user_obs = st.text_area("Your observation:", key=f"obs_{scene['id']}")
-                if st.button("Check", key=f"exp_check_{scene['id']}"):
-                    st.session_state.experiment_result = True
-                    st.success(f"✅ Great observation! {exp.get('expected_result', '')}")
-
-    # ─── Scene Type: ACTIVITY ─────────────────────────────────────────────────
-
-    elif scene_type == "activity":
-        st.header(scene["title"])
-
-        col_content, col_char = st.columns([3, 1])
-
-        with col_content:
-            if "dialogue" in scene:
-                st.markdown(f"""
-                <div class='dialogue-box'>
-                    <div class='speaker'>{scene['dialogue']['speaker']}</div>
-                    <br>{scene['dialogue']['text']}
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.write("")
-            st.write(scene["narration"])
-
-            # TTS audio
-            if scene.get("tts"):
-                with st.expander("🔊 Listen to Narration"):
-                    render_audio_player(scene["narration"], scene["id"])
-
-        with col_char:
-            character_file = f"assets/characters/{scene['character']}.png"
-            if Path(character_file).exists():
-                st.image(character_file, width=200)
-
-        # Animation
-        if "animation" in scene:
-            render_animation(scene["animation"])
-
-        if "activity" in scene:
-            activity = scene["activity"]
-            st.write("")
-            st.subheader(f"🎮 {activity['title']}")
-            st.write(activity["instructions"])
-
-            # ─── Matching Activity ────────────────────────────────────────────
-            if activity["type"] == "matching":
-                answers = {}
-                options = activity["options"]
-
-                for pair in activity["pairs"]:
-                    answers[pair["item"]] = st.selectbox(
-                        f"{pair['icon']} {pair['item']}",
-                        options=["— Select —"] + options,
-                        key=f"match_{scene['id']}_{pair['item']}"
-                    )
-
-                if st.button("✅ Check Answers", key=f"check_match_{scene['id']}"):
-                    st.session_state.activity_submitted = True
-                    correct = 0
-                    for pair in activity["pairs"]:
-                        if answers[pair["item"]] == pair["match"]:
-                            correct += 1
-                    st.session_state.activity_score = correct
-
-                if st.session_state.activity_submitted:
-                    total = len(activity["pairs"])
-                    score = st.session_state.activity_score
-
-                    if score == total:
-                        st.balloons()
-                        st.success(f"🎉 Perfect! You got all {total} correct!")
-                    elif score >= total * 0.7:
-                        st.success(f"👍 Great job! {score}/{total} correct!")
-                    else:
-                        st.warning(f"You got {score}/{total} correct. Review below:")
-
-                    for pair in activity["pairs"]:
-                        user_ans = answers.get(pair["item"], "— Select —")
-                        is_correct = user_ans == pair["match"]
-                        icon = "✅" if is_correct else "❌"
-                        st.markdown(f"**{icon} {pair['item']}** → Correct: **{pair['match']}**")
-                        if "explanation" in pair:
-                            st.caption(f"   {pair['explanation']}")
-
-            # ─── Sequence Activity ────────────────────────────────────────────
-            elif activity["type"] == "sequence":
-                st.write("Arrange these steps in the correct order (1 = first):")
-                user_order = {}
-
-                for step in activity["steps"]:
-                    user_order[step["id"]] = st.selectbox(
-                        f"{step['icon']} {step['name']}",
-                        options=list(range(1, len(activity["steps"]) + 1)),
-                        key=f"seq_{scene['id']}_{step['id']}"
-                    )
-
-                if st.button("✅ Check Order", key=f"check_seq_{scene['id']}"):
-                    st.session_state.activity_submitted = True
-                    correct = sum(
-                        1 for step in activity["steps"]
-                        if user_order[step["id"]] == step["correct_position"]
-                    )
-                    st.session_state.activity_score = correct
-
-                if st.session_state.activity_submitted:
-                    total = len(activity["steps"])
-                    score = st.session_state.activity_score
-
-                    if score == total:
-                        st.balloons()
-                        st.success(f"🎉 Perfect order! All {total} steps correct!")
-                    elif score >= total * 0.7:
-                        st.success(f"👍 Good effort! {score}/{total} in correct position!")
-                    else:
-                        st.warning(f"You got {score}/{total} correct. The correct order is:")
-                        for step in sorted(activity["steps"], key=lambda x: x["correct_position"]):
-                            st.markdown(f"**{step['correct_position']}.** {step['name']}")
-
-    # ─── Scene Type: CHALLENGE ────────────────────────────────────────────────
-
-    elif scene_type == "challenge":
-        st.header(scene["title"])
-
-        col_content, col_char = st.columns([3, 1])
-
-        with col_content:
-            if "dialogue" in scene:
-                st.markdown(f"""
-                <div class='dialogue-box'>
-                    <div class='speaker'>{scene['dialogue']['speaker']}</div>
-                    <br>{scene['dialogue']['text']}
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.write("")
-            st.write(scene["narration"])
-
-            # TTS audio
-            if scene.get("tts"):
-                with st.expander("🔊 Listen to Narration"):
-                    render_audio_player(scene["narration"], scene["id"])
-
-        with col_char:
-            character_file = f"assets/characters/{scene['character']}.png"
-            if Path(character_file).exists():
-                st.image(character_file, width=200)
-
-        if "challenge" in scene:
-            challenge = scene["challenge"]
-            st.write("")
-            st.subheader(f"⚡ {challenge['title']}")
-
-            user_answers = {}
-            for q in challenge["questions"]:
-                user_answers[q["id"]] = st.radio(
-                    f"**{q['statement']}**",
-                    options=["True", "False"],
-                    key=f"tf_{scene['id']}_{q['id']}",
-                    horizontal=True
-                )
-
-            if st.button("✅ Submit Challenge", key=f"submit_challenge_{scene['id']}"):
-                st.session_state.challenge_submitted = True
-                correct = 0
-                for q in challenge["questions"]:
-                    user_bool = user_answers[q["id"]] == "True"
-                    if user_bool == q["answer"]:
-                        correct += 1
-                st.session_state.challenge_score = correct
-
-            if st.session_state.challenge_submitted:
-                total = len(challenge["questions"])
-                score = st.session_state.challenge_score
-
-                if score == total:
-                    st.balloons()
-                    st.success(f"🎉 Perfect! All {total} correct!")
-                elif score >= total * 0.7:
-                    st.success(f"👍 Great! {score}/{total} correct!")
-                else:
-                    st.warning(f"You got {score}/{total}. Review:")
-
-                for q in challenge["questions"]:
-                    user_bool = user_answers[q["id"]] == "True"
-                    is_correct = user_bool == q["answer"]
-                    icon = "✅" if is_correct else "❌"
-                    correct_str = "True" if q["answer"] else "False"
-                    st.markdown(f"**{icon}** {q['statement']} → **{correct_str}**")
-                    if "explanation" in q:
-                        st.caption(f"   {q['explanation']}")
-
-    # ─── Scene Type: QUIZ ─────────────────────────────────────────────────────
-
-    elif scene_type == "quiz":
-        st.header(scene["title"])
-
-        col_content, col_char = st.columns([3, 1])
-
-        with col_content:
-            if "dialogue" in scene:
-                st.markdown(f"""
-                <div class='dialogue-box'>
-                    <div class='speaker'>{scene['dialogue']['speaker']}</div>
-                    <br>{scene['dialogue']['text']}
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.write("")
-            st.write(scene["narration"])
-
-            # TTS audio
-            if scene.get("tts"):
-                with st.expander("🔊 Listen to Narration"):
-                    render_audio_player(scene["narration"], scene["id"])
-
-        with col_char:
-            character_file = f"assets/characters/{scene['character']}.png"
-            if Path(character_file).exists():
-                st.image(character_file, width=200)
-
-        if "quiz" in scene:
-            quiz = scene["quiz"]
-            st.write("")
-            st.subheader(f"📝 {quiz['title']}")
-            st.write(f"**Pass score: {quiz['pass_score']}/{len(quiz['questions'])}**")
-
-            user_answers = {}
-            for i, q in enumerate(quiz["questions"]):
-                user_answers[q["id"]] = st.radio(
-                    f"**Q{i+1}. {q['question']}**",
-                    options=q["options"],
-                    key=f"quiz_{scene['id']}_{q['id']}"
-                )
-
-            if st.button("📨 Submit Quiz", key=f"submit_quiz_{scene['id']}"):
-                st.session_state.quiz_submitted = True
-                correct = 0
-                for q in quiz["questions"]:
-                    correct_answer = q["options"][q["correct"]]
-                    if user_answers[q["id"]] == correct_answer:
-                        correct += 1
-                st.session_state.quiz_score = correct
-
-            if st.session_state.quiz_submitted:
-                total = len(quiz["questions"])
-                score = st.session_state.quiz_score
-                passed = score >= quiz["pass_score"]
-
-                if passed:
-                    st.balloons()
-                    st.success(f"🎉 Congratulations! You scored {score}/{total} — Quiz Passed!")
-                else:
-                    st.error(f"You scored {score}/{total}. You need {quiz['pass_score']} to pass. Review and try again!")
-
-                st.write("---")
-                st.write("**Review:**")
-                for q in quiz["questions"]:
-                    correct_answer = q["options"][q["correct"]]
-                    user_ans = user_answers[q["id"]]
-                    is_correct = user_ans == correct_answer
-                    css_class = "quiz-correct" if is_correct else "quiz-wrong"
-                    icon = "✅" if is_correct else "❌"
-                    st.markdown(f"""
-                    <div class='{css_class}'>
-                        {icon} <strong>{q['question']}</strong><br>
-                        Your answer: {user_ans} | Correct: <strong>{correct_answer}</strong><br>
-                        <em>{q.get('explanation', '')}</em>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-    # ─── Scene Type: SUMMARY ──────────────────────────────────────────────────
-
-    elif scene_type == "summary":
-        st.header(scene["title"])
-
-        col_content, col_char = st.columns([3, 1])
-
-        with col_content:
-            if "dialogue" in scene:
-                st.markdown(f"""
-                <div class='dialogue-box'>
-                    <div class='speaker'>{scene['dialogue']['speaker']}</div>
-                    <br>{scene['dialogue']['text']}
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.write("")
-            st.write(scene["narration"])
-
-            # TTS audio
-            if scene.get("tts"):
-                with st.expander("🔊 Listen to Narration"):
-                    render_audio_player(scene["narration"], scene["id"])
-
-        with col_char:
-            character_file = f"assets/characters/{scene['character']}.png"
-            if Path(character_file).exists():
-                st.image(character_file, width=200)
-
-        if "summary_points" in scene:
-            st.write("")
-            st.subheader("📋 What You Learned")
-            for i, point in enumerate(scene["summary_points"]):
-                if isinstance(point, dict):
-                    st.markdown(f"""
-                    <div class='summary-card' style='animation-delay: {i * 0.15}s;'>
-                        <strong>{point['icon']} {point['title']}</strong><br>
-                        {point['text']}
-                    </div>
-                    """, unsafe_allow_html=True)
-                else:
-                    st.markdown(f"""
-                    <div class='summary-card' style='animation-delay: {i * 0.15}s;'>
-                        <strong>{point}</strong>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-    # ─── Scene Type: BADGE ────────────────────────────────────────────────────
-
-    elif scene_type == "badge":
-        if "badge" in scene:
-            badge = scene["badge"]
-
-            st.markdown(f"""
-            <div class='badge-container'>
-                <div class='badge-icon'>{badge['icon']}</div>
-                <h2>🏆 {badge['name']}</h2>
-                <p>{badge['description']}</p>
-            </div>
-            """, unsafe_allow_html=True)
-
-            if badge["name"] not in st.session_state.badges:
-                st.session_state.badges.append(badge["name"])
-                st.balloons()
-
-        st.header(scene["title"])
-
-        if "dialogue" in scene:
-            st.markdown(f"""
-            <div class='dialogue-box'>
-                <div class='speaker'>{scene['dialogue']['speaker']}</div>
-                <br>{scene['dialogue']['text']}
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.write("")
+        st.write(scene["narration"])
 
         # TTS audio
         if scene.get("tts"):
             with st.expander("🔊 Listen to Narration"):
                 render_audio_player(scene["narration"], scene["id"])
 
-    # ─── XP Award ─────────────────────────────────────────────────────────────
+    with col_char:
+        character_file = Path(f"assets/characters/{scene['character']}.png")
+        if character_file.exists():
+            st.image(str(character_file), width=200)
 
-    if scene.get("xp") and f"xp_scene_{scene['id']}_ch{st.session_state.selected_chapter}" not in st.session_state:
-        st.session_state.xp += scene["xp"]
-        st.session_state[f"xp_scene_{scene['id']}_ch{st.session_state.selected_chapter}"] = True
+    # ─── Dialogue ─────────────────────────────────────────────────────────────
+    if "dialogue" in scene:
+        st.markdown(f"""
+        <div class="dialogue-box">
+            <span class="speaker">{scene['dialogue']['speaker']}:</span><br>
+            {scene['dialogue']['text']}
+        </div>
+        """, unsafe_allow_html=True)
+
+    # ─── Animation ────────────────────────────────────────────────────────────
+    if "animation" in scene:
+        render_animation(scene["animation"])
+
+    # ─── Fun Fact ─────────────────────────────────────────────────────────────
+    if "fun_fact" in scene:
+        st.info(f"🌟 **Fun Fact:** {scene['fun_fact']}")
+
+    # ─── Explore Hotspots ─────────────────────────────────────────────────────
+    if "hotspots" in scene:
+        st.write("")
+        st.subheader("🔍 Explore & Learn")
+        for hotspot in scene["hotspots"]:
+            with st.expander(f"{hotspot.get('icon', '📌')} {hotspot['title']}"):
+                st.write(hotspot["description"])
+                if "example" in hotspot:
+                    st.success(f"💡 Example: {hotspot['example']}")
+
+    # ─── Activity ─────────────────────────────────────────────────────────────
+    if "activity" in scene:
+        activity = scene["activity"]
+        st.write("")
+        st.subheader(f"🎮 {activity['title']}")
+        st.write(activity["instructions"])
+
+        # Matching Activity
+        if activity["type"] == "matching":
+            answers = {}
+            options = activity["options"]
+
+            for pair in activity["pairs"]:
+                answers[pair["item"]] = st.selectbox(
+                    f"{pair['icon']} {pair['item']}",
+                    options=["— Select —"] + options,
+                    key=f"match_{scene['id']}_{pair['item']}_ch{ch_id}"
+                )
+
+            if st.button("✅ Check Answers", key=f"check_match_{scene['id']}_ch{ch_id}"):
+                correct = 0
+                for pair in activity["pairs"]:
+                    if answers.get(pair["item"]) == pair["match"]:
+                        correct += 1
+                        st.success(f"✅ {pair['item']} → {pair['match']}")
+                    else:
+                        st.error(f"❌ {pair['item']}: {pair.get('explanation', 'Try again!')}")
+                st.write(f"**Score: {correct}/{len(activity['pairs'])}**")
+
+        # Sorting Activity
+        elif activity["type"] == "sorting":
+            if "categories" in activity:
+                for cat in activity["categories"]:
+                    st.write(f"**{cat['name']}**")
+                    for item in cat.get("items", []):
+                        st.checkbox(f"{item}", key=f"sort_{scene['id']}_{item}_ch{ch_id}")
+
+        # Labeling Activity
+        elif activity["type"] == "labeling":
+            if "items" in activity:
+                for item in activity["items"]:
+                    st.text_input(
+                        f"{item.get('icon', '📝')} {item.get('hint', 'Label')}",
+                        key=f"label_{scene['id']}_{item.get('id', '')}_ch{ch_id}"
+                    )
+
+
+    # ─── Challenge (True/False) ───────────────────────────────────────────────
+    if "challenge" in scene:
+        challenge = scene["challenge"]
+        st.write("")
+        st.subheader(f"🧠 {challenge.get('title', 'Challenge Time!')}")
+
+        for q in challenge["questions"]:
+            answer = st.radio(
+                f"{q.get('id', '')}. {q['statement']}",
+                options=["True", "False"],
+                key=f"challenge_{scene['id']}_{q.get('id', '')}_ch{ch_id}",
+                horizontal=True
+            )
+
+        if st.button("✅ Check Answers", key=f"check_challenge_{scene['id']}_ch{ch_id}"):
+            correct = 0
+            for q in challenge["questions"]:
+                user_ans = st.session_state.get(f"challenge_{scene['id']}_{q.get('id', '')}_ch{ch_id}", "")
+                correct_ans = str(q["answer"])
+                if user_ans == correct_ans:
+                    correct += 1
+                    st.success(f"✅ {q['statement']} — Correct!")
+                else:
+                    st.error(f"❌ {q['statement']} — Answer: {correct_ans}. {q.get('explanation', '')}")
+            st.write(f"**Score: {correct}/{len(challenge['questions'])}**")
+
+    # ─── Quiz ─────────────────────────────────────────────────────────────────
+    if "quiz" in scene:
+        quiz = scene["quiz"]
+        st.write("")
+        st.subheader(f"📝 {quiz.get('title', 'Quiz Time!')}")
+
+        for q in quiz["questions"]:
+            st.radio(
+                f"{q['id']}. {q['question']}",
+                options=q["options"],
+                key=f"quiz_{scene['id']}_{q['id']}_ch{ch_id}"
+            )
+
+        if st.button("✅ Submit Quiz", key=f"submit_quiz_{scene['id']}_ch{ch_id}"):
+            correct = 0
+            for q in quiz["questions"]:
+                user_ans = st.session_state.get(f"quiz_{scene['id']}_{q['id']}_ch{ch_id}", "")
+                if user_ans == q["answer"]:
+                    correct += 1
+                    st.success(f"✅ Q{q['id']}: Correct!")
+                else:
+                    st.error(f"❌ Q{q['id']}: The answer is: {q['answer']}. {q.get('explanation', '')}")
+            total = len(quiz["questions"])
+            st.write(f"**Score: {correct}/{total}**")
+            if correct == total:
+                st.balloons()
+
+    # ─── Summary ──────────────────────────────────────────────────────────────
+    if "summary" in scene:
+        summary = scene["summary"]
+        st.write("")
+        st.subheader("📋 Chapter Summary")
+        for point in summary.get("points", []):
+            st.write(f"• {point}")
+        if "key_terms" in summary:
+            st.write("")
+            st.write("**Key Terms:**")
+            for term in summary["key_terms"]:
+                st.write(f"  **{term['term']}** — {term['definition']}")
+
+    # ─── Badge Award ──────────────────────────────────────────────────────────
+    if scene.get("scene_type") == "badge":
+        st.write("")
+        badge_name = scene.get("badge", chapter_data.get("badge", "Achievement"))
+        st.markdown(f"""
+        <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #FEF3C7, #FDE68A); border-radius: 20px; margin: 20px 0;">
+            <div style="font-size: 64px;">🏆</div>
+            <h2 style="color: #92400E;">Congratulations, {st.session_state.student_name}!</h2>
+            <h3 style="color: #B45309;">You earned the "{badge_name}" badge!</h3>
+            <p style="color: #78350F;">You have completed Chapter {ch_id} successfully!</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.balloons()
+
+    # ─── XP Award ─────────────────────────────────────────────────────────────
+    xp_key = f"xp_scene_{scene['id']}_ch{ch_id}"
+    if xp_key not in st.session_state:
+        xp_earned = scene.get("xp", 10)
+        st.session_state.xp += xp_earned
+        st.session_state[xp_key] = True
+        st.toast(f"⭐ +{xp_earned} XP!")
 
     # ─── Navigation ───────────────────────────────────────────────────────────
+    st.divider()
+    col_prev, col_home, col_next = st.columns([1, 1, 1])
 
-    st.write("")
-    st.write("")
-    nav_col1, nav_col2, nav_col3 = st.columns([1, 2, 1])
+    with col_prev:
+        if st.button("⬅ Previous", disabled=(st.session_state.scene_index == 0), key="nav_prev"):
+            st.session_state.scene_index -= 1
+            st.rerun()
 
-    with nav_col1:
-        if st.session_state.scene_index > 0:
-            if st.button("⬅️ Previous", use_container_width=True):
-                st.session_state.scene_index -= 1
-                st.session_state.quiz_submitted = False
-                st.session_state.challenge_submitted = False
-                st.session_state.activity_submitted = False
-                st.rerun()
+    with col_home:
+        if st.button("🏠 Home", key="nav_home"):
+            st.session_state.chapter_started = False
+            st.session_state.scene_index = 0
+            st.rerun()
 
-    with nav_col2:
-        st.markdown(
-            f"<div style='text-align: center; color: #6B7280; padding: 10px;'>"
-            f"Scene {st.session_state.scene_index + 1} of {scene_count}"
-            f"</div>",
-            unsafe_allow_html=True
-        )
-
-    with nav_col3:
+    with col_next:
         if st.session_state.scene_index < scene_count - 1:
-            if st.button("Next ➡️", use_container_width=True):
+            if st.button("Next ➡", key="nav_next"):
                 st.session_state.scene_index += 1
-                st.session_state.quiz_submitted = False
-                st.session_state.challenge_submitted = False
-                st.session_state.activity_submitted = False
                 st.rerun()
         else:
-            if st.button("🏠 Home", use_container_width=True):
+            if st.button("🏁 Finish Chapter", key="nav_finish"):
                 st.session_state.chapter_started = False
                 st.session_state.scene_index = 0
-                st.session_state.quiz_submitted = False
                 st.rerun()
 
 # ─── Footer ──────────────────────────────────────────────────────────────────
 
-st.write("")
-st.write("")
-
-# ─── Footer ──────────────────────────────────────────────────────────────────
-
-st.write("")
-st.write("")
-st.markdown("""
-<div style='text-align: center; color: #9CA3AF; padding: 20px; font-size: 14px;'>
-    WonderLearn © 2026 | Learn Through Stories, Explore Through Adventures
-</div>
-""", unsafe_allow_html=True)
+st.divider()
+st.caption("WonderLearn © 2026 | Learn Through Stories, Explore Through Adventures")
