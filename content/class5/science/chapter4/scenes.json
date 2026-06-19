@@ -1,0 +1,874 @@
+{
+  "scenes": [
+    {
+      "id": 1,
+      "title": "Welcome to the Control Centre!",
+      "scene_type": "story",
+      "character": "tara",
+      "background": "none",
+      "xp": 10,
+      "narration": "Welcome, explorer! Today we enter the most amazing control centre in the world — your own body! The nervous system is like a supercomputer that controls everything you do — from thinking and remembering, to moving and feeling. It even works while you sleep!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Did you know your brain can process information faster than any computer ever made? Let's explore how this incredible system works!"
+      },
+      "tts": true,
+      "fun_fact": "Your brain has about 86 billion nerve cells (neurons) — that's more than the number of stars you can see in the night sky!"
+    },
+    {
+      "id": 2,
+      "title": "Parts of the Nervous System",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "The nervous system is made up of three main parts: the brain (the boss), the spinal cord (the highway), and the nerves (the messengers). Together, they form a network that connects every part of your body to your brain.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Think of it like a city! The brain is the mayor, the spinal cord is the main road, and nerves are the smaller streets reaching every house."
+      },
+      "tts": true,
+      "animation": {
+        "type": "nervous_system_parts",
+        "description": "Three parts of the nervous system"
+      },
+      "hotspots": [
+        {
+          "icon": "🧠",
+          "title": "Brain",
+          "description": "The control centre inside your skull. Receives messages, processes them, and sends instructions to the body.",
+          "example": "When you see a ball coming, your brain tells your hands to catch it!"
+        },
+        {
+          "icon": "🦴",
+          "title": "Spinal Cord",
+          "description": "A tube-like structure running inside your backbone (vertebral column). Connects the brain to the rest of the body.",
+          "example": "Messages travel through the spinal cord like cars on a highway."
+        },
+        {
+          "icon": "⚡",
+          "title": "Nerves",
+          "description": "A vast network of thin fibres that carry messages between the brain/spinal cord and every body part. Made of nerve cells called neurons.",
+          "example": "Like telephone wires connecting every house in a city to the exchange."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "The Brain — Your Supercomputer",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "The brain is the most important organ in your body. It is soft and delicate, protected inside the hard skull. A special fluid called cerebrospinal fluid cushions it from shocks and jerks — like bubble wrap for your brain!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Your brain looks like a wrinkly walnut and weighs about 1.4 kg — but it controls your entire body!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "brain_parts",
+        "description": "Three parts of the brain"
+      },
+      "hotspots": [
+        {
+          "icon": "🧩",
+          "title": "Cerebrum (The Thinker)",
+          "description": "The largest part — dome-shaped with ridges and grooves. Controls thinking, learning, memory, intelligence, and all sense organs.",
+          "example": "When you solve a math problem or remember your friend's name, that's your cerebrum working!"
+        },
+        {
+          "icon": "⚖️",
+          "title": "Cerebellum (The Balancer)",
+          "description": "Located below the cerebrum at the back. Smaller in size. Controls muscle movement and body balance.",
+          "example": "When you ride a bicycle without falling, thank your cerebellum!"
+        },
+        {
+          "icon": "🫁",
+          "title": "Medulla (The Life-Keeper)",
+          "description": "Stem-shaped structure beneath the cerebellum. Connects brain to spinal cord. Controls involuntary actions: breathing, heartbeat, sneezing, swallowing.",
+          "example": "Your medulla keeps you breathing even while you sleep — you don't have to think about it!"
+        }
+      ],
+      "fun_fact": "The right half of your brain controls the left side of your body, and the left half controls the right side!"
+    },
+    {
+      "id": 4,
+      "title": "Brain Parts Challenge",
+      "scene_type": "activity",
+      "character": "buddi",
+      "background": "none",
+      "xp": 20,
+      "narration": "Let's test what you learned about the brain! Match each brain part to its function.",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "Can you remember what each part of the brain does? Let's find out!"
+      },
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Match Brain Parts to Functions",
+        "instructions": "Match each brain part with what it controls:",
+        "pairs": [
+          {
+            "item": "Cerebrum",
+            "icon": "🧩",
+            "match": "Thinking & Memory",
+            "explanation": "The cerebrum controls thinking, learning, memory and senses."
+          },
+          {
+            "item": "Cerebellum",
+            "icon": "⚖️",
+            "match": "Balance & Movement",
+            "explanation": "The cerebellum controls muscle movement and body balance."
+          },
+          {
+            "item": "Medulla",
+            "icon": "🫁",
+            "match": "Breathing & Heartbeat",
+            "explanation": "The medulla controls involuntary actions like breathing and heartbeat."
+          }
+        ],
+        "options": [
+          "Thinking & Memory",
+          "Balance & Movement",
+          "Breathing & Heartbeat"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "title": "The Spinal Cord — The Information Highway",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "The spinal cord originates from the medulla and extends almost to the lower end of your backbone. It is a tube-like structure protected by the vertebral column (backbone). It carries all messages between the brain and the rest of the body.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Without the spinal cord, your brain couldn't communicate with your legs, arms, or any other body part!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "spinal_cord_pathway",
+        "description": "Signal pathway through spinal cord"
+      },
+      "hotspots": [
+        {
+          "icon": "🛡️",
+          "title": "Protection",
+          "description": "The spinal cord is surrounded by the vertebral column (33 vertebrae stacked together) which protects it from injury."
+        },
+        {
+          "icon": "📡",
+          "title": "Message Relay",
+          "description": "All information between the brain and body travels through the spinal cord — like a busy information highway."
+        },
+        {
+          "icon": "⚡",
+          "title": "Reflex Control",
+          "description": "The spinal cord also controls reflex actions — quick automatic responses that don't involve the brain!"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Nerves — The Body's Messengers",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "Nerves are like telephone wires running throughout your body. They are made up of special cells called neurons. There are three types of nerves, each with a different job.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Billions of nerve signals travel through your body every second — faster than you can blink!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "nerve_types",
+        "description": "Three types of nerves"
+      },
+      "hotspots": [
+        {
+          "icon": "👁️",
+          "title": "Sensory Nerves",
+          "description": "Carry messages FROM sense organs TO the brain/spinal cord. They tell the brain what you see, hear, smell, taste, and feel.",
+          "example": "When you touch something hot, sensory nerves send the 'HOT!' message to your brain."
+        },
+        {
+          "icon": "💪",
+          "title": "Motor Nerves",
+          "description": "Carry messages FROM the brain/spinal cord TO muscles and glands. They tell your body what to do.",
+          "example": "When your brain says 'lift your arm', motor nerves carry that instruction to arm muscles."
+        },
+        {
+          "icon": "🔄",
+          "title": "Mixed Nerves",
+          "description": "Carry messages in BOTH directions — from body to brain AND brain to body. They do double duty!",
+          "example": "Some nerves in your face carry both sensation (feeling touch) and movement (smiling)."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Reflex Actions — Lightning Fast!",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "Some actions happen so fast that your brain doesn't even have time to think about them! These are called reflex actions. They are controlled by the spinal cord, not the brain. This makes them super quick — protecting you from danger!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "When you touch a hot pan, you pull your hand back BEFORE you even think about it. That's a reflex!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "reflex_action",
+        "description": "Reflex action pathway"
+      },
+      "hotspots": [
+        {
+          "icon": "🔥",
+          "title": "How Reflex Works",
+          "description": "1. Hand touches hot object → 2. Sensory nerves send message to SPINAL CORD (not brain!) → 3. Spinal cord immediately sends message back through motor nerves → 4. Hand pulls away instantly!",
+          "example": "This happens in less than a second — much faster than if the brain had to decide."
+        },
+        {
+          "icon": "📋",
+          "title": "Examples of Reflexes",
+          "description": "Pulling hand from hot object, blinking when something comes near eyes, sneezing when nose is irritated, mouth watering when smelling delicious food, knee-jerk when tapped.",
+          "example": "Try this: have someone clap near your eyes — you'll blink automatically!"
+        },
+        {
+          "icon": "❓",
+          "title": "Why Skip the Brain?",
+          "description": "The spinal cord handles reflexes because sending the message all the way to the brain and back would take too long. By the time the brain decided, you might already be burned!",
+          "example": "Reflex actions protect us from injury by being faster than thought!"
+        }
+      ],
+      "fun_fact": "A reflex action takes about 0.03 seconds — 10 times faster than a normal brain response!"
+    },
+    {
+      "id": 8,
+      "title": "Nervous System True or False",
+      "scene_type": "challenge",
+      "character": "buddi",
+      "background": "none",
+      "xp": 30,
+      "narration": "Time for a challenge! Let's test your knowledge about the brain, spinal cord, and nerves.",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "Are these statements true or false? Think carefully!"
+      },
+      "tts": true,
+      "challenge": {
+        "title": "True or False — Nervous System Facts",
+        "questions": [
+          {
+            "id": 1,
+            "statement": "The cerebrum is the largest part of the brain.",
+            "answer": "True",
+            "explanation": "Yes! The cerebrum is dome-shaped and the biggest part, controlling thinking and memory."
+          },
+          {
+            "id": 2,
+            "statement": "The medulla controls voluntary actions like walking.",
+            "answer": "False",
+            "explanation": "The medulla controls INVOLUNTARY actions like breathing and heartbeat. Walking is voluntary (controlled by cerebrum + cerebellum)."
+          },
+          {
+            "id": 3,
+            "statement": "Reflex actions are controlled by the spinal cord.",
+            "answer": "True",
+            "explanation": "Correct! Reflexes bypass the brain for speed — the spinal cord handles them directly."
+          },
+          {
+            "id": 4,
+            "statement": "Sensory nerves carry messages from the brain to muscles.",
+            "answer": "False",
+            "explanation": "Sensory nerves carry messages FROM sense organs TO the brain. Motor nerves carry messages to muscles."
+          },
+          {
+            "id": 5,
+            "statement": "The right half of the brain controls the right side of the body.",
+            "answer": "False",
+            "explanation": "The right half of the brain controls the LEFT side of the body, and vice versa!"
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "title": "Sense Organs — Our Windows to the World",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "We have five sense organs — eyes, ears, nose, tongue, and skin. They help us sense our surroundings and send information to the brain through sensory nerves. Without them, we couldn't see, hear, smell, taste, or feel!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Your sense organs are like special detectors — each one picks up different kinds of information from the world around you!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "five_senses",
+        "description": "Five sense organs overview"
+      },
+      "hotspots": [
+        {
+          "icon": "👁️",
+          "title": "Eyes — Vision",
+          "description": "Give us the sense of sight. Light enters through the pupil, forms an image on the retina, and the optic nerve sends it to the brain."
+        },
+        {
+          "icon": "👂",
+          "title": "Ears — Hearing",
+          "description": "Sound enters the outer ear, vibrates the eardrum, passes through tiny bones in the middle ear, then the inner ear converts it to nerve signals."
+        },
+        {
+          "icon": "👃",
+          "title": "Nose — Smell",
+          "description": "Special cells in the nasal cavity detect smells and send signals to the brain. Also filters air with tiny hairs and mucus."
+        },
+        {
+          "icon": "👅",
+          "title": "Tongue — Taste",
+          "description": "Taste buds on the tongue detect sweet, sour, salty, and bitter. Also helps us speak and swallow food."
+        },
+        {
+          "icon": "🖐️",
+          "title": "Skin — Touch",
+          "description": "The largest organ! Has nerves sensitive to heat, cold, pressure, and pain. Also regulates body temperature through sweat."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "The Eyes — How We See",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "Eyes give us the sense of vision. Each eye has an eyeball located in a hollow cavity of the skull called the orbit. The eyeball is filled with fluid that protects it from shocks. Light enters through the cornea, passes through the pupil, and forms an image on the retina at the back.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Your eye works like a camera! The pupil is the aperture, and the retina is the film where the picture forms."
+      },
+      "tts": true,
+      "animation": {
+        "type": "eye_structure",
+        "description": "Parts of the eye"
+      },
+      "hotspots": [
+        {
+          "icon": "🔵",
+          "title": "Cornea",
+          "description": "The transparent front part that receives light and bends it inward."
+        },
+        {
+          "icon": "🟤",
+          "title": "Iris & Pupil",
+          "description": "The iris is the coloured part (gives eye colour). The pupil is the black hole in the centre that lets light in — it gets bigger in dark and smaller in bright light."
+        },
+        {
+          "icon": "📸",
+          "title": "Retina",
+          "description": "The screen at the back where images form. Connected to brain by the optic nerve."
+        },
+        {
+          "icon": "🛡️",
+          "title": "Eyelids & Lashes",
+          "description": "Protect the eyeball from dust and bright light. Blinking keeps eyes moist."
+        }
+      ],
+      "fun_fact": "People have different eye colours because the iris can contain different colour pigments!"
+    },
+    {
+      "id": 11,
+      "title": "The Ears — How We Hear",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "Ears give us the sense of hearing. The ear has three main parts: outer ear (pinna — the part you can see), middle ear (with the eardrum and three tiny bones), and inner ear (cochlea — converts sound vibrations into nerve signals).",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Sound travels as vibrations through air, then through your ear, and finally becomes an electrical signal that your brain understands as music, words, or noise!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "ear_structure",
+        "description": "Parts of the ear and sound pathway"
+      },
+      "hotspots": [
+        {
+          "icon": "📡",
+          "title": "Outer Ear (Pinna)",
+          "description": "The visible flap that collects sound waves from the air and funnels them into the ear canal."
+        },
+        {
+          "icon": "🥁",
+          "title": "Middle Ear (Eardrum + Bones)",
+          "description": "Sound hits the eardrum making it vibrate. Three tiny bones amplify these vibrations and pass them along."
+        },
+        {
+          "icon": "🐚",
+          "title": "Inner Ear (Cochlea)",
+          "description": "A snail-shaped organ that converts vibrations into nerve signals. These signals travel to the brain via the auditory nerve."
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Nose, Tongue & Skin",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "The nose helps us smell and breathe — it has special smell-detecting cells in the nasal cavity. The tongue has taste buds that detect sweet, sour, salty, and bitter tastes. The skin is the largest organ, with nerves that sense heat, cold, pressure, and pain.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Did you know your nose also works as an air filter? Tiny hairs and mucus trap dust and germs before air reaches your lungs!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "nose_tongue_skin",
+        "description": "Nose, tongue and skin senses"
+      },
+      "hotspots": [
+        {
+          "icon": "👃",
+          "title": "Nose",
+          "description": "Nostrils lead to the nasal cavity with smell-detecting cells. Also has hair and mucus to filter air. Always breathe through your nose!",
+          "example": "When you smell cookies baking, those smell molecules trigger your nasal cells!"
+        },
+        {
+          "icon": "👅",
+          "title": "Tongue",
+          "description": "Surface covered with taste buds that detect 4 main tastes. Also essential for speech and swallowing food.",
+          "example": "Different parts of your tongue are more sensitive to different tastes."
+        },
+        {
+          "icon": "🖐️",
+          "title": "Skin",
+          "description": "Largest organ — covers entire body. Has nerves for heat, cold, pressure, and pain. Also produces sweat to regulate temperature.",
+          "example": "When you hold an ice cube, skin nerves quickly tell your brain 'COLD!'"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Sense Organs Matching Game",
+      "scene_type": "activity",
+      "character": "buddi",
+      "background": "none",
+      "xp": 20,
+      "narration": "Can you match each sense organ with what it detects? Let's play!",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "This is fun! Match each sense organ to its special power!"
+      },
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Match Sense Organs to Their Functions",
+        "instructions": "Match each sense organ with what it helps us detect:",
+        "pairs": [
+          {
+            "item": "Eyes",
+            "icon": "👁️",
+            "match": "Light and Vision",
+            "explanation": "Eyes detect light and create images on the retina."
+          },
+          {
+            "item": "Ears",
+            "icon": "👂",
+            "match": "Sound Vibrations",
+            "explanation": "Ears detect sound vibrations and convert them to nerve signals."
+          },
+          {
+            "item": "Nose",
+            "icon": "👃",
+            "match": "Smell and Air Filtering",
+            "explanation": "Nose detects smells and filters air we breathe."
+          },
+          {
+            "item": "Tongue",
+            "icon": "👅",
+            "match": "Taste (sweet, sour, salty, bitter)",
+            "explanation": "Tongue has taste buds that detect different flavours."
+          },
+          {
+            "item": "Skin",
+            "icon": "🖐️",
+            "match": "Touch, Temperature & Pain",
+            "explanation": "Skin has nerves for pressure, heat, cold, and pain."
+          }
+        ],
+        "options": [
+          "Light and Vision",
+          "Sound Vibrations",
+          "Smell and Air Filtering",
+          "Taste (sweet, sour, salty, bitter)",
+          "Touch, Temperature & Pain"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "title": "Taking Care of Your Eyes",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 15,
+      "narration": "Our eyes are precious! We must take good care of them. Here are important tips to keep your eyes healthy and your vision sharp.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Good habits now will keep your eyes healthy for life!"
+      },
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "📖",
+          "title": "Reading",
+          "description": "Read in proper light — not too bright, not too dim. Never read in a moving vehicle as it strains the eyes."
+        },
+        {
+          "icon": "📺",
+          "title": "Screen Time",
+          "description": "Watch TV from at least 6 feet distance. Don't play games on phones/computers for too long. Take regular breaks!"
+        },
+        {
+          "icon": "🧼",
+          "title": "Hygiene",
+          "description": "Don't rub itchy eyes — wash with clean cold water instead. Never use someone else's towel to clean your eyes."
+        },
+        {
+          "icon": "😎",
+          "title": "Protection",
+          "description": "Wear sunglasses in bright sunlight. Keep sharp objects away from eyes. Visit an eye doctor regularly."
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Taking Care of Ears, Nose & Skin",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 15,
+      "narration": "Each of our sense organs needs proper care. Clean ears prevent infections, a healthy nose filters air properly, and clean skin prevents germs from entering your body.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Remember — your sense organs are your connection to the world. Treat them with care!"
+      },
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "👂",
+          "title": "Ear Care",
+          "description": "Dry ears after bathing. NEVER clean with sharp objects (hairpin, pen, toothpick). See a doctor for earaches."
+        },
+        {
+          "icon": "👃",
+          "title": "Nose Care",
+          "description": "Don't pick your nose or put objects inside. Blow gently. For a blocked nose, inhale steam instead of blowing hard."
+        },
+        {
+          "icon": "🧴",
+          "title": "Skin Care",
+          "description": "Keep skin dry and clean. Use mild soap. Dry gently with towel. Take extra care of skin between toes. Use sunscreen outdoors."
+        },
+        {
+          "icon": "👅",
+          "title": "Tongue Care",
+          "description": "A dirty tongue causes bad breath and mouth disease. Clean your tongue with a tongue cleaner every time you brush your teeth."
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "How Signals Travel in Your Body",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 20,
+      "narration": "Let's put it all together! When you see, hear, smell, taste, or touch something, here's what happens: the sense organ detects the stimulus, sensory nerves carry the message to the brain through the spinal cord, the brain processes it and decides what to do, then motor nerves carry instructions back to muscles or glands.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "It's like a complete communication loop — detect, send, think, respond! And it all happens in fractions of a second!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "signal_pathway",
+        "description": "Complete signal pathway from stimulus to response"
+      }
+    },
+    {
+      "id": 17,
+      "title": "Voluntary vs Involuntary Actions",
+      "scene_type": "explore",
+      "character": "buddi",
+      "background": "none",
+      "xp": 15,
+      "narration": "Our body performs two types of actions. Voluntary actions are ones you choose to do — like walking, writing, or eating. Involuntary actions happen automatically without your control — like breathing, heartbeat, and digestion. Reflex actions are a special kind of involuntary action that are super fast!",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "You can decide to raise your hand (voluntary), but you can't decide to stop your heart beating (involuntary)!"
+      },
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "✋",
+          "title": "Voluntary Actions",
+          "description": "Actions you CHOOSE to do. Controlled by the cerebrum. Examples: walking, talking, writing, eating, playing.",
+          "example": "When you decide to pick up a pen and write your name — that's voluntary!"
+        },
+        {
+          "icon": "❤️",
+          "title": "Involuntary Actions",
+          "description": "Actions that happen AUTOMATICALLY. Controlled by the medulla. Examples: breathing, heartbeat, digestion, blinking.",
+          "example": "Your heart beats about 100,000 times a day without you ever thinking about it!"
+        },
+        {
+          "icon": "⚡",
+          "title": "Reflex Actions",
+          "description": "Super-fast automatic responses controlled by the spinal cord. Protect you from danger. Examples: pulling hand from hot object, sneezing, blinking at sudden light.",
+          "example": "Faster than thought — your body protects itself before your brain even knows what happened!"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Sorting: Voluntary vs Involuntary vs Reflex",
+      "scene_type": "activity",
+      "character": "buddi",
+      "background": "none",
+      "xp": 20,
+      "narration": "Can you sort these actions into the right categories? Think carefully about whether you choose to do them or they happen automatically!",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "Some actions are tricky! Is blinking voluntary or involuntary? Hint: you CAN blink on purpose, but it mostly happens on its own!"
+      },
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Classify the Actions",
+        "instructions": "Match each action to whether it is Voluntary, Involuntary, or Reflex:",
+        "pairs": [
+          {
+            "item": "Writing your name",
+            "icon": "✍️",
+            "match": "Voluntary",
+            "explanation": "You choose to write — it's controlled by your cerebrum."
+          },
+          {
+            "item": "Heart beating",
+            "icon": "❤️",
+            "match": "Involuntary",
+            "explanation": "Your heart beats automatically, controlled by the medulla."
+          },
+          {
+            "item": "Pulling hand from hot pan",
+            "icon": "🔥",
+            "match": "Reflex",
+            "explanation": "This happens super fast via the spinal cord — no brain thinking involved!"
+          },
+          {
+            "item": "Breathing while asleep",
+            "icon": "😴",
+            "match": "Involuntary",
+            "explanation": "Breathing continues automatically even when you're unconscious."
+          },
+          {
+            "item": "Sneezing",
+            "icon": "🤧",
+            "match": "Reflex",
+            "explanation": "Sneezing is a quick automatic response to nose irritation — a reflex action."
+          }
+        ],
+        "options": [
+          "Voluntary",
+          "Involuntary",
+          "Reflex"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "title": "The Neuron — Building Block of Nerves",
+      "scene_type": "explore",
+      "character": "tara",
+      "background": "none",
+      "xp": 15,
+      "narration": "Nerves are made up of special cells called neurons. Each neuron has a cell body, short branches called dendrites (which receive messages), and a long tail called an axon (which sends messages to the next neuron). Messages jump from neuron to neuron at incredible speed!",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "A neuron is like a relay runner — it receives the baton (message) through its dendrites and passes it along through its axon to the next runner!"
+      },
+      "tts": true,
+      "animation": {
+        "type": "neuron_structure",
+        "description": "Structure of a neuron"
+      },
+      "fun_fact": "Signals can travel through your nerves at speeds up to 120 metres per second — that's faster than a race car!"
+    },
+    {
+      "id": 20,
+      "title": "Final Quiz — Nervous System Master",
+      "scene_type": "quiz",
+      "character": "tara",
+      "background": "none",
+      "xp": 50,
+      "narration": "You've learned so much! Now let's see if you can ace this final quiz about the nervous system and sense organs.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "Take your time, think carefully, and show me what you've learned!"
+      },
+      "tts": true,
+      "quiz": {
+        "title": "Nervous System & Sense Organs Quiz",
+        "questions": [
+          {
+            "id": 1,
+            "question": "Which part of the brain controls thinking and memory?",
+            "options": [
+              "Cerebellum",
+              "Medulla",
+              "Cerebrum",
+              "Spinal cord"
+            ],
+            "answer": "Cerebrum",
+            "explanation": "The cerebrum is the largest part and controls thinking, learning, and memory."
+          },
+          {
+            "id": 2,
+            "question": "What is a reflex action controlled by?",
+            "options": [
+              "Brain",
+              "Cerebrum",
+              "Spinal cord",
+              "Tongue"
+            ],
+            "answer": "Spinal cord",
+            "explanation": "Reflex actions are controlled by the spinal cord for faster response."
+          },
+          {
+            "id": 3,
+            "question": "Which type of nerves carry messages from sense organs to the brain?",
+            "options": [
+              "Motor nerves",
+              "Mixed nerves",
+              "Sensory nerves",
+              "Spinal nerves"
+            ],
+            "answer": "Sensory nerves",
+            "explanation": "Sensory nerves carry information from sense organs to the brain."
+          },
+          {
+            "id": 4,
+            "question": "Where does the image form inside the eye?",
+            "options": [
+              "Cornea",
+              "Iris",
+              "Pupil",
+              "Retina"
+            ],
+            "answer": "Retina",
+            "explanation": "The retina at the back of the eye is where images form, like a camera's film."
+          },
+          {
+            "id": 5,
+            "question": "Which part of the ear converts sound vibrations into nerve signals?",
+            "options": [
+              "Outer ear",
+              "Eardrum",
+              "Inner ear (Cochlea)",
+              "Pinna"
+            ],
+            "answer": "Inner ear (Cochlea)",
+            "explanation": "The cochlea in the inner ear converts vibrations into nerve signals sent to the brain."
+          },
+          {
+            "id": 6,
+            "question": "Breathing and heartbeat are examples of:",
+            "options": [
+              "Voluntary actions",
+              "Reflex actions",
+              "Involuntary actions",
+              "Sensory actions"
+            ],
+            "answer": "Involuntary actions",
+            "explanation": "Breathing and heartbeat happen automatically — controlled by the medulla."
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "title": "Chapter Summary",
+      "scene_type": "summary",
+      "character": "tara",
+      "background": "none",
+      "xp": 10,
+      "narration": "What an incredible journey through the nervous system! You now understand how your brain, spinal cord, and nerves work together to control everything you do. Let's review the key points.",
+      "dialogue": {
+        "speaker": "Tara",
+        "text": "You've mastered the nervous system! From the brain to the tiniest nerve ending, you understand the body's amazing control centre."
+      },
+      "tts": true,
+      "summary_points": [
+        {
+          "icon": "🧠",
+          "title": "Nervous System",
+          "text": "Made of three parts: Brain (control centre), Spinal Cord (highway), and Nerves (messengers made of neurons)."
+        },
+        {
+          "icon": "🧩",
+          "title": "Brain Parts",
+          "text": "Cerebrum (thinking, memory, senses), Cerebellum (balance, movement), Medulla (breathing, heartbeat, involuntary actions)."
+        },
+        {
+          "icon": "⚡",
+          "title": "Nerve Types",
+          "text": "Sensory nerves (sense organs → brain), Motor nerves (brain → muscles), Mixed nerves (both directions)."
+        },
+        {
+          "icon": "🔥",
+          "title": "Reflex Actions",
+          "text": "Super-fast automatic responses controlled by spinal cord (not brain). Protect from danger. Examples: pulling hand from hot object, sneezing."
+        },
+        {
+          "icon": "👁️",
+          "title": "Sense Organs",
+          "text": "Eyes (vision), Ears (hearing — outer, middle, inner ear), Nose (smell + air filter), Tongue (taste), Skin (touch, temperature, pain)."
+        },
+        {
+          "icon": "🏥",
+          "title": "Care",
+          "text": "Read in proper light, limit screen time, don't clean ears with sharp objects, breathe through nose, keep skin clean, clean tongue daily."
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "title": "Badge Awarded — Brain Commander!",
+      "scene_type": "badge",
+      "character": "buddi",
+      "background": "none",
+      "xp": 50,
+      "narration": "Incredible work, explorer! You have mastered the nervous system — from the brain to the sense organs. You truly are a Brain Commander!",
+      "dialogue": {
+        "speaker": "Buddi",
+        "text": "You did it! You now know how your entire nervous system works — brain, spinal cord, nerves, reflexes, and all five senses! See you in the next adventure!"
+      },
+      "tts": true,
+      "badge": {
+        "name": "Brain Commander",
+        "icon": "🧠",
+        "description": "Awarded for mastering the Nervous System — understanding the brain, spinal cord, nerves, reflex actions, and all five sense organs!",
+        "criteria": "Complete all 22 scenes and pass the final quiz"
+      }
+    }
+  ]
+}

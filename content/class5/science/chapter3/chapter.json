@@ -1,0 +1,52 @@
+{
+  "id": 3,
+  "title": "The Skeletal and Muscular System",
+  "subtitle": "The Body Framework Adventure",
+  "subject": "General Science",
+  "class": 5,
+  "theme": {
+    "primary_color": "#8B5CF6",
+    "secondary_color": "#EC4899"
+  },
+  "characters": ["Tara", "Bone Bot"],
+  "badge": {
+    "name": "Skeleton Detective",
+    "icon": "🦴"
+  },
+  "estimated_time": "50 minutes",
+  "total_xp": 370,
+  "learning_objectives": [
+    "Identify the parts of the human skeletal system and their functions",
+    "Describe the structure of a bone (compact, spongy, marrow)",
+    "Explain the role of skull, backbone, ribcage, limbs, and girdles",
+    "Recognise four types of movable joints and their locations",
+    "Differentiate between ball-and-socket, hinge, pivot, and gliding joints",
+    "Understand the muscular system and how muscles create movement",
+    "Classify muscles into voluntary, involuntary, and cardiac types",
+    "Distinguish between tendons (muscle-to-bone) and ligaments (bone-to-bone)"
+  ],
+  "scenes": [
+    {"id": 1, "title": "Welcome to the Body Framework", "type": "story"},
+    {"id": 2, "title": "Meet Bone Bot - Your Skeleton Guide", "type": "story"},
+    {"id": 3, "title": "The Skeletal System - Functions", "type": "explore"},
+    {"id": 4, "title": "Inside a Bone - Structure", "type": "explore"},
+    {"id": 5, "title": "The Skull - Protector of the Brain", "type": "explore"},
+    {"id": 6, "title": "Backbone, Ribcage, Limbs & Girdles", "type": "explore"},
+    {"id": 7, "title": "Skeleton Parts - Match the Numbers", "type": "activity"},
+    {"id": 8, "title": "What Are Joints?", "type": "story"},
+    {"id": 9, "title": "Ball and Socket Joint", "type": "explore"},
+    {"id": 10, "title": "Hinge Joint", "type": "explore"},
+    {"id": 11, "title": "Pivot Joint & Gliding Joint", "type": "explore"},
+    {"id": 12, "title": "Joints - Match the Type", "type": "activity"},
+    {"id": 13, "title": "The Muscular System", "type": "explore"},
+    {"id": 14, "title": "Types of Muscles", "type": "explore"},
+    {"id": 15, "title": "Muscles - Sort Voluntary vs Involuntary", "type": "activity"},
+    {"id": 16, "title": "Keeping Bones & Muscles Healthy", "type": "story"},
+    {"id": 17, "title": "Tendons vs Ligaments - Sequence", "type": "activity"},
+    {"id": 18, "title": "Full Body Review - How It All Connects", "type": "explore"},
+    {"id": 19, "title": "True or False Challenge", "type": "challenge"},
+    {"id": 20, "title": "Final Quiz - Skeleton Detective", "type": "quiz"},
+    {"id": 21, "title": "Chapter Summary", "type": "summary"},
+    {"id": 22, "title": "Badge Awarded - Skeleton Detective!", "type": "badge"}
+  ]
+}
