@@ -2010,6 +2010,351 @@ draw();
         """, height=330)
         return True
 
+    elif anim_type == "nervous_system_parts":
+        components.html("""
+<div style="background:linear-gradient(135deg,#0f172a,#1e1b4b);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#c4b5fd;margin:0 0 16px;font-size:18px;">The Nervous System — 3 Key Parts</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<p style="text-align:center;color:#a5b4fc;font-size:11px;margin:8px 0 0;">Click each part to explore</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const parts=[
+  {x:150,y:80,icon:'🧠',name:'Brain',desc:'Control centre — processes all information and sends instructions',role:'The Boss',color:'#a78bfa'},
+  {x:150,y:170,icon:'🦴',name:'Spinal Cord',desc:'Information highway connecting brain to body, inside the backbone',role:'The Highway',color:'#34d399'},
+  {x:420,y:130,icon:'⚡',name:'Nerves',desc:'Network of messengers carrying signals to/from every body part',role:'The Messengers',color:'#fbbf24'}
+];
+c.addEventListener('click',e=>{const r=c.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;let prev=selected;selected=-1;parts.forEach((p,i)=>{if(Math.hypot(mx-p.x,my-p.y)<40)selected=i;});if(selected===prev)selected=-1;});
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // Signal pulses traveling
+  for(let i=0;i<6;i++){let px=150+((t*1.5+i*100)%300),py=130+Math.sin(t*0.03+i)*20;ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle='#a78bfa55';ctx.fill();}
+  // Connection lines
+  ctx.beginPath();ctx.moveTo(150,110);ctx.lineTo(150,145);ctx.strokeStyle='#34d39966';ctx.lineWidth=3;ctx.stroke();
+  ctx.beginPath();ctx.moveTo(170,170);ctx.lineTo(390,135);ctx.strokeStyle='#fbbf2444';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(170,80);ctx.lineTo(390,125);ctx.strokeStyle='#fbbf2444';ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+  parts.forEach((p,i)=>{
+    let active=selected===i;let bounce=Math.sin(t*0.03+i)*4;let s=active?1.15:1;
+    ctx.save();ctx.translate(p.x,p.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=p.color;ctx.shadowBlur=18;}
+    ctx.beginPath();ctx.arc(0,0,36,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-5,3,0,0,36);g.addColorStop(0,p.color+'44');g.addColorStop(1,'#0f172a');
+    ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=active?p.color:'rgba(255,255,255,0.1)';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.font='28px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(p.icon,0,0);
+    ctx.restore();
+    ctx.font=(active?'bold ':'')+' 11px "Segoe UI",sans-serif';ctx.fillStyle=active?p.color:'#e2e8f0';ctx.textAlign='center';
+    ctx.fillText(p.name+' — '+p.role,p.x,p.y+bounce+52);
+  });
+  if(selected>=0){let p=parts[selected];
+    ctx.fillStyle='rgba(15,23,42,0.95)';ctx.beginPath();ctx.roundRect(50,235,500,35,8);ctx.fill();
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#f1f5f9';ctx.textAlign='center';ctx.fillText(p.icon+' '+p.desc,300,257);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=360)
+        return True
+
+    elif anim_type == "brain_parts":
+        components.html("""
+<div style="background:linear-gradient(135deg,#3b0764,#581c87);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#e9d5ff;margin:0 0 16px;font-size:18px;">Three Parts of the Brain</h4>
+<canvas id="c" width="600" height="280"></canvas>
+<p style="text-align:center;color:#c084fc;font-size:11px;margin:8px 0 0;">Click each brain region</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;c.width=600*dpr;c.height=280*dpr;c.style.width='600px';c.style.height='280px';ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const parts=[
+  {x:200,y:80,r:55,name:'Cerebrum',desc:'Largest part — controls thinking, learning, memory, senses',icon:'🧩',color:'#a78bfa'},
+  {x:220,y:175,r:30,name:'Cerebellum',desc:'Below cerebrum — controls balance and muscle movement',icon:'⚖️',color:'#f472b6'},
+  {x:280,y:210,r:22,name:'Medulla',desc:'Stem-shaped — controls breathing, heartbeat, swallowing',icon:'🫁',color:'#34d399'}
+];
+c.addEventListener('click',e=>{const r=c.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;let prev=selected;selected=-1;parts.forEach((p,i)=>{if(Math.hypot(mx-p.x,my-p.y)<p.r)selected=i;});if(selected===prev)selected=-1;});
+function draw(){
+  ctx.clearRect(0,0,600,280);
+  // Brain outline
+  ctx.beginPath();ctx.ellipse(220,140,90,110,0,0,Math.PI*2);ctx.fillStyle='#4c1d95';ctx.fill();ctx.strokeStyle='#7c3aed';ctx.lineWidth=2;ctx.stroke();
+  // Wrinkle lines
+  for(let i=0;i<5;i++){ctx.beginPath();ctx.arc(180+i*15,70+i*10,20+i*5,0.3,2.5);ctx.strokeStyle='#6d28d944';ctx.lineWidth=1;ctx.stroke();}
+  parts.forEach((p,i)=>{
+    let active=selected===i;let pulse=active?Math.sin(t*0.06)*4:0;
+    ctx.save();if(active){ctx.shadowColor=p.color;ctx.shadowBlur=15;}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r+pulse,0,Math.PI*2);
+    ctx.fillStyle=active?p.color+'44':'transparent';ctx.fill();
+    ctx.strokeStyle=active?p.color:p.color+'66';ctx.lineWidth=active?3:1.5;ctx.stroke();
+    ctx.shadowBlur=0;ctx.restore();
+  });
+  // Labels on right
+  ctx.font='11px "Segoe UI",sans-serif';ctx.textAlign='left';
+  parts.forEach((p,i)=>{
+    let active=selected===i;
+    ctx.fillStyle=active?p.color:'#d8b4fe';
+    ctx.fillText(p.icon+' '+p.name,380,70+i*40);
+    // pointer line
+    ctx.beginPath();ctx.moveTo(p.x+p.r+5,p.y);ctx.lineTo(375,62+i*40);ctx.strokeStyle=p.color+'44';ctx.lineWidth=1;ctx.setLineDash([2,3]);ctx.stroke();ctx.setLineDash([]);
+  });
+  if(selected>=0){let p=parts[selected];
+    ctx.fillStyle='rgba(59,7,100,0.95)';ctx.beginPath();ctx.roundRect(50,250,500,25,6);ctx.fill();
+    ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#f5f3ff';ctx.textAlign='center';ctx.fillText(p.icon+' '+p.name+': '+p.desc,300,266);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=350)
+        return True
+
+    elif anim_type == "spinal_cord_pathway":
+        components.html("""
+<div style="background:linear-gradient(135deg,#064e3b,#065f46);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#6ee7b7;margin:0 0 16px;font-size:18px;">Spinal Cord — The Information Highway</h4>
+<canvas id="c" width="600" height="240"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;c.width=600*dpr;c.height=240*dpr;c.style.width='600px';c.style.height='240px';ctx.scale(dpr,dpr);
+let t=0;
+function draw(){
+  ctx.clearRect(0,0,600,240);
+  // Brain at top
+  ctx.beginPath();ctx.ellipse(300,35,30,25,0,0,Math.PI*2);ctx.fillStyle='#a78bfa44';ctx.fill();ctx.strokeStyle='#a78bfa';ctx.lineWidth=2;ctx.stroke();
+  ctx.font='20px serif';ctx.textAlign='center';ctx.fillText('🧠',300,42);
+  // Spinal cord (vertical)
+  ctx.beginPath();ctx.moveTo(300,60);ctx.lineTo(300,200);ctx.strokeStyle='#34d399';ctx.lineWidth=6;ctx.lineCap='round';ctx.stroke();
+  // Vertebrae
+  for(let i=0;i<7;i++){let vy=70+i*20;ctx.beginPath();ctx.ellipse(300,vy,15,6,0,0,Math.PI*2);ctx.strokeStyle='#6ee7b744';ctx.lineWidth=1;ctx.stroke();}
+  // Nerves branching out
+  for(let i=0;i<5;i++){
+    let ny=80+i*28;
+    ctx.beginPath();ctx.moveTo(300,ny);ctx.lineTo(380+i*10,ny+10);ctx.moveTo(300,ny);ctx.lineTo(220-i*10,ny+10);
+    ctx.strokeStyle='#fbbf2488';ctx.lineWidth=1.5;ctx.stroke();
+  }
+  // Signals traveling up and down
+  for(let i=0;i<4;i++){
+    let sy=60+((t*1.5+i*50)%150);// going down
+    ctx.beginPath();ctx.arc(295,sy,3,0,Math.PI*2);ctx.fillStyle='#34d399';ctx.fill();
+    let sy2=200-((t*1.5+i*50)%150);// going up
+    ctx.beginPath();ctx.arc(305,sy2,3,0,Math.PI*2);ctx.fillStyle='#fbbf24';ctx.fill();
+  }
+  // Labels
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#6ee7b7';ctx.textAlign='left';
+  ctx.fillText('🧠 Brain (Control Centre)',340,40);
+  ctx.fillText('🦴 Vertebral Column (Protection)',340,120);
+  ctx.fillText('⚡ Nerves branch out to body',340,160);
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#34d399';ctx.textAlign='center';
+  ctx.fillText('↓ Motor signals (brain → body)',260,225);
+  ctx.fillStyle='#fbbf24';ctx.fillText('↑ Sensory signals (body → brain)',420,225);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=310)
+        return True
+
+    elif anim_type == "nerve_types":
+        components.html("""
+<div style="background:linear-gradient(135deg,#172554,#1e3a5f);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#bfdbfe;margin:0 0 16px;font-size:18px;">Three Types of Nerves</h4>
+<canvas id="c" width="600" height="260"></canvas>
+<p style="text-align:center;color:#93c5fd;font-size:11px;margin:8px 0 0;">Click to learn about each type</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;c.width=600*dpr;c.height=260*dpr;c.style.width='600px';c.style.height='260px';ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const types=[
+  {x:120,y:100,icon:'👁️',name:'Sensory',dir:'Sense Organs → Brain',desc:'Carry messages FROM senses TO brain (see, hear, smell, taste, feel)',color:'#60a5fa'},
+  {x:300,y:100,icon:'💪',name:'Motor',dir:'Brain → Muscles',desc:'Carry instructions FROM brain TO muscles and glands (move, act)',color:'#f472b6'},
+  {x:480,y:100,icon:'🔄',name:'Mixed',dir:'Both Directions',desc:'Carry messages BOTH ways — detect AND respond through same nerve',color:'#a78bfa'}
+];
+c.addEventListener('click',e=>{const r=c.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;let prev=selected;selected=-1;types.forEach((tp,i)=>{if(Math.hypot(mx-tp.x,my-tp.y)<38)selected=i;});if(selected===prev)selected=-1;});
+function draw(){
+  ctx.clearRect(0,0,600,260);
+  types.forEach((tp,i)=>{
+    let active=selected===i;let bounce=Math.sin(t*0.03+i*1.2)*4;let s=active?1.15:1;
+    ctx.save();ctx.translate(tp.x,tp.y+bounce);ctx.scale(s,s);
+    if(active){ctx.shadowColor=tp.color;ctx.shadowBlur=18;}
+    ctx.beginPath();ctx.arc(0,0,35,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-5,3,0,0,35);g.addColorStop(0,tp.color+'44');g.addColorStop(1,'#172554');
+    ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=active?tp.color:'rgba(255,255,255,0.1)';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.font='26px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(tp.icon,0,0);
+    ctx.restore();
+    ctx.font=(active?'bold ':'')+' 11px "Segoe UI",sans-serif';ctx.fillStyle=active?tp.color:'#bfdbfe';ctx.textAlign='center';
+    ctx.fillText(tp.name+' Nerves',tp.x,tp.y+bounce+50);
+    ctx.font='9px "Segoe UI",sans-serif';ctx.fillStyle='#93c5fd';ctx.fillText(tp.dir,tp.x,tp.y+bounce+63);
+  });
+  if(selected>=0){let tp=types[selected];
+    ctx.fillStyle='rgba(23,37,84,0.95)';ctx.beginPath();ctx.roundRect(50,200,500,45,10);ctx.fill();
+    ctx.strokeStyle=tp.color+'44';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.font='12px "Segoe UI",sans-serif';ctx.fillStyle='#f1f5f9';ctx.textAlign='center';ctx.fillText(tp.icon+' '+tp.name+': '+tp.desc,300,227);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=330)
+        return True
+
+    elif anim_type == "reflex_action":
+        components.html("""
+<div style="background:linear-gradient(135deg,#7c2d12,#431407);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#fed7aa;margin:0 0 16px;font-size:18px;">Reflex Action — Faster Than Thought!</h4>
+<canvas id="c" width="600" height="260"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;c.width=600*dpr;c.height=260*dpr;c.style.width='600px';c.style.height='260px';ctx.scale(dpr,dpr);
+let t=0;
+const steps=[
+  {x:80,y:130,icon:'🔥',label:'Hot Object',color:'#ef4444'},
+  {x:200,y:130,icon:'🖐️',label:'Hand touches',color:'#f97316'},
+  {x:320,y:130,icon:'⚡',label:'Sensory nerve',color:'#fbbf24'},
+  {x:440,y:130,icon:'🦴',label:'Spinal cord',color:'#34d399'},
+  {x:440,y:50,icon:'🧠',label:'Brain (skipped!)',color:'#64748b'},
+  {x:560,y:130,icon:'💪',label:'Hand pulls back!',color:'#60a5fa'}
+];
+function draw(){
+  ctx.clearRect(0,0,600,260);
+  // Main pathway arrows (LTR process)
+  let progress=(t*0.015)%6;
+  for(let i=0;i<5;i++){
+    if(i===3){// Skip brain path
+      ctx.setLineDash([3,5]);ctx.beginPath();ctx.moveTo(440,105);ctx.lineTo(440,70);
+      ctx.strokeStyle='#64748b44';ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([]);
+      // X mark
+      ctx.font='14px sans-serif';ctx.fillStyle='#ef4444';ctx.textAlign='center';ctx.fillText('✗',440,85);
+      continue;
+    }
+    let fromIdx=i<4?i:3;let toIdx=i<3?i+1:(i===4?5:i+1);
+    if(toIdx>5)continue;
+    ctx.beginPath();ctx.moveTo(steps[fromIdx].x+30,steps[fromIdx].y);ctx.lineTo(steps[toIdx].x-30,steps[toIdx].y);
+    ctx.strokeStyle=steps[fromIdx].color+'66';ctx.lineWidth=2;ctx.stroke();
+    let ax=steps[toIdx].x-32;ctx.beginPath();ctx.moveTo(ax-6,steps[toIdx].y-4);ctx.lineTo(ax,steps[toIdx].y);ctx.lineTo(ax-6,steps[toIdx].y+4);ctx.fillStyle=steps[fromIdx].color;ctx.fill();
+  }
+  // Arrow from spinal cord to response
+  ctx.beginPath();ctx.moveTo(465,130);ctx.lineTo(530,130);ctx.strokeStyle='#34d39966';ctx.lineWidth=2;ctx.stroke();
+  // Signal pulse
+  let pulseIdx=Math.floor(progress);
+  steps.forEach((s,i)=>{
+    if(i===4)return;// skip brain display in main loop
+    let active=pulseIdx===i;let bounce=Math.sin(t*0.03+i)*3;
+    ctx.save();ctx.translate(s.x,s.y+bounce);
+    if(active){ctx.shadowColor=s.color;ctx.shadowBlur=14;}
+    ctx.beginPath();ctx.arc(0,0,25,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-3,2,0,0,25);g.addColorStop(0,s.color+'55');g.addColorStop(1,'#431407');
+    ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=active?s.color:s.color+'44';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.font='18px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(s.icon,0,0);
+    ctx.restore();
+    ctx.font='9px "Segoe UI",sans-serif';ctx.fillStyle=s.color;ctx.textAlign='center';ctx.fillText(s.label,s.x,s.y+bounce+35);
+  });
+  // Brain (greyed out with X)
+  ctx.globalAlpha=0.4;ctx.font='20px serif';ctx.textAlign='center';ctx.fillText('🧠',440,55);ctx.globalAlpha=1;
+  ctx.font='8px "Segoe UI",sans-serif';ctx.fillStyle='#64748b';ctx.fillText('Brain skipped',440,75);
+  ctx.fillText('(too slow!)',440,85);
+  // Info
+  ctx.font='11px "Segoe UI",sans-serif';ctx.fillStyle='#fdba74';ctx.textAlign='center';
+  ctx.fillText('Reflex path: Stimulus → Sensory nerve → Spinal cord → Motor nerve → Response (0.03 sec!)',300,230);
+  ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#f97316';
+  ctx.fillText('Signal goes to spinal cord directly — brain is NOT involved → much faster!',300,248);
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=330)
+        return True
+
+    elif anim_type == "five_senses":
+        components.html("""
+<div style="background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:#c4b5fd;margin:0 0 16px;font-size:18px;">Five Sense Organs</h4>
+<canvas id="c" width="600" height="260"></canvas>
+<p style="text-align:center;color:#a5b4fc;font-size:11px;margin:8px 0 0;">Click to explore each sense</p>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;c.width=600*dpr;c.height=260*dpr;c.style.width='600px';c.style.height='260px';ctx.scale(dpr,dpr);
+let t=0,selected=-1;
+const senses=[
+  {x:60,y:100,icon:'👁️',name:'Eyes',sense:'Vision',desc:'Detect light, form images on retina',color:'#60a5fa'},
+  {x:180,y:100,icon:'👂',name:'Ears',sense:'Hearing',desc:'Convert sound vibrations to nerve signals',color:'#34d399'},
+  {x:300,y:100,icon:'👃',name:'Nose',sense:'Smell',desc:'Detect odour molecules, filter air',color:'#fbbf24'},
+  {x:420,y:100,icon:'👅',name:'Tongue',sense:'Taste',desc:'Taste buds detect sweet, sour, salty, bitter',color:'#f472b6'},
+  {x:540,y:100,icon:'🖐️',name:'Skin',sense:'Touch',desc:'Feel heat, cold, pressure, pain',color:'#a78bfa'}
+];
+c.addEventListener('click',e=>{const r=c.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;let prev=selected;selected=-1;senses.forEach((s,i)=>{if(Math.hypot(mx-s.x,my-s.y)<36)selected=i;});if(selected===prev)selected=-1;});
+function draw(){
+  ctx.clearRect(0,0,600,260);
+  senses.forEach((s,i)=>{
+    let active=selected===i;let bounce=Math.sin(t*0.03+i*1.1)*4;let sc=active?1.15:1;
+    ctx.save();ctx.translate(s.x,s.y+bounce);ctx.scale(sc,sc);
+    if(active){ctx.shadowColor=s.color;ctx.shadowBlur=18;}
+    ctx.beginPath();ctx.arc(0,0,33,0,Math.PI*2);
+    let g=ctx.createRadialGradient(0,-4,2,0,0,33);g.addColorStop(0,s.color+'44');g.addColorStop(1,'#1e1b4b');
+    ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=active?s.color:'rgba(255,255,255,0.1)';ctx.lineWidth=active?2.5:1;ctx.stroke();
+    ctx.shadowBlur=0;ctx.font='26px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(s.icon,0,0);
+    ctx.restore();
+    ctx.font=(active?'bold ':'')+' 10px "Segoe UI",sans-serif';ctx.fillStyle=active?s.color:'#c4b5fd';ctx.textAlign='center';
+    ctx.fillText(s.name,s.x,s.y+bounce+48);
+    ctx.font='9px "Segoe UI",sans-serif';ctx.fillStyle='#a5b4fc';ctx.fillText(s.sense,s.x,s.y+bounce+61);
+  });
+  if(selected>=0){let s=senses[selected];
+    ctx.fillStyle='rgba(30,27,75,0.95)';ctx.beginPath();ctx.roundRect(60,200,480,40,10);ctx.fill();
+    ctx.strokeStyle=s.color+'55';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.font='12px "Segoe UI",sans-serif';ctx.fillStyle='#f1f5f9';ctx.textAlign='center';ctx.fillText(s.icon+' '+s.name+' ('+s.sense+'): '+s.desc,300,224);
+  }
+  t++;requestAnimationFrame(draw);
+}
+draw();
+</script></div>
+        """, height=320)
+        return True
+
+    elif anim_type in ("eye_structure", "ear_structure", "nose_tongue_skin", "signal_pathway", "neuron_structure"):
+        # Simplified professional display for remaining types
+        descs = {
+            "eye_structure": ("👁️ Eye Structure", "Light → Cornea → Pupil → Lens → Retina → Optic Nerve → Brain", "#60a5fa"),
+            "ear_structure": ("👂 Ear Structure", "Sound → Pinna → Ear Canal → Eardrum → 3 Tiny Bones → Cochlea → Auditory Nerve → Brain", "#34d399"),
+            "nose_tongue_skin": ("👃👅🖐️ Smell, Taste & Touch", "Nose: odour molecules → nasal cells → brain | Tongue: taste buds → nerve → brain | Skin: pressure/heat → nerve → brain", "#fbbf24"),
+            "signal_pathway": ("⚡ Signal Pathway", "Stimulus → Sense Organ → Sensory Nerve → Spinal Cord → Brain → Motor Nerve → Muscle → Response", "#a78bfa"),
+            "neuron_structure": ("🔬 Neuron", "Dendrites (receive) → Cell Body (process) → Axon (transmit) → Next Neuron | Speed: up to 120 m/s!", "#f472b6")
+        }
+        title, desc, color = descs[anim_type]
+        components.html(f"""
+<div style="background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:20px;padding:24px;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+<h4 style="text-align:center;color:{color};margin:0 0 16px;font-size:18px;">{title}</h4>
+<canvas id="c" width="600" height="180"></canvas>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+const dpr=window.devicePixelRatio||1;c.width=600*dpr;c.height=180*dpr;c.style.width='600px';c.style.height='180px';ctx.scale(dpr,dpr);
+let t=0;
+const steps="{desc}".split(/→|\\|/);
+function draw(){{
+  ctx.clearRect(0,0,600,180);
+  let cols=Math.min(steps.length,6);let w=560/cols;
+  let progress=(t*0.012)%steps.length;
+  steps.forEach((s,i)=>{{
+    let row=Math.floor(i/6),col=i%6;
+    let x=30+col*w+w/2,y=50+row*70;
+    let active=Math.floor(progress)===i;
+    ctx.beginPath();ctx.roundRect(x-w/2+5,y-20,w-10,40,8);
+    ctx.fillStyle=active?'{color}33':'rgba(30,41,59,0.8)';ctx.fill();
+    ctx.strokeStyle=active?'{color}':'{color}44';ctx.lineWidth=active?2:1;ctx.stroke();
+    ctx.font=(active?'bold ':'')+'10px "Segoe UI",sans-serif';ctx.fillStyle=active?'#f1f5f9':'#94a3b8';ctx.textAlign='center';
+    ctx.fillText(s.trim(),x,y+4);
+    if(i<steps.length-1&&col<5){{
+      ctx.beginPath();ctx.moveTo(x+w/2-8,y);ctx.lineTo(x+w/2,y);ctx.strokeStyle='{color}66';ctx.lineWidth=1.5;ctx.stroke();
+    }}
+  }});
+  // Pulse dot
+  let pulseCol=Math.floor(progress)%6,pulseRow=Math.floor(Math.floor(progress)/6);
+  let px=30+pulseCol*w+w/2,py=50+pulseRow*70;
+  ctx.beginPath();ctx.arc(px,py-25,4,0,Math.PI*2);ctx.fillStyle='{color}';ctx.fill();
+  t++;requestAnimationFrame(draw);
+}}
+draw();
+</script></div>
+        """, height=250)
+        return True
+
     return False
 
 
@@ -2361,24 +2706,4 @@ else:
 
     with col_home:
         if st.button("🏠 Home", key="nav_home"):
-            st.session_state.chapter_started = False
-            st.session_state.scene_index = 0
-            st.rerun()
-
-    with col_next:
-        if st.session_state.scene_index < scene_count - 1:
-            if st.button("Next ➡", key="nav_next"):
-                st.session_state.scene_index += 1
-                st.rerun()
-        else:
-            if st.button("🏁 Finish Chapter", key="nav_finish"):
-                st.session_state.chapter_started = False
-                st.session_state.scene_index = 0
-                st.rerun()
-
-
-
-# ─── Footer ──────────────────────────────────────────────────────────────────
-
-st.divider()
-st.caption("WonderLearn © 2026 | Learn Through Stories, Explore Through Adventures")
+            st.session
