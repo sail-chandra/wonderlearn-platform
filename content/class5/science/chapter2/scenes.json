@@ -29,15 +29,35 @@
         "speaker": "Tara",
         "text": "Think of a habitat as an animal's address! Just like you live in a house that protects you, animals live in places that suit their bodies perfectly."
       },
-      "learn_points": [
-        "Terrestrial habitats: Land-based homes like forests, deserts, and grasslands where animals like lions, deer, and elephants live",
-        "Aquatic habitats: Water-based homes like oceans, rivers, and ponds where fish, whales, and jellyfish live",
-        "Amphibians: Animals like frogs that can live both on land AND in water",
-        "Arboreal habitats: Tree-top homes where monkeys, squirrels, and many birds spend most of their time",
-        "Aerial habitats: The sky! Birds, bats, and flying insects spend much of their life in the air"
-      ],
       "xp": 15,
-      "tts": true
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Terrestrial habitats",
+          "description": "Land-based homes like forests, deserts, and grasslands where animals like lions, deer, and elephants live"
+        },
+        {
+          "icon": "🔸",
+          "name": "Aquatic habitats",
+          "description": "Water-based homes like oceans, rivers, and ponds where fish, whales, and jellyfish live"
+        },
+        {
+          "icon": "💡",
+          "name": "Amphibians",
+          "description": "Animals like frogs that can live both on land AND in water"
+        },
+        {
+          "icon": "🌟",
+          "name": "Arboreal habitats",
+          "description": "Tree-top homes where monkeys, squirrels, and many birds spend most of their time"
+        },
+        {
+          "icon": "📍",
+          "name": "Aerial habitats",
+          "description": "The sky! Birds, bats, and flying insects spend much of their life in the air"
+        }
+      ]
     },
     {
       "id": 3,
@@ -50,15 +70,35 @@
         "speaker": "Tara",
         "text": "Imagine wearing a coat that keeps you warm AND protects you from enemies. That's exactly what body coverings do for animals!"
       },
-      "learn_points": [
-        "Feathers: Birds have feathers that keep them warm and help them fly. Feathers are lightweight yet strong",
-        "Scales: Fish have slimy scales that help them glide through water. Reptiles have dry scales that prevent water loss",
-        "Shell: Snails, tortoises, and oysters carry hard shells on their backs for protection. They can hide inside when danger comes",
-        "Wool: Sheep have thick woolly coats that trap air and keep them warm in cold mountains",
-        "Fur: Polar bears and arctic foxes have thick fur that insulates them in freezing temperatures"
-      ],
       "xp": 15,
-      "tts": true
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Feathers",
+          "description": "Birds have feathers that keep them warm and help them fly. Feathers are lightweight yet strong"
+        },
+        {
+          "icon": "🔸",
+          "name": "Scales",
+          "description": "Fish have slimy scales that help them glide through water. Reptiles have dry scales that prevent water loss"
+        },
+        {
+          "icon": "💡",
+          "name": "Shell",
+          "description": "Snails, tortoises, and oysters carry hard shells on their backs for protection. They can hide inside when danger comes"
+        },
+        {
+          "icon": "🌟",
+          "name": "Wool",
+          "description": "Sheep have thick woolly coats that trap air and keep them warm in cold mountains"
+        },
+        {
+          "icon": "📍",
+          "name": "Fur",
+          "description": "Polar bears and arctic foxes have thick fur that insulates them in freezing temperatures"
+        }
+      ]
     },
     {
       "id": 4,
@@ -71,15 +111,35 @@
         "speaker": "Tara",
         "text": "Have you ever tried to spot a zebra in tall grass? Their stripes make it really hard! This is called camouflage - blending in with the surroundings."
       },
-      "learn_points": [
-        "Camouflage: Zebras have stripes that confuse predators. Deer have brown coats that blend with forest floors",
-        "Cuticle: Insects like beetles and cockroaches have a hard outer layer called cuticle that acts like a suit of armour",
-        "Quills: Porcupines have sharp, pointed quills. When threatened, they raise their quills to scare away predators",
-        "Armour plates: Armadillos have bony plates covering their body. They can curl into a ball for complete protection",
-        "Colour changes: Chameleons can change their skin colour to match their surroundings and communicate"
-      ],
       "xp": 15,
-      "tts": true
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Camouflage",
+          "description": "Zebras have stripes that confuse predators. Deer have brown coats that blend with forest floors"
+        },
+        {
+          "icon": "🔸",
+          "name": "Cuticle",
+          "description": "Insects like beetles and cockroaches have a hard outer layer called cuticle that acts like a suit of armour"
+        },
+        {
+          "icon": "💡",
+          "name": "Quills",
+          "description": "Porcupines have sharp, pointed quills. When threatened, they raise their quills to scare away predators"
+        },
+        {
+          "icon": "🌟",
+          "name": "Armour plates",
+          "description": "Armadillos have bony plates covering their body. They can curl into a ball for complete protection"
+        },
+        {
+          "icon": "📍",
+          "name": "Colour changes",
+          "description": "Chameleons can change their skin colour to match their surroundings and communicate"
+        }
+      ]
     },
     {
       "id": 5,
@@ -92,35 +152,65 @@
         "speaker": "Buddi",
         "text": "Let's see how well you remember! Match each animal with the covering that protects it. You've got this!"
       },
-      "activity_type": "matching",
-      "pairs": [
-        {
-          "item": "Parrot",
-          "match": "Feathers"
-        },
-        {
-          "item": "Shark",
-          "match": "Scales"
-        },
-        {
-          "item": "Tortoise",
-          "match": "Shell"
-        },
-        {
-          "item": "Polar Bear",
-          "match": "Fur"
-        },
-        {
-          "item": "Porcupine",
-          "match": "Quills"
-        },
-        {
-          "item": "Armadillo",
-          "match": "Armour Plates"
-        }
-      ],
       "xp": 20,
-      "tts": true
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Body Coverings - Match the Animal",
+        "instructions": "Time for a matching challenge! Can you match each animal to its body covering?",
+        "pairs": [
+          {
+            "item": "Parrot",
+            "icon": "🔹",
+            "match": "Feathers",
+            "hint": "",
+            "explanation": "Parrot → Feathers"
+          },
+          {
+            "item": "Shark",
+            "icon": "🔹",
+            "match": "Scales",
+            "hint": "",
+            "explanation": "Shark → Scales"
+          },
+          {
+            "item": "Tortoise",
+            "icon": "🔹",
+            "match": "Shell",
+            "hint": "",
+            "explanation": "Tortoise → Shell"
+          },
+          {
+            "item": "Polar Bear",
+            "icon": "🔹",
+            "match": "Fur",
+            "hint": "",
+            "explanation": "Polar Bear → Fur"
+          },
+          {
+            "item": "Porcupine",
+            "icon": "🔹",
+            "match": "Quills",
+            "hint": "",
+            "explanation": "Porcupine → Quills"
+          },
+          {
+            "item": "Armadillo",
+            "icon": "🔹",
+            "match": "Armour Plates",
+            "hint": "",
+            "explanation": "Armadillo → Armour Plates"
+          }
+        ],
+        "options": [
+          "Armour Plates",
+          "Feathers",
+          "Fur",
+          "Quills",
+          "Scales",
+          "Shell"
+        ]
+      }
     },
     {
       "id": 6,
@@ -133,15 +223,35 @@
         "speaker": "Tara",
         "text": "Did you know you can tell what an animal eats just by looking at its teeth? Herbivores have flat, broad back teeth perfect for grinding leaves and grass!"
       },
-      "learn_points": [
-        "Herbivores are animals that eat only plants - like cows, horses, deer, and rabbits",
-        "They have sharp front teeth (incisors) to bite off leaves and grass",
-        "They have broad, flat back teeth (molars) to grind and crush plant material",
-        "Many herbivores have hard hooves to walk long distances searching for food",
-        "Herbivores often have long digestive systems because plants are harder to break down"
-      ],
       "xp": 15,
-      "tts": true
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Herbivores are animals that eat only plants - like...",
+          "description": "Herbivores are animals that eat only plants - like cows, horses, deer, and rabbits"
+        },
+        {
+          "icon": "🔸",
+          "name": "They have sharp front teeth (incisors) to bite off...",
+          "description": "They have sharp front teeth (incisors) to bite off leaves and grass"
+        },
+        {
+          "icon": "💡",
+          "name": "They have broad, flat back teeth (molars) to grind...",
+          "description": "They have broad, flat back teeth (molars) to grind and crush plant material"
+        },
+        {
+          "icon": "🌟",
+          "name": "Many herbivores have hard hooves to walk long dist...",
+          "description": "Many herbivores have hard hooves to walk long distances searching for food"
+        },
+        {
+          "icon": "📍",
+          "name": "Herbivores often have long digestive systems becau...",
+          "description": "Herbivores often have long digestive systems because plants are harder to break down"
+        }
+      ]
     },
     {
       "id": 7,
@@ -154,15 +264,35 @@
         "speaker": "Tara",
         "text": "A lion's teeth are like sharp knives, while a butterfly drinks nectar through a straw-like tongue called a proboscis. Nature is so creative!"
       },
-      "learn_points": [
-        "Carnivores eat only meat - like lions, tigers, and eagles. They have sharp, pointed teeth and strong claws or talons to catch prey",
-        "Omnivores eat both plants and animals - like bears, crows, and humans. They have a mix of sharp and flat teeth",
-        "Rodents like rats and squirrels have sharp front teeth that never stop growing - perfect for gnawing hard nuts and seeds",
-        "Butterflies have a long, coiled tube called proboscis to suck nectar from flowers",
-        "Mosquitoes have a needle-like tube to pierce skin and suck blood"
-      ],
       "xp": 15,
-      "tts": true
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Carnivores eat only meat - like lions, tigers, and...",
+          "description": "Carnivores eat only meat - like lions, tigers, and eagles. They have sharp, pointed teeth and strong claws or talons to catch prey"
+        },
+        {
+          "icon": "🔸",
+          "name": "Omnivores eat both plants and animals - like bears...",
+          "description": "Omnivores eat both plants and animals - like bears, crows, and humans. They have a mix of sharp and flat teeth"
+        },
+        {
+          "icon": "💡",
+          "name": "Rodents like rats and squirrels have sharp front t...",
+          "description": "Rodents like rats and squirrels have sharp front teeth that never stop growing - perfect for gnawing hard nuts and seeds"
+        },
+        {
+          "icon": "🌟",
+          "name": "Butterflies have a long, coiled tube called probos...",
+          "description": "Butterflies have a long, coiled tube called proboscis to suck nectar from flowers"
+        },
+        {
+          "icon": "📍",
+          "name": "Mosquitoes have a needle-like tube to pierce skin ...",
+          "description": "Mosquitoes have a needle-like tube to pierce skin and suck blood"
+        }
+      ]
     },
     {
       "id": 8,
@@ -175,35 +305,62 @@
         "speaker": "Buddi",
         "text": "Herbivore, Carnivore, or Omnivore? Let's sort them out! Remember - it's all about what they eat."
       },
-      "activity_type": "matching",
-      "pairs": [
-        {
-          "item": "Cow",
-          "match": "Herbivore"
-        },
-        {
-          "item": "Lion",
-          "match": "Carnivore"
-        },
-        {
-          "item": "Bear",
-          "match": "Omnivore"
-        },
-        {
-          "item": "Deer",
-          "match": "Herbivore"
-        },
-        {
-          "item": "Eagle",
-          "match": "Carnivore"
-        },
-        {
-          "item": "Crow",
-          "match": "Omnivore"
-        }
-      ],
       "xp": 20,
-      "tts": true
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Eating Habits - Sort the Animals",
+        "instructions": "Can you sort these animals into the correct food group? Think about what each animal eats!",
+        "pairs": [
+          {
+            "item": "Cow",
+            "icon": "🔹",
+            "match": "Herbivore",
+            "hint": "",
+            "explanation": "Cow → Herbivore"
+          },
+          {
+            "item": "Lion",
+            "icon": "🔹",
+            "match": "Carnivore",
+            "hint": "",
+            "explanation": "Lion → Carnivore"
+          },
+          {
+            "item": "Bear",
+            "icon": "🔹",
+            "match": "Omnivore",
+            "hint": "",
+            "explanation": "Bear → Omnivore"
+          },
+          {
+            "item": "Deer",
+            "icon": "🔹",
+            "match": "Herbivore",
+            "hint": "",
+            "explanation": "Deer → Herbivore"
+          },
+          {
+            "item": "Eagle",
+            "icon": "🔹",
+            "match": "Carnivore",
+            "hint": "",
+            "explanation": "Eagle → Carnivore"
+          },
+          {
+            "item": "Crow",
+            "icon": "🔹",
+            "match": "Omnivore",
+            "hint": "",
+            "explanation": "Crow → Omnivore"
+          }
+        ],
+        "options": [
+          "Carnivore",
+          "Herbivore",
+          "Omnivore"
+        ]
+      }
     },
     {
       "id": 9,
@@ -216,19 +373,39 @@
         "speaker": "Tara",
         "text": "You breathe through your nose and lungs, but did you know fish breathe through gills that filter oxygen from water? Amazing, right?"
       },
-      "learn_points": [
-        "Lungs: Mammals, birds, and reptiles breathe using lungs. Air enters through nostrils, travels down the windpipe, and reaches the lungs where oxygen is absorbed by haemoglobin in blood",
-        "Gills: Fish and tadpoles breathe using gills. Water flows over thin gill filaments where oxygen is absorbed directly into the blood",
-        "Blowholes: Whales and dolphins are mammals that live in water but breathe air! They come to the surface and breathe through a blowhole on top of their head",
-        "Frogs: Tadpoles breathe through gills, but adult frogs use lungs on land and absorb oxygen through their moist skin in water",
-        "Haemoglobin in our blood carries oxygen from lungs to every cell in the body"
-      ],
       "xp": 15,
       "tts": true,
       "animation": {
         "type": "breathing_systems",
         "description": "Animated comparison of breathing methods - lungs, gills, spiracles"
-      }
+      },
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Lungs",
+          "description": "Mammals, birds, and reptiles breathe using lungs. Air enters through nostrils, travels down the windpipe, and reaches the lungs where oxygen is absorbed by haemoglobin in blood"
+        },
+        {
+          "icon": "🔸",
+          "name": "Gills",
+          "description": "Fish and tadpoles breathe using gills. Water flows over thin gill filaments where oxygen is absorbed directly into the blood"
+        },
+        {
+          "icon": "💡",
+          "name": "Blowholes",
+          "description": "Whales and dolphins are mammals that live in water but breathe air! They come to the surface and breathe through a blowhole on top of their head"
+        },
+        {
+          "icon": "🌟",
+          "name": "Frogs",
+          "description": "Tadpoles breathe through gills, but adult frogs use lungs on land and absorb oxygen through their moist skin in water"
+        },
+        {
+          "icon": "📍",
+          "name": "Haemoglobin in our blood carries oxygen from lungs...",
+          "description": "Haemoglobin in our blood carries oxygen from lungs to every cell in the body"
+        }
+      ]
     },
     {
       "id": 10,
@@ -241,15 +418,35 @@
         "speaker": "Tara",
         "text": "Insects have tiny holes called spiracles on the sides of their body. Air enters through these holes and travels through tubes called trachea directly to their cells!"
       },
-      "learn_points": [
-        "Spiracles: Insects have small openings called spiracles on the sides of their body",
-        "Tracheal system: Air enters spiracles and travels through a network of tubes called trachea that deliver oxygen directly to body cells",
-        "Skin breathing: Earthworms breathe through their moist skin. Oxygen dissolves in the moisture and passes into their blood",
-        "Earthworms must keep their skin moist at all times - if they dry out, they cannot breathe and will die",
-        "This is why you see earthworms come to the surface after heavy rain - their underground burrows flood and they need air"
-      ],
       "xp": 15,
-      "tts": true
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Spiracles",
+          "description": "Insects have small openings called spiracles on the sides of their body"
+        },
+        {
+          "icon": "🔸",
+          "name": "Tracheal system",
+          "description": "Air enters spiracles and travels through a network of tubes called trachea that deliver oxygen directly to body cells"
+        },
+        {
+          "icon": "💡",
+          "name": "Skin breathing",
+          "description": "Earthworms breathe through their moist skin. Oxygen dissolves in the moisture and passes into their blood"
+        },
+        {
+          "icon": "🌟",
+          "name": "Earthworms must keep their skin moist at all times...",
+          "description": "Earthworms must keep their skin moist at all times - if they dry out, they cannot breathe and will die"
+        },
+        {
+          "icon": "📍",
+          "name": "This is why you see earthworms come to the surface...",
+          "description": "This is why you see earthworms come to the surface after heavy rain - their underground burrows flood and they need air"
+        }
+      ]
     },
     {
       "id": 11,
@@ -262,35 +459,64 @@
         "speaker": "Buddi",
         "text": "Lungs, gills, spiracles, skin, or blowhole? Match each animal to how it breathes!"
       },
-      "activity_type": "matching",
-      "pairs": [
-        {
-          "item": "Dog",
-          "match": "Lungs"
-        },
-        {
-          "item": "Fish",
-          "match": "Gills"
-        },
-        {
-          "item": "Grasshopper",
-          "match": "Spiracles"
-        },
-        {
-          "item": "Earthworm",
-          "match": "Skin"
-        },
-        {
-          "item": "Dolphin",
-          "match": "Blowhole"
-        },
-        {
-          "item": "Cockroach",
-          "match": "Spiracles"
-        }
-      ],
       "xp": 20,
-      "tts": true
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Breathing Methods - Match Up",
+        "instructions": "Let's test your knowledge! Match each animal to its breathing method.",
+        "pairs": [
+          {
+            "item": "Dog",
+            "icon": "🔹",
+            "match": "Lungs",
+            "hint": "",
+            "explanation": "Dog → Lungs"
+          },
+          {
+            "item": "Fish",
+            "icon": "🔹",
+            "match": "Gills",
+            "hint": "",
+            "explanation": "Fish → Gills"
+          },
+          {
+            "item": "Grasshopper",
+            "icon": "🔹",
+            "match": "Spiracles",
+            "hint": "",
+            "explanation": "Grasshopper → Spiracles"
+          },
+          {
+            "item": "Earthworm",
+            "icon": "🔹",
+            "match": "Skin",
+            "hint": "",
+            "explanation": "Earthworm → Skin"
+          },
+          {
+            "item": "Dolphin",
+            "icon": "🔹",
+            "match": "Blowhole",
+            "hint": "",
+            "explanation": "Dolphin → Blowhole"
+          },
+          {
+            "item": "Cockroach",
+            "icon": "🔹",
+            "match": "Spiracles",
+            "hint": "",
+            "explanation": "Cockroach → Spiracles"
+          }
+        ],
+        "options": [
+          "Blowhole",
+          "Gills",
+          "Lungs",
+          "Skin",
+          "Spiracles"
+        ]
+      }
     },
     {
       "id": 12,
@@ -303,15 +529,35 @@
         "speaker": "Tara",
         "text": "Some animals walk, some crawl, some hop, and some have six legs! The way an animal moves tells us a lot about where it lives."
       },
-      "learn_points": [
-        "Four limbs: Most land mammals like dogs, cats, horses, and elephants walk and run on four legs",
-        "Crawling: Reptiles like lizards crawl close to the ground. Snakes have no legs - they use scales, muscles, and a flexible backbone to slither",
-        "Six legs: All insects have six legs. Ants, beetles, and cockroaches scurry quickly on their six tiny legs",
-        "Hopping: Kangaroos have powerful back legs for hopping great distances. Grasshoppers and frogs also hop",
-        "Snakes push against the ground with their belly scales and use S-shaped body movements to glide forward"
-      ],
       "xp": 15,
-      "tts": true
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Four limbs",
+          "description": "Most land mammals like dogs, cats, horses, and elephants walk and run on four legs"
+        },
+        {
+          "icon": "🔸",
+          "name": "Crawling",
+          "description": "Reptiles like lizards crawl close to the ground. Snakes have no legs - they use scales, muscles, and a flexible backbone to slither"
+        },
+        {
+          "icon": "💡",
+          "name": "Six legs",
+          "description": "All insects have six legs. Ants, beetles, and cockroaches scurry quickly on their six tiny legs"
+        },
+        {
+          "icon": "🌟",
+          "name": "Hopping",
+          "description": "Kangaroos have powerful back legs for hopping great distances. Grasshoppers and frogs also hop"
+        },
+        {
+          "icon": "📍",
+          "name": "Snakes push against the ground with their belly sc...",
+          "description": "Snakes push against the ground with their belly scales and use S-shaped body movements to glide forward"
+        }
+      ]
     },
     {
       "id": 13,
@@ -324,19 +570,39 @@
         "speaker": "Tara",
         "text": "Birds have hollow bones to stay light, and fish have streamlined bodies to cut through water. Every feature has a purpose!"
       },
-      "learn_points": [
-        "Flying birds have: streamlined body shape, hollow bones (lightweight), strong wings with feathers, and a tail for steering",
-        "Swimming fish have: fins for balance and direction, a streamlined body, scales with slime to reduce friction, and a tail fin for propulsion",
-        "Webbed feet: Ducks, frogs, and platypus have skin between their toes that works like paddles for swimming",
-        "Flippers: Penguins and turtles have flat, broad flippers instead of legs to push through water",
-        "Bats are the only mammals that can truly fly - they have thin skin stretched between their long finger bones forming wings"
-      ],
       "xp": 15,
       "tts": true,
       "animation": {
         "type": "animal_movement",
         "description": "Animated showcase of flying, swimming, and land movement adaptations"
-      }
+      },
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Flying birds have",
+          "description": "streamlined body shape, hollow bones (lightweight), strong wings with feathers, and a tail for steering"
+        },
+        {
+          "icon": "🔸",
+          "name": "Swimming fish have",
+          "description": "fins for balance and direction, a streamlined body, scales with slime to reduce friction, and a tail fin for propulsion"
+        },
+        {
+          "icon": "💡",
+          "name": "Webbed feet",
+          "description": "Ducks, frogs, and platypus have skin between their toes that works like paddles for swimming"
+        },
+        {
+          "icon": "🌟",
+          "name": "Flippers",
+          "description": "Penguins and turtles have flat, broad flippers instead of legs to push through water"
+        },
+        {
+          "icon": "📍",
+          "name": "Bats are the only mammals that can truly fly - the...",
+          "description": "Bats are the only mammals that can truly fly - they have thin skin stretched between their long finger bones forming wings"
+        }
+      ]
     },
     {
       "id": 14,
@@ -364,16 +630,45 @@
         "speaker": "Buddi",
         "text": "Put these bird adaptations for flight in order from the most essential to supporting features!"
       },
-      "activity_type": "sequence",
-      "correct_sequence": [
-        "Wings with strong feathers",
-        "Hollow lightweight bones",
-        "Streamlined body shape",
-        "Strong chest muscles",
-        "Tail feathers for steering"
-      ],
       "xp": 20,
-      "tts": true
+      "tts": true,
+      "activity": {
+        "type": "sequence",
+        "title": "Movement - Sequence the Adaptation",
+        "instructions": "Let's arrange how a bird's body is adapted for flight, from most important to supporting features!",
+        "steps": [
+          {
+            "id": 1,
+            "icon": "1️⃣",
+            "name": "Wings with strong feathers",
+            "correct_position": 1
+          },
+          {
+            "id": 2,
+            "icon": "2️⃣",
+            "name": "Hollow lightweight bones",
+            "correct_position": 2
+          },
+          {
+            "id": 3,
+            "icon": "3️⃣",
+            "name": "Streamlined body shape",
+            "correct_position": 3
+          },
+          {
+            "id": 4,
+            "icon": "4️⃣",
+            "name": "Strong chest muscles",
+            "correct_position": 4
+          },
+          {
+            "id": 5,
+            "icon": "5️⃣",
+            "name": "Tail feathers for steering",
+            "correct_position": 5
+          }
+        ]
+      }
     },
     {
       "id": 16,
@@ -386,15 +681,35 @@
         "speaker": "Tara",
         "text": "Imagine walking from India to Siberia! That's what some birds do - they fly thousands of kilometres twice a year. Let's learn about these amazing travellers."
       },
-      "learn_points": [
-        "Siberian Crane: Flies from Siberia (Russia) to India every winter to escape the extreme cold. They travel over 5000 km!",
-        "Arctic Tern: Has the longest migration - flies from the Arctic to Antarctica and back every year, covering about 70,000 km!",
-        "Caribou: Large deer that move south in winter to find food when their Arctic home gets too cold and snowy",
-        "Salmon: Born in rivers, swim to the ocean to grow, then return to the same river to lay eggs - an incredible journey!",
-        "Monarch Butterflies: Travel from Canada to Mexico (4000 km) every autumn. No single butterfly makes the full round trip - it takes 4 generations!"
-      ],
       "xp": 15,
-      "tts": true
+      "tts": true,
+      "hotspots": [
+        {
+          "icon": "🔹",
+          "name": "Siberian Crane",
+          "description": "Flies from Siberia (Russia) to India every winter to escape the extreme cold. They travel over 5000 km!"
+        },
+        {
+          "icon": "🔸",
+          "name": "Arctic Tern",
+          "description": "Has the longest migration - flies from the Arctic to Antarctica and back every year, covering about 70,000 km!"
+        },
+        {
+          "icon": "💡",
+          "name": "Caribou",
+          "description": "Large deer that move south in winter to find food when their Arctic home gets too cold and snowy"
+        },
+        {
+          "icon": "🌟",
+          "name": "Salmon",
+          "description": "Born in rivers, swim to the ocean to grow, then return to the same river to lay eggs - an incredible journey!"
+        },
+        {
+          "icon": "📍",
+          "name": "Monarch Butterflies",
+          "description": "Travel from Canada to Mexico (4000 km) every autumn. No single butterfly makes the full round trip - it takes 4 generations!"
+        }
+      ]
     },
     {
       "id": 17,
@@ -422,35 +737,65 @@
         "speaker": "Buddi",
         "text": "These animals are world travellers! Match each one to where or why it migrates."
       },
-      "activity_type": "matching",
-      "pairs": [
-        {
-          "item": "Siberian Crane",
-          "match": "Siberia to India (winter)"
-        },
-        {
-          "item": "Arctic Tern",
-          "match": "Arctic to Antarctica"
-        },
-        {
-          "item": "Monarch Butterfly",
-          "match": "Canada to Mexico"
-        },
-        {
-          "item": "Olive Ridley Turtle",
-          "match": "Ocean to Odisha coast"
-        },
-        {
-          "item": "Salmon",
-          "match": "Ocean to birth river"
-        },
-        {
-          "item": "Caribou",
-          "match": "North to South (winter)"
-        }
-      ],
       "xp": 20,
-      "tts": true
+      "tts": true,
+      "activity": {
+        "type": "matching",
+        "title": "Migration - Match the Journey",
+        "instructions": "Can you match each animal to its migration route or reason?",
+        "pairs": [
+          {
+            "item": "Siberian Crane",
+            "icon": "🔹",
+            "match": "Siberia to India (winter)",
+            "hint": "",
+            "explanation": "Siberian Crane → Siberia to India (winter)"
+          },
+          {
+            "item": "Arctic Tern",
+            "icon": "🔹",
+            "match": "Arctic to Antarctica",
+            "hint": "",
+            "explanation": "Arctic Tern → Arctic to Antarctica"
+          },
+          {
+            "item": "Monarch Butterfly",
+            "icon": "🔹",
+            "match": "Canada to Mexico",
+            "hint": "",
+            "explanation": "Monarch Butterfly → Canada to Mexico"
+          },
+          {
+            "item": "Olive Ridley Turtle",
+            "icon": "🔹",
+            "match": "Ocean to Odisha coast",
+            "hint": "",
+            "explanation": "Olive Ridley Turtle → Ocean to Odisha coast"
+          },
+          {
+            "item": "Salmon",
+            "icon": "🔹",
+            "match": "Ocean to birth river",
+            "hint": "",
+            "explanation": "Salmon → Ocean to birth river"
+          },
+          {
+            "item": "Caribou",
+            "icon": "🔹",
+            "match": "North to South (winter)",
+            "hint": "",
+            "explanation": "Caribou → North to South (winter)"
+          }
+        ],
+        "options": [
+          "Arctic to Antarctica",
+          "Canada to Mexico",
+          "North to South (winter)",
+          "Ocean to Odisha coast",
+          "Ocean to birth river",
+          "Siberia to India (winter)"
+        ]
+      }
     },
     {
       "id": 19,
@@ -463,50 +808,61 @@
         "speaker": "Buddi",
         "text": "I've prepared 8 tricky statements about animals. Think carefully before you answer - some of these might surprise you!"
       },
-      "statements": [
-        {
-          "text": "Fish breathe using lungs.",
-          "answer": false,
-          "explanation": "Fish breathe using gills, not lungs. Gills extract oxygen dissolved in water."
-        },
-        {
-          "text": "Earthworms breathe through their moist skin.",
-          "answer": true,
-          "explanation": "Correct! Earthworms absorb oxygen through their moist skin surface."
-        },
-        {
-          "text": "All birds can fly.",
-          "answer": false,
-          "explanation": "False! Ostrich, emu, penguin, and cassowary are flightless birds."
-        },
-        {
-          "text": "Insects breathe through small holes called spiracles.",
-          "answer": true,
-          "explanation": "Correct! Spiracles are tiny openings on the sides of an insect's body that let air in."
-        },
-        {
-          "text": "Herbivores have sharp pointed teeth for tearing meat.",
-          "answer": false,
-          "explanation": "False! Herbivores have broad, flat back teeth for grinding plants. Carnivores have sharp pointed teeth."
-        },
-        {
-          "text": "Whales breathe through a blowhole on top of their head.",
-          "answer": true,
-          "explanation": "Correct! Whales are mammals that must surface to breathe air through their blowhole."
-        },
-        {
-          "text": "Snakes move using legs hidden under their scales.",
-          "answer": false,
-          "explanation": "False! Snakes have no legs. They move using their scales, muscles, and flexible backbone."
-        },
-        {
-          "text": "The Arctic Tern has the longest migration route of any animal.",
-          "answer": true,
-          "explanation": "Correct! Arctic Terns fly about 70,000 km every year from Arctic to Antarctic and back."
-        }
-      ],
       "xp": 30,
-      "tts": true
+      "tts": true,
+      "challenge": {
+        "title": "True or False — Animal Facts",
+        "questions": [
+          {
+            "id": 1,
+            "statement": "Fish breathe using lungs.",
+            "answer": false,
+            "explanation": "Fish breathe using gills, not lungs. Gills extract oxygen dissolved in water."
+          },
+          {
+            "id": 2,
+            "statement": "Earthworms breathe through their moist skin.",
+            "answer": true,
+            "explanation": "Correct! Earthworms absorb oxygen through their moist skin surface."
+          },
+          {
+            "id": 3,
+            "statement": "All birds can fly.",
+            "answer": false,
+            "explanation": "False! Ostrich, emu, penguin, and cassowary are flightless birds."
+          },
+          {
+            "id": 4,
+            "statement": "Insects breathe through small holes called spiracles.",
+            "answer": true,
+            "explanation": "Correct! Spiracles are tiny openings on the sides of an insect's body that let air in."
+          },
+          {
+            "id": 5,
+            "statement": "Herbivores have sharp pointed teeth for tearing meat.",
+            "answer": false,
+            "explanation": "False! Herbivores have broad, flat back teeth for grinding plants. Carnivores have sharp pointed teeth."
+          },
+          {
+            "id": 6,
+            "statement": "Whales breathe through a blowhole on top of their head.",
+            "answer": true,
+            "explanation": "Correct! Whales are mammals that must surface to breathe air through their blowhole."
+          },
+          {
+            "id": 7,
+            "statement": "Snakes move using legs hidden under their scales.",
+            "answer": false,
+            "explanation": "False! Snakes have no legs. They move using their scales, muscles, and flexible backbone."
+          },
+          {
+            "id": 8,
+            "statement": "The Arctic Tern has the longest migration route of any animal.",
+            "answer": true,
+            "explanation": "Correct! Arctic Terns fly about 70,000 km every year from Arctic to Antarctic and back."
+          }
+        ]
+      }
     },
     {
       "id": 20,
@@ -519,111 +875,134 @@
         "speaker": "Tara",
         "text": "This is it - the final challenge! Show me everything you've learned about animals in their surroundings. Good luck, explorer!"
       },
-      "questions": [
-        {
-          "question": "Which body covering helps a porcupine defend itself from predators?",
-          "options": [
-            "Fur",
-            "Scales",
-            "Quills",
-            "Feathers"
-          ],
-          "correct": 2
-        },
-        {
-          "question": "What do insects use to breathe?",
-          "options": [
-            "Lungs",
-            "Gills",
-            "Skin",
-            "Spiracles and trachea"
-          ],
-          "correct": 3
-        },
-        {
-          "question": "Which type of teeth do herbivores use to grind plants?",
-          "options": [
-            "Sharp canines",
-            "Broad flat molars",
-            "Pointed incisors",
-            "Needle-like teeth"
-          ],
-          "correct": 1
-        },
-        {
-          "question": "How do fish breathe underwater?",
-          "options": [
-            "Through lungs",
-            "Through their skin",
-            "Through gills",
-            "Through spiracles"
-          ],
-          "correct": 2
-        },
-        {
-          "question": "Which animal migrates from Canada to Mexico every year?",
-          "options": [
-            "Arctic Tern",
-            "Siberian Crane",
-            "Monarch Butterfly",
-            "Salmon"
-          ],
-          "correct": 2
-        },
-        {
-          "question": "What helps a snake move without legs?",
-          "options": [
-            "Wings",
-            "Fins",
-            "Scales, muscles and flexible backbone",
-            "Webbed feet"
-          ],
-          "correct": 2
-        },
-        {
-          "question": "Which is a flightless bird?",
-          "options": [
-            "Eagle",
-            "Sparrow",
-            "Penguin",
-            "Parrot"
-          ],
-          "correct": 2
-        },
-        {
-          "question": "How does an earthworm breathe?",
-          "options": [
-            "Through lungs",
-            "Through gills",
-            "Through spiracles",
-            "Through moist skin"
-          ],
-          "correct": 3
-        },
-        {
-          "question": "What body feature helps ducks swim?",
-          "options": [
-            "Sharp claws",
-            "Webbed feet",
-            "Long tail",
-            "Hollow bones"
-          ],
-          "correct": 1
-        },
-        {
-          "question": "Where do Olive Ridley turtles come to lay eggs in India?",
-          "options": [
-            "Kerala coast",
-            "Goa beaches",
-            "Odisha coast",
-            "Mumbai shore"
-          ],
-          "correct": 2
-        }
-      ],
-      "pass_score": 7,
       "xp": 50,
-      "tts": true
+      "tts": true,
+      "quiz": {
+        "title": "Final Quiz — Habitat Hero",
+        "pass_score": 7,
+        "questions": [
+          {
+            "id": 1,
+            "question": "Which body covering helps a porcupine defend itself from predators?",
+            "options": [
+              "Fur",
+              "Scales",
+              "Quills",
+              "Feathers"
+            ],
+            "correct": 2,
+            "explanation": "The correct answer is: Quills"
+          },
+          {
+            "id": 2,
+            "question": "What do insects use to breathe?",
+            "options": [
+              "Lungs",
+              "Gills",
+              "Skin",
+              "Spiracles and trachea"
+            ],
+            "correct": 3,
+            "explanation": "The correct answer is: Spiracles and trachea"
+          },
+          {
+            "id": 3,
+            "question": "Which type of teeth do herbivores use to grind plants?",
+            "options": [
+              "Sharp canines",
+              "Broad flat molars",
+              "Pointed incisors",
+              "Needle-like teeth"
+            ],
+            "correct": 1,
+            "explanation": "The correct answer is: Broad flat molars"
+          },
+          {
+            "id": 4,
+            "question": "How do fish breathe underwater?",
+            "options": [
+              "Through lungs",
+              "Through their skin",
+              "Through gills",
+              "Through spiracles"
+            ],
+            "correct": 2,
+            "explanation": "The correct answer is: Through gills"
+          },
+          {
+            "id": 5,
+            "question": "Which animal migrates from Canada to Mexico every year?",
+            "options": [
+              "Arctic Tern",
+              "Siberian Crane",
+              "Monarch Butterfly",
+              "Salmon"
+            ],
+            "correct": 2,
+            "explanation": "The correct answer is: Monarch Butterfly"
+          },
+          {
+            "id": 6,
+            "question": "What helps a snake move without legs?",
+            "options": [
+              "Wings",
+              "Fins",
+              "Scales, muscles and flexible backbone",
+              "Webbed feet"
+            ],
+            "correct": 2,
+            "explanation": "The correct answer is: Scales, muscles and flexible backbone"
+          },
+          {
+            "id": 7,
+            "question": "Which is a flightless bird?",
+            "options": [
+              "Eagle",
+              "Sparrow",
+              "Penguin",
+              "Parrot"
+            ],
+            "correct": 2,
+            "explanation": "The correct answer is: Penguin"
+          },
+          {
+            "id": 8,
+            "question": "How does an earthworm breathe?",
+            "options": [
+              "Through lungs",
+              "Through gills",
+              "Through spiracles",
+              "Through moist skin"
+            ],
+            "correct": 3,
+            "explanation": "The correct answer is: Through moist skin"
+          },
+          {
+            "id": 9,
+            "question": "What body feature helps ducks swim?",
+            "options": [
+              "Sharp claws",
+              "Webbed feet",
+              "Long tail",
+              "Hollow bones"
+            ],
+            "correct": 1,
+            "explanation": "The correct answer is: Webbed feet"
+          },
+          {
+            "id": 10,
+            "question": "Where do Olive Ridley turtles come to lay eggs in India?",
+            "options": [
+              "Kerala coast",
+              "Goa beaches",
+              "Odisha coast",
+              "Mumbai shore"
+            ],
+            "correct": 2,
+            "explanation": "The correct answer is: Odisha coast"
+          }
+        ]
+      }
     },
     {
       "id": 21,
