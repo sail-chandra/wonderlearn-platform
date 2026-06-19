@@ -4,47 +4,49 @@
   "subtitle": "The Great Plant Adventure",
   "subject": "General Science",
   "class": 5,
-
   "theme": {
     "primary_color": "#22C55E",
-    "secondary_color": "#2563EB",
-    "background": "plant_land"
+    "secondary_color": "#2563EB"
   },
-
-  "characters": [
-    "Tara",
-    "Buddi",
-    "Farmer Kisan"
-  ],
-
+  "characters": ["Tara", "Buddi", "Farmer Kisan"],
   "badge": {
     "name": "Seed Explorer",
     "icon": "🌱"
   },
-
-  "estimated_time": "30 minutes",
-  "total_xp": 280,
-
+  "estimated_time": "45 minutes",
+  "total_xp": 450,
   "learning_objectives": [
-    "Understand seed structure (seed coat, cotyledon, embryo)",
-    "Learn the process and conditions for germination",
-    "Explore different methods of seed dispersal",
-    "Understand vegetative propagation with examples",
-    "Learn the steps of agriculture and farming"
+    "Describe different ways in which plants reproduce",
+    "Analyse the structure of a seed (dicot vs monocot)",
+    "Demonstrate the conditions required for seed germination",
+    "Explain the different methods of seed dispersal",
+    "Understand vegetative propagation from stems, leaves, roots, and spores",
+    "Distinguish between different kinds of crops (food, fibre, oil)",
+    "Differentiate between Kharif and Rabi crops",
+    "List different stages in agriculture",
+    "Understand crop protection and storage"
   ],
-
   "scenes": [
-    {"id": 1, "title": "Welcome to Plant Land", "type": "story"},
-    {"id": 2, "title": "Meet Buddi the Seed", "type": "story"},
-    {"id": 3, "title": "Inside a Seed", "type": "explore"},
-    {"id": 4, "title": "Germination Lab", "type": "experiment"},
-    {"id": 5, "title": "Stages of Germination", "type": "story"},
-    {"id": 6, "title": "Seed Dispersal Adventure", "type": "activity"},
-    {"id": 7, "title": "Vegetative Propagation Garden", "type": "explore"},
-    {"id": 8, "title": "Farmer Kisan's Field", "type": "activity"},
-    {"id": 9, "title": "Chapter Challenge", "type": "challenge"},
-    {"id": 10, "title": "Final Quiz — Seed Explorer", "type": "quiz"},
-    {"id": 11, "title": "Chapter Summary", "type": "summary"},
-    {"id": 12, "title": "Badge Awarded — Seed Explorer!", "type": "badge"}
+    {"id": 1, "title": "Welcome to the World of Plants", "type": "story"},
+    {"id": 2, "title": "How Do Plants Reproduce?", "type": "explore"},
+    {"id": 3, "title": "Inside a Seed - Kidney Bean", "type": "explore"},
+    {"id": 4, "title": "Dicot vs Monocot Seeds", "type": "activity"},
+    {"id": 5, "title": "Germination - What Seeds Need", "type": "experiment"},
+    {"id": 6, "title": "Stages of Germination", "type": "story"},
+    {"id": 7, "title": "Why Seeds Need to Travel", "type": "story"},
+    {"id": 8, "title": "Seed Dispersal Methods", "type": "explore"},
+    {"id": 9, "title": "Seed Dispersal - Match the Method", "type": "activity"},
+    {"id": 10, "title": "Reproduction from Stems", "type": "explore"},
+    {"id": 11, "title": "Reproduction from Leaves, Roots and Spores", "type": "explore"},
+    {"id": 12, "title": "Vegetative Propagation - Sort the Method", "type": "activity"},
+    {"id": 13, "title": "Types of Crops", "type": "explore"},
+    {"id": 14, "title": "Kharif vs Rabi - Sort the Crops", "type": "activity"},
+    {"id": 15, "title": "Growing Healthy Crops", "type": "explore"},
+    {"id": 16, "title": "Stages of Agriculture", "type": "activity"},
+    {"id": 17, "title": "Protection of Crops", "type": "story"},
+    {"id": 18, "title": "True or False Challenge", "type": "challenge"},
+    {"id": 19, "title": "Final Quiz - Seed Explorer", "type": "quiz"},
+    {"id": 20, "title": "Chapter Summary", "type": "summary"},
+    {"id": 21, "title": "Badge Awarded - Seed Explorer!", "type": "badge"}
   ]
 }
