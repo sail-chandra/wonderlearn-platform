@@ -57,7 +57,11 @@
           "name": "Aerial habitats",
           "description": "The sky! Birds, bats, and flying insects spend much of their life in the air"
         }
-      ]
+      ],
+      "animation": {
+        "type": "habitat_types",
+        "description": "Visual infographic showing 5 habitat types with animals"
+      }
     },
     {
       "id": 3,
@@ -98,7 +102,11 @@
           "name": "Fur",
           "description": "Polar bears and arctic foxes have thick fur that insulates them in freezing temperatures"
         }
-      ]
+      ],
+      "animation": {
+        "type": "body_coverings_1",
+        "description": "Animated display of feathers, scales, shells, wool, and fur"
+      }
     },
     {
       "id": 4,
@@ -139,7 +147,11 @@
           "name": "Colour changes",
           "description": "Chameleons can change their skin colour to match their surroundings and communicate"
         }
-      ]
+      ],
+      "animation": {
+        "type": "body_coverings_2",
+        "description": "Animated display of camouflage, cuticle, quills, armour plates"
+      }
     },
     {
       "id": 5,
@@ -251,7 +263,11 @@
           "name": "Herbivores often have long digestive systems becau...",
           "description": "Herbivores often have long digestive systems because plants are harder to break down"
         }
-      ]
+      ],
+      "animation": {
+        "type": "herbivore_teeth",
+        "description": "Animated comparison of herbivore teeth and feeding"
+      }
     },
     {
       "id": 7,
@@ -292,7 +308,11 @@
           "name": "Mosquitoes have a needle-like tube to pierce skin ...",
           "description": "Mosquitoes have a needle-like tube to pierce skin and suck blood"
         }
-      ]
+      ],
+      "animation": {
+        "type": "carnivore_feeders",
+        "description": "Animated display of carnivore teeth and special feeders"
+      }
     },
     {
       "id": 8,
@@ -446,7 +466,11 @@
           "name": "This is why you see earthworms come to the surface...",
           "description": "This is why you see earthworms come to the surface after heavy rain - their underground burrows flood and they need air"
         }
-      ]
+      ],
+      "animation": {
+        "type": "spiracles_skin",
+        "description": "Animated diagram of insect spiracles and earthworm skin breathing"
+      }
     },
     {
       "id": 11,
@@ -557,7 +581,11 @@
           "name": "Snakes push against the ground with their belly sc...",
           "description": "Snakes push against the ground with their belly scales and use S-shaped body movements to glide forward"
         }
-      ]
+      ],
+      "animation": {
+        "type": "land_movement",
+        "description": "Animated showcase of walking, crawling, hopping, slithering"
+      }
     },
     {
       "id": 13,
@@ -709,7 +737,11 @@
           "name": "Monarch Butterflies",
           "description": "Travel from Canada to Mexico (4000 km) every autumn. No single butterfly makes the full round trip - it takes 4 generations!"
         }
-      ]
+      ],
+      "animation": {
+        "type": "migration_map",
+        "description": "Animated migration routes with directional arrows"
+      }
     },
     {
       "id": 17,
