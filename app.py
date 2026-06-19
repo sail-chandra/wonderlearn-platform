@@ -1247,13 +1247,13 @@ if st.session_state.chapter_started:
     with nav_col2:
         st.markdown(
             f"<div style='text-align: center; color: #6B7280; padding: 10px;'>"
-            f"Scene {st.session_state.scene_index + 1} of {len(scenes)}"
+            f"Scene {st.session_state.scene_index + 1} of {scene_count}"
             f"</div>",
             unsafe_allow_html=True
         )
 
     with nav_col3:
-        if st.session_state.scene_index < len(scenes) - 1:
+        if st.session_state.scene_index < scene_count - 1:
             if st.button("Next ➡️", use_container_width=True):
                 st.session_state.scene_index += 1
                 st.session_state.quiz_submitted = False
