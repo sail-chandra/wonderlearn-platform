@@ -1121,11 +1121,11 @@ c.style.width='600px';c.style.height='280px';
 ctx.scale(dpr,dpr);
 let t=0;
 const stages=[
-  {x:500,label:'Seed',icon:'🌰',desc:'Dormant seed',color:'#a16207'},
-  {x:380,label:'Water',icon:'💧',desc:'Absorbs water, swells',color:'#0ea5e9'},
-  {x:260,label:'Root',icon:'🌱',desc:'Radicle emerges down',color:'#16a34a'},
-  {x:140,label:'Shoot',icon:'🌿',desc:'Plumule grows up',color:'#22c55e'},
-  {x:20,label:'Seedling',icon:'🌳',desc:'Leaves open, photosynthesis',color:'#15803d'}
+  {x:60,label:'Seed',icon:'🌰',desc:'Dormant seed',color:'#a16207'},
+  {x:180,label:'Water',icon:'💧',desc:'Absorbs water, swells',color:'#0ea5e9'},
+  {x:300,label:'Root',icon:'🌱',desc:'Radicle emerges down',color:'#16a34a'},
+  {x:420,label:'Shoot',icon:'🌿',desc:'Plumule grows up',color:'#22c55e'},
+  {x:540,label:'Seedling',icon:'🌳',desc:'Leaves open, photosynthesis',color:'#15803d'}
 ];
 function draw(){
   ctx.clearRect(0,0,600,280);
@@ -1135,7 +1135,7 @@ function draw(){
   for(let i=0;i<30;i++){ctx.beginPath();ctx.arc(i*20+Math.sin(i)*5,200+Math.random()*60,3,0,Math.PI*2);ctx.fill();}
   // Animated water drops RTL
   for(let i=0;i<5;i++){
-    let wx=580-((t*1.2+i*130)%650),wy=60+Math.sin(t*0.03+i)*20;
+    let wx=((t*1.2+i*130)%650)-50,wy=60+Math.sin(t*0.03+i)*20;
     ctx.globalAlpha=0.4;ctx.font='14px serif';ctx.fillText('💧',wx,wy);ctx.globalAlpha=1;
   }
   // Stages
@@ -1166,7 +1166,7 @@ function draw(){
   });
   // Direction
   ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#4ade80';ctx.textAlign='center';
-  ctx.fillText('← Growth stages progress',300,260);
+  ctx.fillText('Growth stages progress →',300,260);
   t++;requestAnimationFrame(draw);
 }
 draw();
@@ -1205,7 +1205,7 @@ function draw(){
   ctx.clearRect(0,0,600,300);
   // Floating seeds RTL
   for(let i=0;i<6;i++){
-    let sx=600-((t*0.8+i*110)%680),sy=30+i*15+Math.sin(t*0.02+i)*12;
+    let sx=((t*0.8+i*110)%680)-40,sy=30+i*15+Math.sin(t*0.02+i)*12;
     ctx.globalAlpha=0.3;ctx.font='12px serif';ctx.fillText('🌱',sx,sy);ctx.globalAlpha=1;
   }
   methods.forEach((m,i)=>{
@@ -1398,11 +1398,11 @@ c.style.width='600px';c.style.height='260px';
 ctx.scale(dpr,dpr);
 let t=0;
 const steps=[
-  {x:520,icon:'🚜',label:'Ploughing',desc:'Loosen soil',color:'#d97706'},
-  {x:410,icon:'🌱',label:'Sowing',desc:'Plant seeds',color:'#16a34a'},
+  {x:60,icon:'🚜',label:'Ploughing',desc:'Loosen soil',color:'#d97706'},
+  {x:180,icon:'🌱',label:'Sowing',desc:'Plant seeds',color:'#16a34a'},
   {x:300,icon:'💧',label:'Irrigation',desc:'Water crops',color:'#0ea5e9'},
-  {x:190,icon:'🧴',label:'Fertilizing',desc:'Add nutrients',color:'#a855f7'},
-  {x:80,icon:'🌾',label:'Harvesting',desc:'Collect crops',color:'#eab308'}
+  {x:420,icon:'🧴',label:'Fertilizing',desc:'Add nutrients',color:'#a855f7'},
+  {x:540,icon:'🌾',label:'Harvesting',desc:'Collect crops',color:'#eab308'}
 ];
 function draw(){
   ctx.clearRect(0,0,600,260);
@@ -1410,7 +1410,7 @@ function draw(){
   ctx.beginPath();ctx.moveTo(550,120);ctx.lineTo(50,120);
   ctx.strokeStyle='#92400e44';ctx.lineWidth=3;ctx.stroke();
   // Animated farmer walking RTL
-  let farmerX=580-((t*1)%620);
+  let farmerX=((t*1)%620)-20;
   ctx.font='24px serif';ctx.textAlign='center';ctx.fillText('👨‍🌾',farmerX,90);
   // Steps
   steps.forEach((s,i)=>{
@@ -1442,7 +1442,7 @@ function draw(){
     ctx.fillText(s.desc,s.x,177+bounce);
   });
   ctx.font='10px "Segoe UI",sans-serif';ctx.fillStyle='#d97706';ctx.textAlign='center';
-  ctx.fillText('← Farming cycle progresses through seasons',300,240);
+  ctx.fillText('Farming cycle progresses through seasons →',300,240);
   t++;requestAnimationFrame(draw);
 }
 draw();
@@ -2243,6 +2243,7 @@ else:
             answer = st.radio(
                 f"{q.get('id', '')}. {q['statement']}",
                 options=["True", "False"],
+                index=None,
                 key=f"challenge_{scene['id']}_{q.get('id', '')}_ch{ch_id}",
                 horizontal=True
             )
@@ -2269,6 +2270,7 @@ else:
             st.radio(
                 f"{q['id']}. {q['question']}",
                 options=q["options"],
+                index=None,
                 key=f"quiz_{scene['id']}_{q['id']}_ch{ch_id}"
             )
 
@@ -2287,28 +2289,55 @@ else:
                 st.balloons()
 
     # ─── Summary ──────────────────────────────────────────────────────────────
-    if "summary" in scene:
-        summary = scene["summary"]
+    if "summary" in scene or "summary_points" in scene:
         st.write("")
         st.subheader("📋 Chapter Summary")
-        for point in summary.get("points", []):
-            st.write(f"• {point}")
-        if "key_terms" in summary:
-            st.write("")
-            st.write("**Key Terms:**")
-            for term in summary["key_terms"]:
-                st.write(f"  **{term['term']}** — {term['definition']}")
+
+        # Handle summary_points format (list of {icon, title, text})
+        if "summary_points" in scene:
+            for point in scene["summary_points"]:
+                if isinstance(point, dict):
+                    icon = point.get("icon", "📌")
+                    title = point.get("title", "")
+                    text = point.get("text", "")
+                    st.write(f"{icon} **{title}:** {text}")
+                else:
+                    st.write(f"• {point}")
+
+        # Handle summary format (dict with points list and key_terms)
+        elif "summary" in scene:
+            summary = scene["summary"]
+            if isinstance(summary, dict):
+                for point in summary.get("points", []):
+                    st.write(f"• {point}")
+                if "key_terms" in summary:
+                    st.write("")
+                    st.write("**Key Terms:**")
+                    for term in summary["key_terms"]:
+                        st.write(f"  **{term['term']}** — {term['definition']}")
+            elif isinstance(summary, list):
+                for point in summary:
+                    st.write(f"• {point}")
 
     # ─── Badge Award ──────────────────────────────────────────────────────────
     if scene.get("scene_type") == "badge":
         st.write("")
-        badge_name = scene.get("badge", chapter_data.get("badge", "Achievement"))
+        badge_data = scene.get("badge", {})
+        if isinstance(badge_data, dict):
+            badge_name = badge_data.get("name", chapter_data.get("badge", "Achievement"))
+            badge_icon = badge_data.get("icon", "🏆")
+            badge_desc = badge_data.get("description", "")
+        else:
+            badge_name = str(badge_data) if badge_data else chapter_data.get("badge", "Achievement")
+            badge_icon = "🏆"
+            badge_desc = ""
         st.markdown(f"""
         <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #FEF3C7, #FDE68A); border-radius: 20px; margin: 20px 0;">
-            <div style="font-size: 64px;">🏆</div>
+            <div style="font-size: 64px;">{badge_icon}</div>
             <h2 style="color: #92400E;">Congratulations, {st.session_state.student_name}!</h2>
             <h3 style="color: #B45309;">You earned the "{badge_name}" badge!</h3>
-            <p style="color: #78350F;">You have completed Chapter {ch_id} successfully!</p>
+            <p style="color: #78350F;">{badge_desc}</p>
+            <p style="color: #92400E; font-size: 14px;">You have completed Chapter {ch_id} successfully!</p>
         </div>
         """, unsafe_allow_html=True)
         st.balloons()
@@ -2346,6 +2375,8 @@ else:
                 st.session_state.chapter_started = False
                 st.session_state.scene_index = 0
                 st.rerun()
+
+
 
 # ─── Footer ──────────────────────────────────────────────────────────────────
 
