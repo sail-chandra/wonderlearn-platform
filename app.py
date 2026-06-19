@@ -2711,7 +2711,7 @@ else:
             st.rerun()
 
     with col_next:
-        if st.button("Next ➡", disabled=(st.session_state.scene_index >= len(scenes) - 1), key="nav_next"):
+        if st.button("Next ➡", disabled=(st.session_state.scene_index >= scene_count - 1), key="nav_next"):
             st.session_state.scene_index += 1
             st.rerun()
 
