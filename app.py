@@ -474,6 +474,64 @@ def render_animation(animation_config):
         </div>
         """, unsafe_allow_html=True)
 
+    elif anim_type == "breathing_systems":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #EFF6FF, #DBEAFE);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #1E40AF;">🎬 How Animals Breathe</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite;">🫁</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Lungs</strong><br>Mammals, Birds<br>Nostrils → Windpipe → Lungs</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.5s;">🐟</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Gills</strong><br>Fish, Tadpoles<br>Water flows over gill filaments</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1s;">🐛</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Spiracles</strong><br>Insects<br>Tiny holes → Trachea tubes</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 1.5s;">🪱</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Skin</strong><br>Earthworm<br>Moist skin absorbs O₂</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 2s;">🐋</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Blowhole</strong><br>Whales, Dolphins<br>Surface to breathe air</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    elif anim_type == "animal_movement":
+        st.markdown("""
+        <div class="animation-container" style="background: linear-gradient(180deg, #F0FDF4, #DCFCE7);">
+            <div style="font-weight: bold; text-align: center; margin-bottom: 20px; color: #166534;">🎬 Animals on the Move!</div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
+                <div style="text-align: center; padding: 15px;">
+                    <div class="wind-seed">🦅</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Flying</strong><br>Wings + Hollow bones<br>+ Streamlined body</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div class="water-seed">🐠</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Swimming</strong><br>Fins + Streamlined body<br>+ Tail propulsion</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 35px; animation: bounce 1.5s ease-in-out infinite;">🦘</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Hopping</strong><br>Powerful back legs<br>Kangaroo, Frog</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.3s;">🐍</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Slithering</strong><br>Scales + Muscles<br>+ Flexible backbone</div>
+                </div>
+                <div style="text-align: center; padding: 15px;">
+                    <div style="font-size: 35px; animation: bounce 2s ease-in-out infinite 0.6s;">🦆</div>
+                    <div style="font-size: 13px; margin-top: 8px;"><strong>Webbed Feet</strong><br>Skin between toes<br>Ducks, Frogs</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
 
 # ─── Session State Initialization ─────────────────────────────────────────────
 
@@ -1118,12 +1176,19 @@ if st.session_state.chapter_started:
             st.write("")
             st.subheader("📋 What You Learned")
             for i, point in enumerate(scene["summary_points"]):
-                st.markdown(f"""
-                <div class='summary-card' style='animation-delay: {i * 0.15}s;'>
-                    <strong>{point['icon']} {point['title']}</strong><br>
-                    {point['text']}
-                </div>
-                """, unsafe_allow_html=True)
+                if isinstance(point, dict):
+                    st.markdown(f"""
+                    <div class='summary-card' style='animation-delay: {i * 0.15}s;'>
+                        <strong>{point['icon']} {point['title']}</strong><br>
+                        {point['text']}
+                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown(f"""
+                    <div class='summary-card' style='animation-delay: {i * 0.15}s;'>
+                        <strong>{point}</strong>
+                    </div>
+                    """, unsafe_allow_html=True)
 
     # ─── Scene Type: BADGE ────────────────────────────────────────────────────
 
@@ -1154,67 +1219,58 @@ if st.session_state.chapter_started:
             """, unsafe_allow_html=True)
 
         st.write("")
-        st.write(scene["narration"])
 
         # TTS audio
         if scene.get("tts"):
             with st.expander("🔊 Listen to Narration"):
                 render_audio_player(scene["narration"], scene["id"])
 
-        col_char_center = st.columns([1, 2, 1])
-        with col_char_center[1]:
-            character_file = f"assets/characters/{scene['character']}.png"
-            if Path(character_file).exists():
-                st.image(character_file, width=250)
-
     # ─── XP Award ─────────────────────────────────────────────────────────────
 
-    scene_key = f"ch{st.session_state.selected_chapter}_s{scene['id']}"
-    if scene_key not in st.session_state.scene_xp_awarded:
-        xp_gain = scene.get("xp", 10)
-        st.session_state.xp += xp_gain
-        st.session_state.scene_xp_awarded.add(scene_key)
+    if scene.get("xp") and f"xp_scene_{scene['id']}" not in st.session_state:
+        st.session_state.xp += scene["xp"]
+        st.session_state[f"xp_scene_{scene['id']}"] = True
 
-    # ─── Progress & Navigation ────────────────────────────────────────────────
+    # ─── Navigation ───────────────────────────────────────────────────────────
 
     st.write("")
-    st.progress((st.session_state.scene_index + 1) / scene_count)
+    st.write("")
+    nav_col1, nav_col2, nav_col3 = st.columns([1, 2, 1])
 
-    col_info1, col_info2, col_info3 = st.columns(3)
-    with col_info1:
-        st.caption(f"Scene {st.session_state.scene_index + 1} of {scene_count}")
-    with col_info2:
-        st.caption(f"Type: {scene_type.title()}")
-    with col_info3:
-        st.caption(f"XP this scene: +{scene.get('xp', 10)}")
+    with nav_col1:
+        if st.session_state.scene_index > 0:
+            if st.button("⬅️ Previous", use_container_width=True):
+                st.session_state.scene_index -= 1
+                st.session_state.quiz_submitted = False
+                st.rerun()
 
-    st.divider()
+    with nav_col2:
+        st.markdown(
+            f"<div style='text-align: center; color: #6B7280; padding: 10px;'>"
+            f"Scene {st.session_state.scene_index + 1} of {len(scenes)}"
+            f"</div>",
+            unsafe_allow_html=True
+        )
 
-    col_prev, col_scene_info, col_next = st.columns([1, 2, 1])
-
-    with col_prev:
-        if st.button("⬅ Previous", disabled=(st.session_state.scene_index == 0)):
-            st.session_state.scene_index -= 1
-            st.session_state.quiz_submitted = False
-            st.session_state.challenge_submitted = False
-            st.session_state.activity_submitted = False
-            st.session_state.experiment_result = None
-            st.rerun()
-
-    with col_scene_info:
-        st.markdown(f"<div class='xp-gain'>⭐ Total XP: {st.session_state.xp}</div>",
-                    unsafe_allow_html=True)
-
-    with col_next:
-        if st.button("Next ➡", disabled=(st.session_state.scene_index >= scene_count - 1)):
-            st.session_state.scene_index += 1
-            st.session_state.quiz_submitted = False
-            st.session_state.challenge_submitted = False
-            st.session_state.activity_submitted = False
-            st.session_state.experiment_result = None
-            st.rerun()
+    with nav_col3:
+        if st.session_state.scene_index < len(scenes) - 1:
+            if st.button("Next ➡️", use_container_width=True):
+                st.session_state.scene_index += 1
+                st.session_state.quiz_submitted = False
+                st.rerun()
+        else:
+            if st.button("🏠 Home", use_container_width=True):
+                st.session_state.chapter_started = False
+                st.session_state.scene_index = 0
+                st.session_state.quiz_submitted = False
+                st.rerun()
 
 # ─── Footer ──────────────────────────────────────────────────────────────────
 
-st.divider()
-st.caption("WonderLearn © 2026 | Learn Through Stories, Explore Through Adventures")
+st.write("")
+st.write("")
+st.markdown("""
+<div style='text-align: center; color: #9CA3AF; padding: 20px; font-size: 14px;'>
+    WonderLearn © 2026 | Learn Through Stories, Explore Through Adventures
+</div>
+""", unsafe_allow_html=True)
